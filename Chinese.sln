@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinese.Windows", "Chinese.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinese.WindowsPhone", "Chinese.WindowsPhone\Chinese.WindowsPhone.csproj", "{9AA40E72-E0F2-4B7D-8076-7E25FBD53A80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanguageModel", "LanguageModel\LanguageModel.csproj", "{C310D1DE-A16C-41ED-9D18-73DA836F59A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanguageModel.Tests", "LanguageModel.Tests\LanguageModel.Tests.csproj", "{A46D0CD3-7202-456E-8A6A-560B1B79CA6A}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Chinese.Shared\Chinese.Shared.projitems*{9aa40e72-e0f2-4b7d-8076-7e25fbd53a80}*SharedItemsImports = 4
@@ -70,6 +74,26 @@ Global
 		{9AA40E72-E0F2-4B7D-8076-7E25FBD53A80}.Release|x86.ActiveCfg = Release|x86
 		{9AA40E72-E0F2-4B7D-8076-7E25FBD53A80}.Release|x86.Build.0 = Release|x86
 		{9AA40E72-E0F2-4B7D-8076-7E25FBD53A80}.Release|x86.Deploy.0 = Release|x86
+		{C310D1DE-A16C-41ED-9D18-73DA836F59A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C310D1DE-A16C-41ED-9D18-73DA836F59A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C310D1DE-A16C-41ED-9D18-73DA836F59A7}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C310D1DE-A16C-41ED-9D18-73DA836F59A7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C310D1DE-A16C-41ED-9D18-73DA836F59A7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C310D1DE-A16C-41ED-9D18-73DA836F59A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C310D1DE-A16C-41ED-9D18-73DA836F59A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C310D1DE-A16C-41ED-9D18-73DA836F59A7}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C310D1DE-A16C-41ED-9D18-73DA836F59A7}.Release|x64.ActiveCfg = Release|Any CPU
+		{C310D1DE-A16C-41ED-9D18-73DA836F59A7}.Release|x86.ActiveCfg = Release|Any CPU
+		{A46D0CD3-7202-456E-8A6A-560B1B79CA6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A46D0CD3-7202-456E-8A6A-560B1B79CA6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A46D0CD3-7202-456E-8A6A-560B1B79CA6A}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A46D0CD3-7202-456E-8A6A-560B1B79CA6A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A46D0CD3-7202-456E-8A6A-560B1B79CA6A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A46D0CD3-7202-456E-8A6A-560B1B79CA6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A46D0CD3-7202-456E-8A6A-560B1B79CA6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A46D0CD3-7202-456E-8A6A-560B1B79CA6A}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A46D0CD3-7202-456E-8A6A-560B1B79CA6A}.Release|x64.ActiveCfg = Release|Any CPU
+		{A46D0CD3-7202-456E-8A6A-560B1B79CA6A}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
