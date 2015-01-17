@@ -52,9 +52,9 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 
-                <Button Grid.Row="0" Grid.Column="0">Pick existing database</Button>
+                <Button Grid.Row="0" Grid.Column="0" Command="{Binding PickDatabaseFileCommand}">Pick existing database</Button>
                 <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource BodyTextBlockStyle}" Text="or" Margin="5,3,5,0" />
-                <Button Grid.Row="0" Grid.Column="2">Choose where to save</Button>
+                <Button Grid.Row="0" Grid.Column="2" Command="{Binding PickDatabaseFolderCommand}">Choose where to save</Button>
                 <TextBlock Text="Selected location:" Grid.Row="0" Grid.Column="3" Style="{StaticResource BodyTextBlockStyle}" Margin="5,3,5,0" />
                 <TextBlock Text="{Binding StoragePath}" Grid.Row="0" Grid.Column="4" Style="{StaticResource BodyTextBlockStyle}" Margin="0,3,0,0" />
             </Grid>
@@ -62,7 +62,7 @@
             <TextBlock Text="Row regex" Grid.Row="4" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Right" />
             <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding Regex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             
-            <Button Grid.Row="6" Grid.Column="2">Make it so</Button>
+            <Button Grid.Row="6" Grid.Column="2" Command="{Binding EngageCommand}">Make it so</Button>
         </Grid>
         
     </Grid>

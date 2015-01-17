@@ -1,7 +1,13 @@
 ﻿using LangDB;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
+using System;
 using System.Composition;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.UI.Popups;
 
 namespace DBManager.ViewModels
 {
@@ -32,6 +38,11 @@ namespace DBManager.ViewModels
         private string regex = "herpderp123";
 
         /// <summary>
+        /// Whether the process is currently executing.
+        /// </summary>
+        private bool executing = false;
+
+        /// <summary>
         /// MEF importing constructor.
         /// </summary>
         /// <param name="dbFileService">The database file service.</param>
@@ -39,6 +50,10 @@ namespace DBManager.ViewModels
         public MainPageViewModel(ILanguageDatabaseFileService dbFileService)
         {
             this.dbFileService = dbFileService;
+
+            this.PickDatabaseFileCommand = DelegateCommand.FromAsyncHandler(this.PickDatabaseFileAsync, this.CanExecuteAsync);
+            this.PickDatabaseFolderCommand = DelegateCommand.FromAsyncHandler(this.PickDatabaseFolderAsync, this.CanExecuteAsync);
+            this.EngageCommand = DelegateCommand.FromAsyncHandler(this.EngageAsync, this.CanExecuteAsync);
         }
 
         /// <summary>
@@ -80,6 +95,118 @@ namespace DBManager.ViewModels
             {
                 this.SetProperty(ref this.regex, value);
             }
+        }
+
+        /// <summary>
+        /// Command for picking a file to be the database.
+        /// </summary>
+        public ICommand PickDatabaseFileCommand { get; private set; }
+
+        /// <summary>
+        /// Command for picking a folder to place the database within.
+        /// </summary>
+        public ICommand PickDatabaseFolderCommand { get; private set; }
+
+        /// <summary>
+        /// Command to execute the acquisition.
+        /// </summary>
+        public ICommand EngageCommand { get; private set; }
+
+        /// <summary>
+        /// Execute the pick database file command.
+        /// </summary>
+        /// <returns>When complete.</returns>
+        private async Task PickDatabaseFileAsync()
+        {
+            var picker = new FileOpenPicker();
+            picker.ViewMode = PickerViewMode.Thumbnail;
+            picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            picker.FileTypeFilter.Add(".langdb");
+
+            var file = await picker.PickSingleFileAsync();
+
+            if (file == null)
+            {
+                return;
+            }
+
+            this.targetFile = file;
+            this.OnPropertyChanged("StoragePath");
+        }
+
+        /// <summary>
+        /// Execute the pick database folder command.
+        /// </summary>
+        /// <returns>When complete.</returns>
+        private async Task PickDatabaseFolderAsync()
+        {
+            var picker = new FolderPicker();
+            picker.ViewMode = PickerViewMode.Thumbnail;
+            picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            picker.FileTypeFilter.Add("*");
+
+            var folder = await picker.PickSingleFolderAsync();
+
+            if (folder == null)
+            {
+                return;
+            }
+
+            StorageFile file = null;
+
+            var existingFile = await folder.TryGetItemAsync("Chinese.langdb");
+            if (existingFile != null)
+            {
+                // There is already a file with the expected name in the folder, does the user want to use that?
+                var messageDialog = new MessageDialog("There is already a language database in this folder, would you like to use it?", "Existing language database found");
+                
+                messageDialog.Commands.Add(new UICommand("Use existing file", new UICommandInvokedHandler((IUICommand cmd) =>
+                {
+                    file = existingFile as StorageFile;
+                })));
+                
+                messageDialog.Commands.Add(new UICommand("Pick again", new UICommandInvokedHandler((IUICommand cmd) =>
+                {
+                    file = null;
+                })));
+
+                messageDialog.DefaultCommandIndex = 0;
+                messageDialog.CancelCommandIndex = 1;
+                await messageDialog.ShowAsync();
+            }
+            else
+            {
+                file = await folder.CreateFileAsync("Chinese.langdb", CreationCollisionOption.OpenIfExists);
+            }
+
+            // If the user cancelled picking a file then don't set it.
+            if (file == null)
+            {
+                return;
+            }
+
+            this.targetFile = file;
+            this.OnPropertyChanged("StoragePath");
+        }
+
+        /// <summary>
+        /// Execute the engage command.
+        /// </summary>
+        /// <returns>When complete.</returns>
+        private async Task EngageAsync()
+        {
+            this.executing = true;
+
+            
+        }
+
+        /// <summary>
+        /// Whether commands can execute is based on whether we are currently executing.
+        /// </summary>
+        /// <returns>Whether the command can be executed.</returns>
+        private bool CanExecuteAsync()
+        {
+            return !this.executing;
         }
     }
 }
