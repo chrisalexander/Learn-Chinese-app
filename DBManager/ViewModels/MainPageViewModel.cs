@@ -3,6 +3,7 @@ using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using System;
 using System.Composition;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage;
@@ -18,9 +19,9 @@ namespace DBManager.ViewModels
     public class MainPageViewModel : ViewModel
     {
         /// <summary>
-        /// The database file service.
+        /// The database language service.
         /// </summary>
-        private readonly ILanguageDatabaseFileService dbFileService;
+        private readonly ILanguageDatabaseService dbService;
 
         /// <summary>
         /// The URI to access the data from.
@@ -35,7 +36,7 @@ namespace DBManager.ViewModels
         /// <summary>
         /// The regex to use to separate data in a line of the file.
         /// </summary>
-        private string regex = "herpderp123";
+        private string regex = @"^(?<traditional>[^ ]+?) (?<simplified>[^ ]+?) \[(?<pinyin>[^\/]+?)\] \/((?<english>[^\/]+?)\/)*$";
 
         /// <summary>
         /// Whether the process is currently executing.
@@ -47,9 +48,9 @@ namespace DBManager.ViewModels
         /// </summary>
         /// <param name="dbFileService">The database file service.</param>
         [ImportingConstructor]
-        public MainPageViewModel(ILanguageDatabaseFileService dbFileService)
+        public MainPageViewModel(ILanguageDatabaseService dbService)
         {
-            this.dbFileService = dbFileService;
+            this.dbService = dbService;
 
             this.PickDatabaseFileCommand = DelegateCommand.FromAsyncHandler(this.PickDatabaseFileAsync, this.CanExecuteAsync);
             this.PickDatabaseFolderCommand = DelegateCommand.FromAsyncHandler(this.PickDatabaseFolderAsync, this.CanExecuteAsync);
@@ -197,7 +198,9 @@ namespace DBManager.ViewModels
         {
             this.executing = true;
 
-            
+            await this.dbService.AcquireAndParseArchiveAsync(new Uri(this.uri), this.targetFile, new Regex(this.regex));
+
+            this.executing = false;
         }
 
         /// <summary>

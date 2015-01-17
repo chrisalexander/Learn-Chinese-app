@@ -26,7 +26,7 @@ namespace LangDB
         /// </summary>
         /// <param name="file">The file to load the database from.</param>
         /// <returns>The loaded database.</returns>
-        public async Task<LanguageDatabase> Load(StorageFile file)
+        public async Task<LanguageDatabase> LoadAsync(StorageFile file)
         {
             using (var stream = await file.OpenStreamForReadAsync())
             using (var streamReader = new StreamReader(stream))
@@ -43,7 +43,7 @@ namespace LangDB
         /// <param name="database">The database to save.</param>
         /// <param name="file">The file to save it to.</param>
         /// <returns>When complete.</returns>
-        public async Task Save(LanguageDatabase database, StorageFile file)
+        public async Task SaveAsync(LanguageDatabase database, StorageFile file)
         {
             using (var stream = await file.OpenStreamForWriteAsync())
             using (var streamWriter = new StreamWriter(stream))

@@ -172,6 +172,10 @@
       <Project>{eee40438-cadd-4587-8dab-c51368800598}</Project>
       <Name>LangDB</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LanguageModel\LanguageModel.csproj">
+      <Project>{c310d1de-a16c-41ed-9d18-73da836f59a7}</Project>
+      <Name>LanguageModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

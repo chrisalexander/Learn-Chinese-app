@@ -45,10 +45,16 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArchiveAcquisitionService.cs" />
+    <Compile Include="DatabaseParsingService.cs" />
+    <Compile Include="IArchiveAcquisitionService.cs" />
+    <Compile Include="IDatabaseParsingService.cs" />
     <Compile Include="ILanguageDatabaseFileService.cs" />
+    <Compile Include="ILanguageDatabaseService.cs" />
     <Compile Include="JsonDatabaseFileService.cs" />
     <Compile Include="LangDBModule.cs" />
     <Compile Include="LanguageDatabase.cs" />
+    <Compile Include="LanguageDatabaseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
