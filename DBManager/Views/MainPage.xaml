@@ -37,7 +37,7 @@
             </Grid.RowDefinitions>
                 
             <TextBlock Text="ZIP archive URI" Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Right" />
-            <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding Uri}" />
+            <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding Uri, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock Text="Specify database" Grid.Row="2" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Right" Margin="0,3,0,0" />
             <Grid Grid.Row="2" Grid.Column="2">
@@ -56,11 +56,11 @@
                 <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource BodyTextBlockStyle}" Text="or" Margin="5,3,5,0" />
                 <Button Grid.Row="0" Grid.Column="2">Choose where to save</Button>
                 <TextBlock Text="Selected location:" Grid.Row="0" Grid.Column="3" Style="{StaticResource BodyTextBlockStyle}" Margin="5,3,5,0" />
-                <TextBlock Text="" Grid.Row="0" Grid.Column="4" Style="{StaticResource BodyTextBlockStyle}" Margin="0,3,0,0" />
+                <TextBlock Text="{Binding StoragePath}" Grid.Row="0" Grid.Column="4" Style="{StaticResource BodyTextBlockStyle}" Margin="0,3,0,0" />
             </Grid>
 
             <TextBlock Text="Row regex" Grid.Row="4" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Right" />
-            <TextBox Grid.Row="4" Grid.Column="2" />
+            <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding Regex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             
             <Button Grid.Row="6" Grid.Column="2">Make it so</Button>
         </Grid>
