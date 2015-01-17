@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanguageModel.Tests", "Lang
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBManager", "DBManager\DBManager.csproj", "{13120364-E9F8-49A8-ABCE-24C6B61A388B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LangDB", "LangDB\LangDB.csproj", "{EEE40438-CADD-4587-8DAB-C51368800598}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Chinese.Shared\Chinese.Shared.projitems*{9aa40e72-e0f2-4b7d-8076-7e25fbd53a80}*SharedItemsImports = 4
@@ -120,6 +122,16 @@ Global
 		{13120364-E9F8-49A8-ABCE-24C6B61A388B}.Release|x86.ActiveCfg = Release|x86
 		{13120364-E9F8-49A8-ABCE-24C6B61A388B}.Release|x86.Build.0 = Release|x86
 		{13120364-E9F8-49A8-ABCE-24C6B61A388B}.Release|x86.Deploy.0 = Release|x86
+		{EEE40438-CADD-4587-8DAB-C51368800598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEE40438-CADD-4587-8DAB-C51368800598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEE40438-CADD-4587-8DAB-C51368800598}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{EEE40438-CADD-4587-8DAB-C51368800598}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EEE40438-CADD-4587-8DAB-C51368800598}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EEE40438-CADD-4587-8DAB-C51368800598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEE40438-CADD-4587-8DAB-C51368800598}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEE40438-CADD-4587-8DAB-C51368800598}.Release|ARM.ActiveCfg = Release|Any CPU
+		{EEE40438-CADD-4587-8DAB-C51368800598}.Release|x64.ActiveCfg = Release|Any CPU
+		{EEE40438-CADD-4587-8DAB-C51368800598}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

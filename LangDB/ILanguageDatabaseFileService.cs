@@ -1,0 +1,30 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Windows.Storage;
+
+namespace LangDB
+{
+    /// <summary>
+    /// Interface for services which can work with database files.
+    /// </summary>
+    public interface ILanguageDatabaseFileService
+    {
+        /// <summary>
+        /// Load the language database in the specified file.
+        /// </summary>
+        /// <param name="file">The file to load the database from.</param>
+        /// <returns>The loaded database.</returns>
+        Task<LanguageDatabase> Load(StorageFile file);
+
+        /// <summary>
+        /// Save the specified language database to the file.
+        /// </summary>
+        /// <param name="database">The database to save.</param>
+        /// <param name="file">The file to save it to.</param>
+        /// <returns>When complete.</returns>
+        Task Save(LanguageDatabase database, StorageFile file);
+    }
+}
