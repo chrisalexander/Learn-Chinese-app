@@ -196,6 +196,19 @@ namespace DBManager.ViewModels
         /// <returns>When complete.</returns>
         private async Task EngageAsync()
         {
+            // Validate they have picked a file.
+            if (this.targetFile == null)
+            {
+                var messageDialog = new MessageDialog("You have not picked a file; please pick one to continue.", "Please pick a file");
+
+                messageDialog.Commands.Add(new UICommand("OK"));
+
+                messageDialog.DefaultCommandIndex = 0;
+                messageDialog.CancelCommandIndex = 0;
+                await messageDialog.ShowAsync();
+                return;
+            }
+
             this.executing = true;
 
             await this.dbService.AcquireAndParseArchiveAsync(new Uri(this.uri), this.targetFile, new Regex(this.regex));
