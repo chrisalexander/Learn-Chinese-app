@@ -32,6 +32,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="20" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="20" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
@@ -61,8 +62,10 @@
 
             <TextBlock Text="Row regex" Grid.Row="4" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" HorizontalAlignment="Right" />
             <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding Regex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock Grid.Row="5" Grid.Column="2" Text="Required named groups: traditional, simplified, pinyin, english." Style="{StaticResource BaseTextBlockStyle}" />
             
-            <Button Grid.Row="6" Grid.Column="2" Command="{Binding EngageCommand}">Make it so</Button>
+            <Button Grid.Row="7" Grid.Column="2" Command="{Binding EngageCommand}">Make it so</Button>
         </Grid>
         
     </Grid>
