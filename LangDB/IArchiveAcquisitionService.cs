@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LongRunningProcess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,8 @@ namespace LangDB
         /// Acquire a URI and return the lines within the file.
         /// </summary>
         /// <param name="uri">The URI of the archive to retrieve.</param>
+        /// <param name="process">The process.</param>
         /// <returns>Each of the lines in the file.</returns>
-        Task<IEnumerable<string>> GetLinesAsync(Uri uri);
+        Task<IList<string>> GetLinesAsync(Uri uri, IProcess process);
     }
 }

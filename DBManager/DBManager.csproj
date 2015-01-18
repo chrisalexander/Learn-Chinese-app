@@ -165,6 +165,9 @@
     <Reference Include="System.Composition.TypedParts">
       <HintPath>..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\System.Composition.TypedParts.dll</HintPath>
     </Reference>
+    <Reference Include="VisibilityControlLibrary">
+      <HintPath>..\packages\VisibilityControl.1.0.1\lib\winrt45\VisibilityControlLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -175,6 +178,10 @@
     <ProjectReference Include="..\LanguageModel\LanguageModel.csproj">
       <Project>{c310d1de-a16c-41ed-9d18-73da836f59a7}</Project>
       <Name>LanguageModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LongRunningProcess\LongRunningProcess.csproj">
+      <Project>{ef45a007-c8a8-4285-b3dd-1be875c3a04f}</Project>
+      <Name>LongRunningProcess</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">

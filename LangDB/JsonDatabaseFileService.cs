@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using LongRunningProcess;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Composition;
@@ -42,8 +43,9 @@ namespace LangDB
         /// </summary>
         /// <param name="database">The database to save.</param>
         /// <param name="file">The file to save it to.</param>
+        /// <param name="process">The process.</param>
         /// <returns>When complete.</returns>
-        public async Task SaveAsync(LanguageDatabase database, StorageFile file)
+        public async Task SaveAsync(LanguageDatabase database, StorageFile file, IProcess process)
         {
             using (var stream = await file.OpenStreamForWriteAsync())
             using (var streamWriter = new StreamWriter(stream))
@@ -54,6 +56,8 @@ namespace LangDB
                 var serializer = this.GetSerializer();
                 await Task.Run(() => serializer.Serialize(jsonWriter, database));
             }
+
+            process.Complete();
         }
 
         /// <summary>

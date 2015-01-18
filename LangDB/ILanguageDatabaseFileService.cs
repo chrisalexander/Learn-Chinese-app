@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using LongRunningProcess;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -24,7 +21,8 @@ namespace LangDB
         /// </summary>
         /// <param name="database">The database to save.</param>
         /// <param name="file">The file to save it to.</param>
+        /// <param name="process">The process.</param>
         /// <returns>When complete.</returns>
-        Task SaveAsync(LanguageDatabase database, StorageFile file);
+        Task SaveAsync(LanguageDatabase database, StorageFile file, IProcess process);
     }
 }

@@ -1,4 +1,6 @@
 ﻿using LanguageModel;
+using LongRunningProcess;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -9,6 +11,15 @@ namespace LangDB
     /// </summary>
     public interface IDatabaseParsingService
     {
+        /// <summary>
+        /// Parse a list of lines.
+        /// </summary>
+        /// <param name="lines">The lines to parse.</param>
+        /// <param name="regex">The configured regex to use.</param>
+        /// <param name="process">The process.</param>
+        /// <returns>The language entries.</returns>
+        Task<IList<LanguageEntry>> ParseLinesAsync(IList<string> lines, Regex regex, IProcess process);
+
         /// <summary>
         /// Parse a single line of the database file and return an entry if possible.
         /// </summary>

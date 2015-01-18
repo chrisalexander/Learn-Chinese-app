@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LongRunningProcess;
+using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.IO;
@@ -16,19 +17,27 @@ namespace LangDB
         /// Acquire a URI and return the lines within the file.
         /// </summary>
         /// <param name="uri">The URI of the archive to retrieve.</param>
+        /// <param name="process">The process.</param>
         /// <returns>Each of the lines in the file.</returns>
-        public async Task<IEnumerable<string>> GetLinesAsync(Uri uri)
+        public async Task<IList<string>> GetLinesAsync(Uri uri, IProcess process)
         {
-            var temporaryFile = await this.DownloadFile(uri);
+            var temporaryFile = await this.DownloadFile(uri, process.Step("Downloading", 45));
 
-            var archiveFolder = await this.ExtractArchive(temporaryFile);
+            var archiveFolder = await this.ExtractArchive(temporaryFile, process.Step("Extracting", 45));
 
             var targetFile = await archiveFolder.GetFileAsync("cedict_ts.u8");
 
             var lines = await FileIO.ReadLinesAsync(targetFile);
 
+            var deleteStep = process.Step("Cleaning up", 10);
+            deleteStep.DurationType = ProcessDurationType.Determinate;
+
             await temporaryFile.DeleteAsync();
+            deleteStep.Increment(50);
             await archiveFolder.DeleteAsync();
+            deleteStep.Complete();
+
+            process.Complete();
 
             return lines;
         }
@@ -38,14 +47,21 @@ namespace LangDB
         /// </summary>
         /// <param name="uri">The URI to download.</param>
         /// <returns>The file that was downloaded.</returns>
-        private async Task<StorageFile> DownloadFile(Uri uri)
+        private async Task<StorageFile> DownloadFile(Uri uri, IProcess process)
         {
+            process.DurationType = ProcessDurationType.Determinate;
+
             var destination = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(Guid.NewGuid().ToString());
 
             var downloader = new BackgroundDownloader();
             var download = downloader.CreateDownload(uri, destination);
 
-            await download.StartAsync();
+            await download.StartAsync().AsTask(process.CancellationToken, new Progress<DownloadOperation>((operation) =>
+            {
+                process.Increment(operation.Progress.BytesReceived / operation.Progress.TotalBytesToReceive);
+            }));
+
+            process.Complete();
 
             return destination;
         }
@@ -55,13 +71,16 @@ namespace LangDB
         /// </summary>
         /// <param name="file">The file to extract.</param>
         /// <returns>The folder the file was extracted in to.</returns>
-        private async Task<StorageFolder> ExtractArchive(StorageFile file)
+        private async Task<StorageFolder> ExtractArchive(StorageFile file, IProcess process)
         {
+            process.DurationType = ProcessDurationType.Determinate;
+
             var targetFolder = await ApplicationData.Current.TemporaryFolder.CreateFolderAsync(Guid.NewGuid().ToString());
 
             using (var stream = await file.OpenStreamForReadAsync())
             using (var archive = new ZipArchive(stream, ZipArchiveMode.Read))
             {
+                var stepSize = 100.0 / archive.Entries.Count;
                 foreach (var entry in archive.Entries)
                 {
                     var targetFile = await targetFolder.CreateFileAsync(entry.FullName, CreationCollisionOption.GenerateUniqueName);
@@ -76,9 +95,15 @@ namespace LangDB
                         {
                             await fileStream.WriteAsync(buffer, 0, bytesread);
                         }
+
+                        process.CancellationToken.ThrowIfCancellationRequested();
                     }
+
+                    process.Increment(stepSize);
                 }
             }
+
+            process.Complete();
 
             return targetFolder;
         }

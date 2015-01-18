@@ -6,9 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="using:Microsoft.Practices.Prism.Mvvm"
+    xmlns:vcl="using:VisibilityControlLibrary"
     mc:Ignorable="d"
     prism:ViewModelLocator.AutoWireViewModel="true">
-
+    
+    <Page.Resources>
+        <vcl:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <vcl:BooleanToInvisibilityConverter x:Key="BooleanToInvisibilityConverter" />
+    </Page.Resources>
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -16,11 +22,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
+        <ProgressBar IsIndeterminate="False" Maximum="100" Value="{Binding Process.PercentageComplete}" Visibility="{Binding Running, Converter={StaticResource BooleanToVisibilityConverter}}" />
         
-        <TextBlock Text="DB Manager" Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderTextBlockStyle}" Margin="20,20,20,20" />
+        <TextBlock Text="DB Manager" Grid.Row="1" Grid.Column="0" Style="{StaticResource HeaderTextBlockStyle}" Margin="20,20,20,20" />
         
-        <Grid Grid.Row="1" Grid.Column="0" Margin="20,20,20,20">
+        <Grid Grid.Row="2" Grid.Column="0" Margin="20,20,20,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="20" />
@@ -32,6 +41,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="20" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="20" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="20" />
                 <RowDefinition Height="Auto" />
@@ -65,7 +76,20 @@
 
             <TextBlock Grid.Row="5" Grid.Column="2" Text="Required named groups: traditional, simplified, pinyin, english." Style="{StaticResource BaseTextBlockStyle}" />
 
-            <Button Grid.Row="7" Grid.Column="2" Command="{Binding EngageCommand}" IsEnabled="{Binding Enabled}">Make it so</Button>
+            <Grid Grid.Row="7" Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Button Grid.Row="0" Grid.Column="0" Command="{Binding EngageCommand}" IsEnabled="{Binding Enabled}">Make it so</Button>
+                <Button Grid.Row="0" Grid.Column="1" Command="{Binding CancelCommand}"  Visibility="{Binding Running, Converter={StaticResource BooleanToVisibilityConverter}}">Cancel</Button>
+            </Grid>
+            
+            <TextBlock Grid.Row="9" Grid.Column="2" Text="{Binding Process.CurrentState}" Style="{StaticResource BaseTextBlockStyle}" Visibility="{Binding Running, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </Grid>
         
     </Grid>

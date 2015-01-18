@@ -1,7 +1,9 @@
 ﻿using LangDB;
+using LongRunningProcess;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using System;
+using System.ComponentModel;
 using System.Composition;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -55,6 +57,7 @@ namespace DBManager.ViewModels
             this.PickDatabaseFileCommand = DelegateCommand.FromAsyncHandler(this.PickDatabaseFileAsync, this.CanExecuteAsync);
             this.PickDatabaseFolderCommand = DelegateCommand.FromAsyncHandler(this.PickDatabaseFolderAsync, this.CanExecuteAsync);
             this.EngageCommand = DelegateCommand.FromAsyncHandler(this.EngageAsync, this.CanExecuteAsync);
+            this.CancelCommand = DelegateCommand.FromAsyncHandler(this.CancelAsync);
         }
 
         /// <summary>
@@ -114,6 +117,22 @@ namespace DBManager.ViewModels
         }
 
         /// <summary>
+        /// Whether the process is running.
+        /// </summary>
+        public bool Running
+        {
+            get
+            {
+                return this.Process != null && !this.Process.Completed;
+            }
+        }
+
+        /// <summary>
+        /// The process for ongoing operations.
+        /// </summary>
+        public IProcess Process { get; private set; }
+
+        /// <summary>
         /// Command for picking a file to be the database.
         /// </summary>
         public ICommand PickDatabaseFileCommand { get; private set; }
@@ -127,6 +146,11 @@ namespace DBManager.ViewModels
         /// Command to execute the acquisition.
         /// </summary>
         public ICommand EngageCommand { get; private set; }
+
+        /// <summary>
+        /// Command to cancel the acquisition.
+        /// </summary>
+        public ICommand CancelCommand { get; private set; }
 
         /// <summary>
         /// Execute the pick database file command.
@@ -226,9 +250,28 @@ namespace DBManager.ViewModels
 
             this.Enabled = false;
 
-            await this.dbService.AcquireAndParseArchiveAsync(new Uri(this.uri), this.targetFile, new Regex(this.regex));
+            try
+            {
+                await this.dbService.AcquireAndParseArchiveAsync(new Uri(this.uri), this.targetFile, new Regex(this.regex), this.CreateProcess());
+            }
+            catch (Exception) { }
 
             this.Enabled = true;
+        }
+
+        /// <summary>
+        /// Execute the cancel command.
+        /// </summary>
+        /// <returns>When complete.</returns>
+        private async Task CancelAsync()
+        {
+            // Can't cancel if not running.
+            if (this.Process == null || this.Process.Completed)
+            {
+                return;
+            }
+
+            await this.Process.CancelAsync();
         }
 
         /// <summary>
@@ -238,6 +281,37 @@ namespace DBManager.ViewModels
         private bool CanExecuteAsync()
         {
             return !this.executing;
+        }
+
+        /// <summary>
+        /// Create a process to be used for the exceution.
+        /// </summary>
+        /// <returns>The process.</returns>
+        private IProcess CreateProcess()
+        {
+            if (this.Process != null)
+            {
+                this.Process.PropertyChanged -= this.ProcessChanged;
+            }
+
+            this.Process = new Process("Create database");
+            this.Process.PropertyChanged += this.ProcessChanged;
+
+            this.OnPropertyChanged("Process");
+            this.OnPropertyChanged("Running");
+
+            return this.Process;
+        }
+
+        /// <summary>
+        /// Handler for when the process changes.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="args">The event arguments.</param>
+        private void ProcessChanged(object sender, PropertyChangedEventArgs args)
+        {
+            this.OnPropertyChanged("Process");
+            this.OnPropertyChanged("Running");
         }
     }
 }

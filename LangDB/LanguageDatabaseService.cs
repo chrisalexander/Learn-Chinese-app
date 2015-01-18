@@ -1,4 +1,7 @@
-﻿using System;
+﻿using LanguageModel;
+using LongRunningProcess;
+using System;
+using System.Collections.Generic;
 using System.Composition;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -50,23 +53,24 @@ namespace LangDB
         /// <param name="uri">The URI of the archive.</param>
         /// <param name="file">The existing archive file to merge with.</param>
         /// <param name="regex">The regex to apply to extract data from each row of the archive.</param>
+        /// <param name="process">The process.</param>
         /// <returns>When complete.</returns>
-        public async Task AcquireAndParseArchiveAsync(Uri uri, StorageFile file, Regex regex)
+        public async Task AcquireAndParseArchiveAsync(Uri uri, StorageFile file, Regex regex, IProcess process)
         {
             var database = new LanguageDatabase(file.Path);
 
-            var lines = await this.archiveAcquisitionService.GetLinesAsync(uri);
+            var lines = await this.archiveAcquisitionService.GetLinesAsync(uri, process.Step("Acquiring database", 40));
 
-            foreach (var line in lines)
+            var entries = await this.parsingService.ParseLinesAsync(lines, regex, process.Step("Parsing database entries", 40));
+
+            foreach (var entry in entries)
             {
-                var entry = await this.parsingService.ParseLineAsync(line, regex);
-                if (entry != null)
-                {
-                    database.Entries.Add(entry);
-                }
+                database.Entries.Add(entry);
             }
 
-            await this.fileService.SaveAsync(database, file);
+            await this.fileService.SaveAsync(database, file, process.Step("Saving database", 20));
+
+            process.Complete();
         }
     }
 }

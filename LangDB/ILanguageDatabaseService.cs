@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LongRunningProcess;
+using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -16,7 +17,8 @@ namespace LangDB
         /// <param name="uri">The URI of the archive.</param>
         /// <param name="file">The existing archive file to merge with.</param>
         /// <param name="regex">The regex to apply to extract data from each row of the archive.</param>
+        /// <param name="process">The process.</param>
         /// <returns>When complete.</returns>
-        Task AcquireAndParseArchiveAsync(Uri uri, StorageFile file, Regex regex);
+        Task AcquireAndParseArchiveAsync(Uri uri, StorageFile file, Regex regex, IProcess process);
     }
 }

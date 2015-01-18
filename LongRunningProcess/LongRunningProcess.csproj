@@ -5,11 +5,11 @@
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EEE40438-CADD-4587-8DAB-C51368800598}</ProjectGuid>
+    <ProjectGuid>{EF45A007-C8A8-4285-B3DD-1BE875C3A04F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LangDB</RootNamespace>
-    <AssemblyName>LangDB</AssemblyName>
+    <RootNamespace>LongRunningProcess</RootNamespace>
+    <AssemblyName>LongRunningProcess</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,54 +35,17 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\LanguageModel\LanguageModel.csproj">
-      <Project>{c310d1de-a16c-41ed-9d18-73da836f59a7}</Project>
-      <Name>LanguageModel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LongRunningProcess\LongRunningProcess.csproj">
-      <Project>{ef45a007-c8a8-4285-b3dd-1be875c3a04f}</Project>
-      <Name>LongRunningProcess</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArchiveAcquisitionService.cs" />
-    <Compile Include="DatabaseParsingService.cs" />
-    <Compile Include="IArchiveAcquisitionService.cs" />
-    <Compile Include="IDatabaseParsingService.cs" />
-    <Compile Include="ILanguageDatabaseFileService.cs" />
-    <Compile Include="ILanguageDatabaseService.cs" />
-    <Compile Include="JsonDatabaseFileService.cs" />
-    <Compile Include="LangDBModule.cs" />
-    <Compile Include="LanguageDatabase.cs" />
-    <Compile Include="LanguageDatabaseService.cs" />
+    <Compile Include="ChildProcess.cs" />
+    <Compile Include="IProcess.cs" />
+    <Compile Include="Process.cs" />
+    <Compile Include="ProcessDurationType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Composition.AttributedModel">
-      <HintPath>..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\System.Composition.AttributedModel.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Composition.Convention">
-      <HintPath>..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\System.Composition.Convention.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Composition.Hosting">
-      <HintPath>..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\System.Composition.Hosting.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Composition.Runtime">
-      <HintPath>..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\System.Composition.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Composition.TypedParts">
-      <HintPath>..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\System.Composition.TypedParts.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
