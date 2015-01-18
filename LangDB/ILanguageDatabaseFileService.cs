@@ -14,7 +14,7 @@ namespace LangDB
         /// </summary>
         /// <param name="file">The file to load the database from.</param>
         /// <returns>The loaded database.</returns>
-        Task<LanguageDatabase> LoadAsync(StorageFile file);
+        Task<ILanguageDatabase> LoadAsync(IStorageFile file);
 
         /// <summary>
         /// Save the specified language database to the file.
@@ -23,6 +23,6 @@ namespace LangDB
         /// <param name="file">The file to save it to.</param>
         /// <param name="process">The process.</param>
         /// <returns>When complete.</returns>
-        Task SaveAsync(LanguageDatabase database, StorageFile file, IProcess process);
+        Task SaveAsync(ILanguageDatabase database, IStorageFile file, IProcess process);
     }
 }

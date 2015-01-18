@@ -60,7 +60,7 @@ namespace LongRunningProcess
             get
             {
                 var childStatus = this.childProcesses.FirstOrDefault(c => !c.Process.Completed);
-                return this.status + (childStatus != null ? ": " + childStatus.Process.CurrentState : string.Empty);
+                return this.status + (childStatus != null ? "; " + childStatus.Process.CurrentState : string.Empty);
             }
         }
 

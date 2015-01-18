@@ -17,6 +17,8 @@ namespace LanguageModel.Tests.PinyinSyllable
 
         It Should_have_the_right_tone = () => Syllable.Tone.ShouldEqual(Tone.Curve);
 
+        It Should_create_a_string = () => Syllable.ToString().ShouldEqual(Pinyin);
+
         static LanguageModel.PinyinSyllable Syllable;
 
         static string Pinyin = "kou3";
@@ -34,5 +36,15 @@ namespace LanguageModel.Tests.PinyinSyllable
         static LanguageModel.PinyinSyllable Syllable;
 
         static string Pinyin = "kou";
+    }
+
+    [Subject(typeof(LanguageModel.PinyinSyllable))]
+    public class When_constructing_with_invalid_input
+    {
+        Because of = () => Exception = Catch.Exception(() => new LanguageModel.PinyinSyllable(string.Empty));
+
+        It Should_have_thrown_the_right_exception = () => Exception.ShouldBeOfType<ArgumentOutOfRangeException>();
+
+        static Exception Exception;
     }
 }

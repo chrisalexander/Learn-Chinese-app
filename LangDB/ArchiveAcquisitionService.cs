@@ -47,7 +47,7 @@ namespace LangDB
         /// </summary>
         /// <param name="uri">The URI to download.</param>
         /// <returns>The file that was downloaded.</returns>
-        private async Task<StorageFile> DownloadFile(Uri uri, IProcess process)
+        private async Task<IStorageFile> DownloadFile(Uri uri, IProcess process)
         {
             process.DurationType = ProcessDurationType.Determinate;
 
@@ -71,7 +71,7 @@ namespace LangDB
         /// </summary>
         /// <param name="file">The file to extract.</param>
         /// <returns>The folder the file was extracted in to.</returns>
-        private async Task<StorageFolder> ExtractArchive(StorageFile file, IProcess process)
+        private async Task<IStorageFolder> ExtractArchive(IStorageFile file, IProcess process)
         {
             process.DurationType = ProcessDurationType.Determinate;
 

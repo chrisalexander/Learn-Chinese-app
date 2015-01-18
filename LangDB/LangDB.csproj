@@ -53,6 +53,7 @@
     <Compile Include="DatabaseParsingService.cs" />
     <Compile Include="IArchiveAcquisitionService.cs" />
     <Compile Include="IDatabaseParsingService.cs" />
+    <Compile Include="ILanguageDatabase.cs" />
     <Compile Include="ILanguageDatabaseFileService.cs" />
     <Compile Include="ILanguageDatabaseService.cs" />
     <Compile Include="JsonDatabaseFileService.cs" />

@@ -54,7 +54,7 @@ namespace LanguageModel
         /// <returns>The pronounciation in Pinyin form.</returns>
         public override string ToString()
         {
-            return base.ToString();
+            return this.Letters + ((int)this.Tone);
         }
     }
 }

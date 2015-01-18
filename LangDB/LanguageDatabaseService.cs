@@ -55,9 +55,9 @@ namespace LangDB
         /// <param name="regex">The regex to apply to extract data from each row of the archive.</param>
         /// <param name="process">The process.</param>
         /// <returns>When complete.</returns>
-        public async Task AcquireAndParseArchiveAsync(Uri uri, StorageFile file, Regex regex, IProcess process)
+        public async Task AcquireAndParseArchiveAsync(Uri uri, IStorageFile file, Regex regex, IProcess process)
         {
-            var database = new LanguageDatabase(file.Path);
+            var database = new LanguageDatabase();
 
             var lines = await this.archiveAcquisitionService.GetLinesAsync(uri, process.Step("Acquiring database", 40));
 

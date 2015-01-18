@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ChineseWord\Constructor.specs.cs" />
+    <Compile Include="LanguageEntry\Constructor.specs.cs" />
     <Compile Include="PinyinSyllable\Constructor.specs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

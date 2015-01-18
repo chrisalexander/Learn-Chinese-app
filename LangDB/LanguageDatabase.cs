@@ -6,15 +6,13 @@ namespace LangDB
     /// <summary>
     /// A language database contains the language data as well as information about its storage.
     /// </summary>
-    public class LanguageDatabase
+    public class LanguageDatabase : ILanguageDatabase
     {
         /// <summary>
         /// Construct a language database.
         /// </summary>
-        /// <param name="path"></param>
-        public LanguageDatabase(string path)
+        public LanguageDatabase()
         {
-            this.Path = path;
             this.Entries = new List<LanguageEntry>();
         }
 
@@ -26,6 +24,6 @@ namespace LangDB
         /// <summary>
         /// The path to the database file.
         /// </summary>
-        public string Path { get; private set; }
+        public string Path { get; set; }
     }
 }
