@@ -99,6 +99,21 @@ namespace DBManager.ViewModels
         }
 
         /// <summary>
+        /// Whether the UI should be enabled.
+        /// </summary>
+        public bool Enabled
+        {
+            get
+            {
+                return !this.executing;
+            }
+            private set
+            {
+                this.SetProperty(ref this.executing, !value);
+            }
+        }
+
+        /// <summary>
         /// Command for picking a file to be the database.
         /// </summary>
         public ICommand PickDatabaseFileCommand { get; private set; }
@@ -209,11 +224,11 @@ namespace DBManager.ViewModels
                 return;
             }
 
-            this.executing = true;
+            this.Enabled = false;
 
             await this.dbService.AcquireAndParseArchiveAsync(new Uri(this.uri), this.targetFile, new Regex(this.regex));
 
-            this.executing = false;
+            this.Enabled = true;
         }
 
         /// <summary>
