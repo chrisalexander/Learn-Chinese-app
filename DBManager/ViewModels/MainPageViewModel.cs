@@ -26,6 +26,11 @@ namespace DBManager.ViewModels
         private readonly ILanguageDatabaseService dbService;
 
         /// <summary>
+        /// The process factory.
+        /// </summary>
+        private readonly IProcessFactory processFactory;
+
+        /// <summary>
         /// The URI to access the data from.
         /// </summary>
         private string uri = "http://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.zip";
@@ -48,11 +53,13 @@ namespace DBManager.ViewModels
         /// <summary>
         /// MEF importing constructor.
         /// </summary>
-        /// <param name="dbFileService">The database file service.</param>
+        /// <param name="dbService">The database service.</param>
+        /// <param name="processFactory">The process factory.</param>
         [ImportingConstructor]
-        public MainPageViewModel(ILanguageDatabaseService dbService)
+        public MainPageViewModel(ILanguageDatabaseService dbService, IProcessFactory processFactory)
         {
             this.dbService = dbService;
+            this.processFactory = processFactory;
 
             this.PickDatabaseFileCommand = DelegateCommand.FromAsyncHandler(this.PickDatabaseFileAsync, this.CanExecuteAsync);
             this.PickDatabaseFolderCommand = DelegateCommand.FromAsyncHandler(this.PickDatabaseFolderAsync, this.CanExecuteAsync);
@@ -294,7 +301,7 @@ namespace DBManager.ViewModels
                 this.Process.PropertyChanged -= this.ProcessChanged;
             }
 
-            this.Process = new Process("Create database");
+            this.Process = this.processFactory.Create("Create database");
             this.Process.PropertyChanged += this.ProcessChanged;
 
             this.OnPropertyChanged("Process");

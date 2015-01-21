@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A46D0CD3-7202-456E-8A6A-560B1B79CA6A}</ProjectGuid>
+    <ProjectGuid>{1E1B6AF2-1364-4780-BABF-33F56D7F7F27}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LanguageModel.Tests</RootNamespace>
-    <AssemblyName>LanguageModel.Tests</AssemblyName>
+    <RootNamespace>LongRunningProcess.Tests</RootNamespace>
+    <AssemblyName>LongRunningProcess.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -36,8 +36,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Machine.Specifications, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Machine.Fakes">
+      <HintPath>..\packages\Machine.Fakes.2.5.0\lib\net40\Machine.Fakes.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Fakes.Adapters.RhinoMocks">
+      <HintPath>..\packages\Machine.Fakes.RhinoMocks.2.5.0\lib\net40\Machine.Fakes.Adapters.RhinoMocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Specifications">
       <HintPath>..\packages\Machine.Specifications.0.9.0\lib\net45\Machine.Specifications.dll</HintPath>
     </Reference>
     <Reference Include="Machine.Specifications.Clr4">
@@ -45,6 +50,9 @@
     </Reference>
     <Reference Include="Machine.Specifications.Should">
       <HintPath>..\packages\Machine.Specifications.Should.0.7.2\lib\net45\Machine.Specifications.Should.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
@@ -57,15 +65,13 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="ChineseWord\Constructor.specs.cs" />
-    <Compile Include="LanguageEntry\Constructor.specs.cs" />
-    <Compile Include="PinyinSyllable\Constructor.specs.cs" />
+    <Compile Include="Process\CurrentState.specs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LanguageModel\LanguageModel.csproj">
-      <Project>{c310d1de-a16c-41ed-9d18-73da836f59a7}</Project>
-      <Name>LanguageModel</Name>
+    <ProjectReference Include="..\LongRunningProcess\LongRunningProcess.csproj">
+      <Project>{ef45a007-c8a8-4285-b3dd-1be875c3a04f}</Project>
+      <Name>LongRunningProcess</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

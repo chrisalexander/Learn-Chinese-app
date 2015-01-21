@@ -15,6 +15,11 @@ namespace LongRunningProcess
     public class Process : IProcess, INotifyPropertyChanged
     {
         /// <summary>
+        /// Factory for creating new processes.
+        /// </summary>
+        private readonly IProcessFactory processFactory;
+
+        /// <summary>
         /// The cancellation token source for the process.
         /// </summary>
         private readonly CancellationTokenSource cancellationSource;
@@ -43,10 +48,12 @@ namespace LongRunningProcess
         /// Construct a long running process.
         /// </summary>
         /// <param name="status">Describes what the process is doing.</param>
+        /// <param name="processFactory">Factory for creating new processes.</param>
         /// <param name="cancellationSource">Cancellation token source.</param>
-        public Process(string status, CancellationTokenSource cancellationSource = null)
+        public Process(string status, IProcessFactory processFactory, CancellationTokenSource cancellationSource = null)
         {
             this.status = status;
+            this.processFactory = processFactory;
             this.cancellationSource = cancellationSource ?? new CancellationTokenSource();
             this.childProcesses = new List<ChildProcess>();
             this.durationType = ProcessDurationType.Indeterminate;
@@ -143,7 +150,7 @@ namespace LongRunningProcess
         /// <returns></returns>
         public IProcess Step(string name, double weighting)
         {
-            var process = new Process(name, this.cancellationSource);
+            var process = this.processFactory.Create(name, this.cancellationSource);
 
             process.PropertyChanged += (sender, args) =>
             {
