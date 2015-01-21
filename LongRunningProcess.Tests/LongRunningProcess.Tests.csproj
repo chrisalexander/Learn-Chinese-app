@@ -66,6 +66,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Process\CurrentState.specs.cs" />
+    <Compile Include="Process\PercentageComplete.specs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
