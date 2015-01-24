@@ -5,6 +5,7 @@ using Microsoft.Practices.Prism.Mvvm;
 using System;
 using System.ComponentModel;
 using System.Composition;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -257,13 +258,50 @@ namespace DBManager.ViewModels
 
             this.Enabled = false;
 
+            IDatabaseAcquisitionResult result = null;
+            Exception error = null;
+
             try
             {
-                await this.dbService.AcquireAndParseArchiveAsync(new Uri(this.uri), this.targetFile, new Regex(this.regex), this.CreateProcess());
+                result = await this.dbService.AcquireAndParseArchiveAsync(new Uri(this.uri), this.targetFile, new Regex(this.regex), this.CreateProcess());
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                error = e;
+            }
 
             this.Enabled = true;
+
+            if (result != null)
+            {
+                var builder = new StringBuilder();
+
+                builder.AppendFormat("{0} entries in the database (previously: {1})", result.NewTotal, result.OldTotal); builder.AppendLine();
+                builder.AppendFormat("{0} items added", result.Added); builder.AppendLine();
+                builder.AppendFormat("{0} items modified", result.Modified); builder.AppendLine();
+                builder.AppendFormat("{0} items removed", result.Removed); builder.AppendLine();
+                builder.AppendFormat("{0} items not modified", result.Unmodified); builder.AppendLine();
+
+                var messageDialog = new MessageDialog(builder.ToString(), "Acquisition completed");
+
+                messageDialog.Commands.Add(new UICommand("OK"));
+
+                messageDialog.DefaultCommandIndex = 0;
+                messageDialog.CancelCommandIndex = 0;
+                await messageDialog.ShowAsync();
+                return;
+            }
+
+            if (error != null)
+            {
+                var messageDialog = new MessageDialog(error.Message, "Exception performing acquisition");
+
+                messageDialog.Commands.Add(new UICommand("Done"));
+
+                messageDialog.DefaultCommandIndex = 0;
+                messageDialog.CancelCommandIndex = 0;
+                await messageDialog.ShowAsync();
+            }
         }
 
         /// <summary>
