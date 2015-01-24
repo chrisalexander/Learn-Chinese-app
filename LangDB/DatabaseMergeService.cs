@@ -84,7 +84,7 @@ namespace LangDB
                 result.Removed++;
             }
 
-            // Apply the changes we want to mak
+            // Apply the changes we want to make
             foreach (var entry in entriesToAdd)
             {
                 database.Entries[entry.Id] = entry;
