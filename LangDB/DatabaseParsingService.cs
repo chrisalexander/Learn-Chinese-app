@@ -25,14 +25,9 @@ namespace LangDB
             var stepSize = 100.0 / lines.Count;
 
             var entries = new List<LanguageEntry>();
-            var i = 0;
+
             foreach (var line in lines)
             {
-                i++;
-                if (i > 105)
-                {
-                    break;
-                }
                 var entry = await this.ParseLineAsync(line, regex);
                 if (entry != null)
                 {
