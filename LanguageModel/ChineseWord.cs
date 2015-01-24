@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,6 +37,16 @@ namespace LanguageModel
                 characters.Add(character);
             }
 
+            this.Characters = characters;
+        }
+
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        /// <param name="characters">The characters.</param>
+        [JsonConstructor]
+        private ChineseWord(IEnumerable<ChineseCharacter> characters)
+        {
             this.Characters = characters;
         }
 

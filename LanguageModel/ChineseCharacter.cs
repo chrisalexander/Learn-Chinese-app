@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,20 @@ namespace LanguageModel
             this.Traditional = traditional;
             this.Simplified = simplified;
             this.Mandarin = new PinyinSyllable(pinyin);
+        }
+
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        /// <param name="traditional">Traditional character.</param>
+        /// <param name="simplified">Simplified character.</param>
+        /// <param name="mandarin">Mandarin Pinyin.</param>
+        [JsonConstructor]
+        private ChineseCharacter(char traditional, char simplified, PinyinSyllable mandarin)
+        {
+            this.Traditional = traditional;
+            this.Simplified = simplified;
+            this.Mandarin = mandarin;
         }
 
         /// <summary>

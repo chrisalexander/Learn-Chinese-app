@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,12 +31,24 @@ namespace LanguageModel
                 this.Tone = (Tone)number;
                 this.Letters = complete.Substring(0, complete.Length - 1);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // If we cannot convert then we assume there isn't one.
                 this.Tone = Tone.Short;
                 this.Letters = complete;
             }
+        }
+
+        /// <summary>
+        /// Constructor for deserialization.
+        /// </summary>
+        /// <param name="Letters">The letters.</param>
+        /// <param name="Tone">The tone.</param>
+        [JsonConstructor]
+        private PinyinSyllable(string Letters, Tone Tone)
+        {
+            this.Letters = Letters;
+            this.Tone = Tone;
         }
 
         /// <summary>
