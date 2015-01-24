@@ -26,15 +26,23 @@ namespace LangDB
         /// Load from JSON file.
         /// </summary>
         /// <param name="file">The file to load the database from.</param>
+        /// <param name="process">The process.</param>
         /// <returns>The loaded database.</returns>
-        public async Task<ILanguageDatabase> LoadAsync(IStorageFile file)
+        public async Task<ILanguageDatabase> LoadAsync(IStorageFile file, IProcess process)
         {
-            using (var stream = await file.OpenStreamForReadAsync())
-            using (var streamReader = new StreamReader(stream))
-            using (var jsonReader = new JsonTextReader(streamReader))
+            try
             {
-                var serializer = this.GetSerializer();
-                return await Task.Run(() => serializer.Deserialize<LanguageDatabase>(jsonReader));
+                using (var stream = await file.OpenStreamForReadAsync())
+                using (var streamReader = new StreamReader(stream))
+                using (var jsonReader = new JsonTextReader(streamReader))
+                {
+                    var serializer = this.GetSerializer();
+                    return await Task.Run(() => serializer.Deserialize<LanguageDatabase>(jsonReader));
+                }
+            }
+            finally
+            {
+                process.Complete();
             }
         }
 

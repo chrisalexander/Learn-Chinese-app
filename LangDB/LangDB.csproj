@@ -50,8 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArchiveAcquisitionService.cs" />
+    <Compile Include="DatabaseAcquisitionResult.cs" />
+    <Compile Include="DatabaseMergeService.cs" />
     <Compile Include="DatabaseParsingService.cs" />
     <Compile Include="IArchiveAcquisitionService.cs" />
+    <Compile Include="IDatabaseAcquisitionResult.cs" />
+    <Compile Include="IDatabaseMergeService.cs" />
     <Compile Include="IDatabaseParsingService.cs" />
     <Compile Include="ILanguageDatabase.cs" />
     <Compile Include="ILanguageDatabaseFileService.cs" />

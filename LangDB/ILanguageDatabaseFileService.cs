@@ -13,8 +13,9 @@ namespace LangDB
         /// Load the language database in the specified file.
         /// </summary>
         /// <param name="file">The file to load the database from.</param>
+        /// <param name="process">The process.</param>
         /// <returns>The loaded database.</returns>
-        Task<ILanguageDatabase> LoadAsync(IStorageFile file);
+        Task<ILanguageDatabase> LoadAsync(IStorageFile file, IProcess process);
 
         /// <summary>
         /// Save the specified language database to the file.

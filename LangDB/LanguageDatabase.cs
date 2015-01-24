@@ -13,13 +13,13 @@ namespace LangDB
         /// </summary>
         public LanguageDatabase()
         {
-            this.Entries = new List<LanguageEntry>();
+            this.Entries = new Dictionary<string, LanguageEntry>();
         }
 
         /// <summary>
-        /// The entries in the database.
+        /// The entries in the database, indexed by an ID.
         /// </summary>
-        public IList<LanguageEntry> Entries { get; private set; }
+        public IDictionary<string, LanguageEntry> Entries { get; private set; }
 
         /// <summary>
         /// The path to the database file.

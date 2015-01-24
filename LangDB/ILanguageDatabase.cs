@@ -12,7 +12,7 @@ namespace LangDB
         /// <summary>
         /// The entries in the database.
         /// </summary>
-        IList<LanguageEntry> Entries { get; }
+        IDictionary<string, LanguageEntry> Entries { get; }
 
         /// <summary>
         /// The path to the database file.

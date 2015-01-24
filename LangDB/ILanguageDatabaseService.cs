@@ -19,6 +19,6 @@ namespace LangDB
         /// <param name="regex">The regex to apply to extract data from each row of the archive.</param>
         /// <param name="process">The process.</param>
         /// <returns>When complete.</returns>
-        Task AcquireAndParseArchiveAsync(Uri uri, IStorageFile file, Regex regex, IProcess process);
+        Task<IDatabaseAcquisitionResult> AcquireAndParseArchiveAsync(Uri uri, IStorageFile file, Regex regex, IProcess process);
     }
 }
