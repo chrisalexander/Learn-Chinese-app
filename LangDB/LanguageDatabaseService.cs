@@ -81,11 +81,11 @@ namespace LangDB
                 database = new LanguageDatabase();
             }
 
-            var lines = await this.archiveAcquisitionService.GetLinesAsync(uri, process.Step("Acquiring database", 30));
+            var lines = await this.archiveAcquisitionService.GetLinesAsync(uri, process.Step("Acquiring database", 20));
 
-            var entries = await this.parsingService.ParseLinesAsync(lines, regex, process.Step("Parsing database entries", 40));
+            var entries = await this.parsingService.ParseLinesAsync(lines, regex, process.Step("Parsing database entries", 30));
 
-            var result = await this.mergeService.Merge(database, entries, process.Step("Merging databases", 10));
+            var result = await this.mergeService.Merge(database, entries, process.Step("Merging databases", 30));
 
             await this.fileService.SaveAsync(database, file, process.Step("Saving database", 10));
 
