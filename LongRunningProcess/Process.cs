@@ -174,6 +174,7 @@ namespace LongRunningProcess
 
             this.AssessDurationType();
             this.OnPropertyChanged("PercentageComplete");
+            this.OnPropertyChanged("CurrentState");
 
             return process;
         }
