@@ -12,7 +12,21 @@ namespace LongRunningProcess.Tests.Process
 
         It Should_have_its_own_status = () => Process.CurrentState.ShouldEqual(Status);
 
-        static LongRunningProcess.IProcess Process;
+        static IProcess Process;
+
+        static string Status = "Status";
+    }
+
+    [Subject(typeof(LongRunningProcess.Process))]
+    public class When_status_is_set
+    {
+        Establish context = () => Process = new LongRunningProcess.Process(string.Empty, null);
+
+        Because of = () => Process.Status(Status);
+
+        It Should_have_its_own_status = () => Process.CurrentState.ShouldEqual(Status);
+
+        static IProcess Process;
 
         static string Status = "Status";
     }
@@ -22,7 +36,7 @@ namespace LongRunningProcess.Tests.Process
     {
         Establish context = () =>
             {
-                Factory = An<LongRunningProcess.IProcessFactory>();
+                Factory = An<IProcessFactory>();
 
                 Process = new LongRunningProcess.Process(Status, Factory);
 
@@ -37,11 +51,11 @@ namespace LongRunningProcess.Tests.Process
 
         It Should_have_both_statuses = () => Process.CurrentState.ShouldEqual(Status + "; " + ChildStatus);
 
-        static LongRunningProcess.IProcessFactory Factory;
+        static IProcessFactory Factory;
 
-        static LongRunningProcess.IProcess Process;
+        static IProcess Process;
 
-        static LongRunningProcess.IProcess Child;
+        static IProcess Child;
 
         static string Status = "Status";
 
@@ -53,7 +67,7 @@ namespace LongRunningProcess.Tests.Process
     {
         Establish context = () =>
         {
-            Factory = MockRepository.GenerateStub<LongRunningProcess.IProcessFactory>();
+            Factory = MockRepository.GenerateStub<IProcessFactory>();
 
             Process = new LongRunningProcess.Process(Status, Factory);
 
@@ -77,13 +91,13 @@ namespace LongRunningProcess.Tests.Process
 
         It Should_have_both_statuses = () => Process.CurrentState.ShouldEqual(Status + "; " + ChildStatus2);
 
-        static LongRunningProcess.IProcessFactory Factory;
+        static IProcessFactory Factory;
 
-        static LongRunningProcess.IProcess Process;
+        static IProcess Process;
 
-        static LongRunningProcess.IProcess Child;
+        static IProcess Child;
         
-        static LongRunningProcess.IProcess Child2;
+        static IProcess Child2;
 
         static string Status = "Status";
 

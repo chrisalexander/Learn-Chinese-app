@@ -65,8 +65,12 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Process\Cancel.specs.cs" />
+    <Compile Include="Process\CancellationToken.specs.cs" />
     <Compile Include="Process\CurrentState.specs.cs" />
+    <Compile Include="Process\DurationType.specs.cs" />
     <Compile Include="Process\PercentageComplete.specs.cs" />
+    <Compile Include="Process\PropertyChanged.specs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

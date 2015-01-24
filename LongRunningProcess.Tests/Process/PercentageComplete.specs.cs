@@ -19,7 +19,7 @@ namespace LongRunningProcess.Tests.Process
 
         It Should_be_at_100_percent = () => Process.PercentageComplete.ShouldEqual(100);
 
-        static LongRunningProcess.IProcess Process;
+        static IProcess Process;
     }
 
     [Subject(typeof(LongRunningProcess.Process))]
@@ -31,7 +31,7 @@ namespace LongRunningProcess.Tests.Process
 
         It Should_be_at_50_percent = () => Process.PercentageComplete.ShouldEqual(50);
 
-        static LongRunningProcess.IProcess Process;
+        static IProcess Process;
     }
 
     [Subject(typeof(LongRunningProcess.Process))]
@@ -43,7 +43,7 @@ namespace LongRunningProcess.Tests.Process
 
         It Should_be_capped_at_100_percent = () => Process.PercentageComplete.ShouldEqual(100);
 
-        static LongRunningProcess.IProcess Process;
+        static IProcess Process;
     }
 
     [Subject(typeof(LongRunningProcess.Process))]
@@ -51,11 +51,11 @@ namespace LongRunningProcess.Tests.Process
     {
         Establish context = () =>
         {
-            Factory = An<LongRunningProcess.IProcessFactory>();
+            Factory = An<IProcessFactory>();
 
             Process = new LongRunningProcess.Process(string.Empty, Factory);
 
-            Child = An<LongRunningProcess.IProcess>();
+            Child = An<IProcess>();
             Child.WhenToldTo(c => c.PercentageComplete).Return(50);
 
             Factory.WhenToldTo(c => c.Create(Param<string>.IsAnything, Param<CancellationTokenSource>.IsAnything)).Return(Child);
@@ -65,11 +65,11 @@ namespace LongRunningProcess.Tests.Process
 
         It Should_compute_the_correct_percentage = () => Process.PercentageComplete.ShouldEqual(25);
 
-        static LongRunningProcess.IProcessFactory Factory;
+        static IProcessFactory Factory;
 
-        static LongRunningProcess.IProcess Process;
+        static IProcess Process;
 
-        static LongRunningProcess.IProcess Child;
+        static IProcess Child;
     }
 
     [Subject(typeof(LongRunningProcess.Process))]
@@ -77,14 +77,14 @@ namespace LongRunningProcess.Tests.Process
     {
         Establish context = () =>
         {
-            Factory = MockRepository.GenerateStub<LongRunningProcess.IProcessFactory>();
+            Factory = MockRepository.GenerateStub<IProcessFactory>();
 
             Process = new LongRunningProcess.Process(string.Empty, Factory);
 
-            Child = An<LongRunningProcess.IProcess>();
+            Child = An<IProcess>();
             Child.WhenToldTo(c => c.PercentageComplete).Return(10);
 
-            Child2 = An<LongRunningProcess.IProcess>();
+            Child2 = An<IProcess>();
             Child2.WhenToldTo(c => c.PercentageComplete).Return(20);
 
             Factory.Stub(f => f.Create(Arg<string>.Is.Anything, Arg<CancellationTokenSource>.Is.Anything)).Return(Child).Repeat.Once();
@@ -99,13 +99,13 @@ namespace LongRunningProcess.Tests.Process
 
         It Should_combine_two_child_percentages = () => Process.PercentageComplete.ShouldEqual(14);
 
-        static LongRunningProcess.IProcessFactory Factory;
+        static IProcessFactory Factory;
 
-        static LongRunningProcess.IProcess Process;
+        static IProcess Process;
 
-        static LongRunningProcess.IProcess Child;
+        static IProcess Child;
 
-        static LongRunningProcess.IProcess Child2;
+        static IProcess Child2;
     }
 
     [Subject(typeof(LongRunningProcess.Process))]
@@ -117,10 +117,10 @@ namespace LongRunningProcess.Tests.Process
 
             Process = new LongRunningProcess.Process(string.Empty, Factory);
 
-            Child = An<LongRunningProcess.IProcess>();
+            Child = An<IProcess>();
             Child.WhenToldTo(c => c.PercentageComplete).Return(99);
 
-            Child2 = An<LongRunningProcess.IProcess>();
+            Child2 = An<IProcess>();
             Child2.WhenToldTo(c => c.PercentageComplete).Return(98);
 
             Factory.Stub(f => f.Create(Arg<string>.Is.Anything, Arg<CancellationTokenSource>.Is.Anything)).Return(Child).Repeat.Once();
@@ -135,13 +135,13 @@ namespace LongRunningProcess.Tests.Process
 
         It Should_cap_the_percentage_complete = () => Process.PercentageComplete.ShouldEqual(100);
 
-        static LongRunningProcess.IProcessFactory Factory;
+        static IProcessFactory Factory;
 
-        static LongRunningProcess.IProcess Process;
+        static IProcess Process;
 
-        static LongRunningProcess.IProcess Child;
+        static IProcess Child;
 
-        static LongRunningProcess.IProcess Child2;
+        static IProcess Child2;
     }
 
     [Subject(typeof(LongRunningProcess.Process))]
@@ -153,10 +153,10 @@ namespace LongRunningProcess.Tests.Process
 
             Process = new LongRunningProcess.Process(string.Empty, Factory);
 
-            Child = An<LongRunningProcess.IProcess>();
+            Child = An<IProcess>();
             Child.WhenToldTo(c => c.PercentageComplete).Return(10);
 
-            Child2 = An<LongRunningProcess.IProcess>();
+            Child2 = An<IProcess>();
             Child2.WhenToldTo(c => c.PercentageComplete).Return(20);
 
             Factory.Stub(f => f.Create(Arg<string>.Is.Anything, Arg<CancellationTokenSource>.Is.Anything)).Return(Child).Repeat.Once();
@@ -172,12 +172,12 @@ namespace LongRunningProcess.Tests.Process
 
         It Should_combine_two_child_percentages = () => Process.PercentageComplete.ShouldEqual(19);
 
-        static LongRunningProcess.IProcessFactory Factory;
+        static IProcessFactory Factory;
 
-        static LongRunningProcess.IProcess Process;
+        static IProcess Process;
 
-        static LongRunningProcess.IProcess Child;
+        static IProcess Child;
 
-        static LongRunningProcess.IProcess Child2;
+        static IProcess Child2;
     }
 }
