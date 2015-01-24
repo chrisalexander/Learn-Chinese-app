@@ -25,6 +25,24 @@ namespace LanguageModel
         }
 
         /// <summary>
+        /// ID of the entry, which is formed of the traditional characters.
+        /// </summary>
+        public string Id
+        {
+            get
+            {
+                var builder = new StringBuilder();
+                
+                foreach (var character in this.Chinese.Characters)
+                {
+                    builder.Append(character.Traditional);
+                }
+
+                return builder.ToString();
+            }
+        }
+
+        /// <summary>
         /// The Chinese word.
         /// </summary>
         public ChineseWord Chinese { get; private set; }

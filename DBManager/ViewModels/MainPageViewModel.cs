@@ -205,9 +205,9 @@ namespace DBManager.ViewModels
             if (existingFile != null)
             {
                 // There is already a file with the expected name in the folder, does the user want to use that?
-                var messageDialog = new MessageDialog("There is already a language database in this folder, would you like to use it?", "Existing language database found");
+                var messageDialog = new MessageDialog("There is already a language database in this folder, would you like to merge with it?", "Existing language database found");
                 
-                messageDialog.Commands.Add(new UICommand("Use existing file", new UICommandInvokedHandler((IUICommand cmd) =>
+                messageDialog.Commands.Add(new UICommand("Merge with existing file", new UICommandInvokedHandler((IUICommand cmd) =>
                 {
                     file = existingFile as StorageFile;
                 })));
