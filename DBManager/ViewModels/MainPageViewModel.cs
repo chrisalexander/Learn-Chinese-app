@@ -13,6 +13,8 @@ using System.Windows.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Popups;
+using Windows.UI.Notifications;
+using Windows.Data.Xml.Dom;
 
 namespace DBManager.ViewModels
 {
@@ -304,6 +306,15 @@ namespace DBManager.ViewModels
 
             if (result != null)
             {
+                // Show the notification
+                var toastTemplate = ToastTemplateType.ToastText01;
+                var toastXml = ToastNotificationManager.GetTemplateContent(toastTemplate);
+                var toastTextElements = toastXml.GetElementsByTagName("text");
+                toastTextElements[0].AppendChild(toastXml.CreateTextNode("Language database acquisition completed"));
+                var toast = new ToastNotification(toastXml);
+                ToastNotificationManager.CreateToastNotifier().Show(toast);
+
+                // Show the info popup
                 var builder = new StringBuilder();
 
                 builder.AppendFormat("{0} entries in the database (previously: {1})", result.NewTotal, result.OldTotal); builder.AppendLine();
