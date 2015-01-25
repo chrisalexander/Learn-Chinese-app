@@ -51,6 +51,15 @@
     <Reference Include="Machine.Specifications.Should">
       <HintPath>..\packages\Machine.Specifications.Should.0.7.2\lib\net45\Machine.Specifications.Should.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Mvvm">
+      <HintPath>..\packages\Prism.Mvvm.1.1.1\lib\net45\Microsoft.Practices.Prism.Mvvm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Mvvm.Desktop">
+      <HintPath>..\packages\Prism.Mvvm.1.1.1\lib\net45\Microsoft.Practices.Prism.Mvvm.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.SharedInterfaces">
+      <HintPath>..\packages\Prism.Mvvm.1.1.1\lib\net45\Microsoft.Practices.Prism.SharedInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Rhino.Mocks">
       <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
     </Reference>
@@ -67,9 +76,9 @@
   <ItemGroup>
     <Compile Include="Process\Cancel.specs.cs" />
     <Compile Include="Process\CancellationToken.specs.cs" />
-    <Compile Include="Process\CurrentState.specs.cs" />
+    <Compile Include="Process\OverallStatus.specs.cs" />
     <Compile Include="Process\DurationType.specs.cs" />
-    <Compile Include="Process\PercentageComplete.specs.cs" />
+    <Compile Include="Process\OverallProgress.specs.cs" />
     <Compile Include="Process\PropertyChanged.specs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -36,7 +36,7 @@ namespace LangDB
                 process.Increment(stepSize);
             }
 
-            process.Complete();
+            process.Completed = true;
 
             return entries;
         }

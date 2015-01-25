@@ -35,9 +35,9 @@ namespace LangDB
             await temporaryFile.DeleteAsync();
             deleteStep.Increment(50);
             await archiveFolder.DeleteAsync();
-            deleteStep.Complete();
+            deleteStep.Completed = true;
 
-            process.Complete();
+            process.Completed = true;
 
             return lines;
         }
@@ -61,7 +61,7 @@ namespace LangDB
                 process.Increment(operation.Progress.BytesReceived / operation.Progress.TotalBytesToReceive);
             }));
 
-            process.Complete();
+            process.Completed = true;
 
             return destination;
         }
@@ -103,7 +103,7 @@ namespace LangDB
                 }
             }
 
-            process.Complete();
+            process.Completed = true;
 
             return targetFolder;
         }

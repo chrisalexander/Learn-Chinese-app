@@ -25,7 +25,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ProgressBar IsIndeterminate="False" Maximum="100" Value="{Binding Process.PercentageComplete}" Visibility="{Binding Running, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <ProgressBar IsIndeterminate="False" Maximum="100" Value="{Binding OverallProgress}" Visibility="{Binding Enabled, Converter={StaticResource BooleanToInvisibilityConverter}}" />
         
         <TextBlock Text="DB Manager" Grid.Row="1" Grid.Column="0" Style="{StaticResource HeaderTextBlockStyle}" Margin="20,20,20,20" />
         
@@ -86,10 +86,21 @@
                 </Grid.RowDefinitions>
 
                 <Button Grid.Row="0" Grid.Column="0" Command="{Binding EngageCommand}" IsEnabled="{Binding Enabled}">Make it so</Button>
-                <Button Grid.Row="0" Grid.Column="1" Command="{Binding CancelCommand}"  Visibility="{Binding Running, Converter={StaticResource BooleanToVisibilityConverter}}">Cancel</Button>
+                <Button Grid.Row="0" Grid.Column="1" Command="{Binding CancelCommand}"  Visibility="{Binding Enabled, Converter={StaticResource BooleanToInvisibilityConverter}}">Cancel</Button>
             </Grid>
             
-            <TextBlock Grid.Row="9" Grid.Column="2" Text="{Binding Process.CurrentStatus}" Style="{StaticResource BaseTextBlockStyle}" Visibility="{Binding Running, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <ItemsControl Grid.Row="9" Grid.Column="2" Visibility="{Binding Enabled, Converter={StaticResource BooleanToInvisibilityConverter}}" ItemsSource="{Binding OverallStatus}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" Style="{StaticResource BaseTextBlockStyle}" Margin="0,0,10,0" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </Grid>
         
     </Grid>

@@ -89,7 +89,7 @@ namespace LangDB
 
             await this.fileService.SaveAsync(database, file, process.Step("Saving database", 10));
 
-            process.Complete();
+            process.Completed = true;
 
             return result;
         }

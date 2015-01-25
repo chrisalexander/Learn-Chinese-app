@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Practices.Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace LongRunningProcess
     /// and steps it is taking, along with receiving cancellation
     /// notifications.
     /// </summary>
-    public class Process : IProcess, INotifyPropertyChanged
+    public class Process : BindableBase, IProcess
     {
         /// <summary>
         /// Factory for creating new processes.
@@ -40,9 +41,24 @@ namespace LongRunningProcess
         private string status;
 
         /// <summary>
+        /// The overall statuses.
+        /// </summary>
+        private IEnumerable<string> overallStatus;
+
+        /// <summary>
         /// How far complete this process on its own is.
         /// </summary>
-        private double completeness;
+        private double progress;
+
+        /// <summary>
+        /// The overall progress.
+        /// </summary>
+        private double overallProgress;
+
+        /// <summary>
+        /// Whether this process is completed.
+        /// </summary>
+        private bool completed;
 
         /// <summary>
         /// Construct a long running process.
@@ -52,54 +68,79 @@ namespace LongRunningProcess
         /// <param name="cancellationSource">Cancellation token source.</param>
         public Process(string status, IProcessFactory processFactory, CancellationTokenSource cancellationSource = null)
         {
-            this.status = status;
+            this.childProcesses = new List<ChildProcess>();
+
             this.processFactory = processFactory;
             this.cancellationSource = cancellationSource ?? new CancellationTokenSource();
-            this.childProcesses = new List<ChildProcess>();
-            this.durationType = ProcessDurationType.Indeterminate;
+
+            this.Status = status;
+            this.DurationType = ProcessDurationType.Indeterminate;
         }
 
         /// <summary>
-        /// Get the string describing what is currently being worked on in the process.
+        /// Gets or sets the status of this specific process.
         /// </summary>
-        public string CurrentStatus
+        public string Status
         {
             get
             {
-                var childStatus = this.childProcesses.FirstOrDefault(c => !c.Process.Completed);
-                return this.status + (childStatus != null ? "; " + childStatus.Process.CurrentStatus : string.Empty);
+                return this.status;
+            }
+
+            set
+            {
+                this.SetProperty(ref this.status, value);
+                this.UpdateOverallStatus();
+            }
+        }
+
+        /// <summary>
+        /// The statuses of the currently running processes, in hierarchical order.
+        /// </summary>
+        public IEnumerable<string> OverallStatus
+        {
+            get
+            {
+                return this.overallStatus;
+            }
+
+            private set
+            {
+                this.SetProperty(ref this.overallStatus, value);
             }
         }
 
         /// <summary>
         /// Get the completeness percentage of this process.
         /// </summary>
-        public double PercentageComplete
+        public double Progress
         {
             get
             {
-                // Shortcut if we are complete.
-                if (this.Completed)
-                {
-                    return 100;
-                }
+                return this.progress;
+            }
 
-                var childTotal = 0.0;
-                var childPercentage = this.childProcesses.Sum(c =>
-                {
-                    childTotal += c.Weighting;
-                    return (c.Weighting / 100.0) * c.Process.PercentageComplete;
-                });
+            private set
+            {
+                this.SetProperty(ref this.progress, value);
+                this.UpdateOverallProgress();
+                this.DurationType = this.DurationType;
+            }
+        }
 
-                // If children account for more than our total, return their percentage.
-                if (childTotal >= 100)
-                {
-                    return Math.Min(childPercentage, 100);
-                }
+        /// <summary>
+        /// Gets the overall progress of the process including subproccesses, as a percentage.
+        /// </summary>
+        public double OverallProgress
+        {
+            get
+            {
+                return this.overallProgress;
+            }
 
-                var deficitPercentage = 100.0 - childTotal;
-
-                return Math.Min(childPercentage + (deficitPercentage * (this.completeness / 100.0)), 100);
+            private set
+            {
+                this.SetProperty(ref this.overallProgress, value);
             }
         }
 
@@ -114,16 +155,37 @@ namespace LongRunningProcess
             }
             set
             {
-                this.durationType = value;
-                this.AssessDurationType();
-                this.OnPropertyChanged("DurationType");
+                var durationType = value;   
+
+                // It should be indeterminate if it is 100% or more and not complete.
+                // It should be indeterminate if there are more than 100% of work to do in child processes.
+                if (this.Progress >= 100 && !this.Completed ||
+                    this.childProcesses.Sum(c => c.Weighting) > 100)
+                {
+                    durationType = ProcessDurationType.Indeterminate;
+                }
+
+                this.SetProperty(ref this.durationType, durationType);
             }
         }
 
         /// <summary>
-        /// Return whether or not this process has been completed.
+        /// Gets or sets whether or not this process has been completed.
         /// </summary>
-        public bool Completed { get; private set; }
+        public bool Completed
+        {
+            get
+            {
+                return this.completed;
+            }
+
+            set
+            {
+                this.SetProperty(ref this.completed, value);
+                this.UpdateOverallProgress();
+                this.DurationType = this.DurationType;
+            }
+        }
 
         /// <summary>
         /// Get a cancellation token for the current process.
@@ -135,11 +197,6 @@ namespace LongRunningProcess
                 return this.cancellationSource.Token;
             }
         }
-
-        /// <summary>
-        /// The property changed event handler.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// Create a step in the current process.
@@ -156,14 +213,15 @@ namespace LongRunningProcess
             {
                 switch (args.PropertyName)
                 {
-                    // When a child's completeness changes, so does ours.
-                    case "PercentageComplete":
-                        this.OnPropertyChanged("PercentageComplete");
+                    // When a child's completeness changes, check ours too.
+                    case "OverallProgress":
+                        this.UpdateOverallProgress();
                         break;
-                    // When a child's state string or completedness changes, so does ours.
+                    // When a child's state string or completedness changes, so could ours.
                     case "Completed":
                     case "CurrentStatus":
-                        this.OnPropertyChanged("CurrentStatus");
+                    case "OverallStatus":
+                        this.UpdateOverallStatus();
                         break;
                 }
             };
@@ -172,9 +230,9 @@ namespace LongRunningProcess
 
             this.childProcesses.Add(childProcess);
 
-            this.AssessDurationType();
-            this.OnPropertyChanged("PercentageComplete");
-            this.OnPropertyChanged("CurrentStatus");
+            this.UpdateOverallStatus();
+            this.UpdateOverallProgress();
+            this.DurationType = this.DurationType;
 
             return process;
         }
@@ -185,29 +243,7 @@ namespace LongRunningProcess
         /// <param name="amount">The amount to increment by.</param>
         public void Increment(double amount)
         {
-            this.completeness += amount;
-            this.OnPropertyChanged("PercentageComplete");
-            this.AssessDurationType();
-        }
-
-        /// <summary>
-        /// Mark this current process, and all child processes, as complete.
-        /// </summary>
-        public void Complete()
-        {
-            this.Completed = true;
-            this.OnPropertyChanged("Completed");
-            this.OnPropertyChanged("PercentageComplete");
-        }
-
-        /// <summary>
-        /// Update the status describing the process.
-        /// </summary>
-        /// <param name="status">The new status of the process.</param>
-        public void Status(string status)
-        {
-            this.status = status;
-            this.OnPropertyChanged("CurrentStatus");
+            this.Progress += amount;
         }
 
         /// <summary>
@@ -225,37 +261,57 @@ namespace LongRunningProcess
 
             await Task.Run(() => this.cancellationSource.Cancel());
 
+            var previousCompleted = this.Completed;
+            
             this.Completed = true;
-            this.OnPropertyChanged("Completed");
         }
 
         /// <summary>
-        /// Notify any listeners that a property has changed.
+        /// Helper to update the overall progress in response to changes in the contributing factors.
         /// </summary>
-        /// <param name="propertyName"></param>
-        protected void OnPropertyChanged(string propertyName)
+        private void UpdateOverallProgress()
         {
-            var eventHandler = this.PropertyChanged;
-            if (eventHandler != null)
+            // Shortcut if we are complete.
+            if (this.Completed)
             {
-                eventHandler(this, new PropertyChangedEventArgs(propertyName));
+                this.OverallProgress = 100;
+                return;
             }
+
+            var childTotal = 0.0;
+            var childPercentage = this.childProcesses.Sum(c =>
+            {
+                childTotal += c.Weighting;
+                return (c.Weighting / 100.0) * c.Process.OverallProgress;
+            });
+
+            // If children account for more than our total, return their percentage.
+            if (childTotal >= 100)
+            {
+                this.OverallProgress = Math.Min(childPercentage, 100);
+                return;
+            }
+
+            var deficitPercentage = 100.0 - childTotal;
+
+            this.OverallProgress = Math.Min(childPercentage + (deficitPercentage * (this.Progress / 100.0)), 100);
         }
 
         /// <summary>
-        /// Assess the current progress of this process and evaluate whether
-        /// it should be indeterminate.
+        /// Helper to update the overall status if it changes.
         /// </summary>
-        private void AssessDurationType()
+        private void UpdateOverallStatus()
         {
-            // It should be indeterminate if it is 100% or more and not complete.
-            // It should be indeterminate if there are more than 100% of work to do in child processes.
-            if (this.completeness >= 100 && !this.Completed || 
-                this.childProcesses.Sum(c => c.Weighting) > 100)
+            var statuses = new List<string>();
+            statuses.Add(this.Status);
+
+            var runningChild = this.childProcesses.FirstOrDefault(c => !c.Process.Completed);
+            if (runningChild != null)
             {
-                this.durationType = ProcessDurationType.Indeterminate;
-                this.OnPropertyChanged("DurationType");
+                statuses.AddRange(runningChild.Process.OverallStatus);
             }
+
+            this.OverallStatus = statuses;
         }
     }
 }

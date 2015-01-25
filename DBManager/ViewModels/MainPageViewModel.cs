@@ -3,6 +3,7 @@ using LongRunningProcess;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Composition;
 using System.Text;
@@ -50,6 +51,16 @@ namespace DBManager.ViewModels
         /// Whether the process is currently executing.
         /// </summary>
         private bool executing = false;
+
+        /// <summary>
+        /// The overall progress of the operation.
+        /// </summary>
+        private double overallProgress;
+
+        /// <summary>
+        /// The overall status of the operation.
+        /// </summary>
+        private IEnumerable<string> overallStatus;
 
         /// <summary>
         /// MEF importing constructor.
@@ -125,13 +136,32 @@ namespace DBManager.ViewModels
         }
 
         /// <summary>
-        /// Whether the process is running.
+        /// The overall progress of the operation.
         /// </summary>
-        public bool Running
+        public double OverallProgress
         {
             get
             {
-                return this.Process != null && !this.Process.Completed;
+                return this.overallProgress;
+            }
+            private set
+            {
+                this.SetProperty(ref this.overallProgress, value);
+            }
+        }
+
+        /// <summary>
+        /// The overall status of the operation.
+        /// </summary>
+        public IEnumerable<string> OverallStatus
+        {
+            get
+            {
+                return this.overallStatus;
+            }
+            private set
+            {
+                this.SetProperty(ref this.overallStatus, value);
             }
         }
 
@@ -339,11 +369,8 @@ namespace DBManager.ViewModels
                 this.Process.PropertyChanged -= this.ProcessChanged;
             }
 
-            this.Process = this.processFactory.Create("Create database");
+            this.Process = this.processFactory.Create("Sync database");
             this.Process.PropertyChanged += this.ProcessChanged;
-
-            this.OnPropertyChanged("Process");
-            this.OnPropertyChanged("Running");
 
             return this.Process;
         }
@@ -355,8 +382,15 @@ namespace DBManager.ViewModels
         /// <param name="args">The event arguments.</param>
         private void ProcessChanged(object sender, PropertyChangedEventArgs args)
         {
-            this.OnPropertyChanged("Process");
-            this.OnPropertyChanged("Running");
+            switch (args.PropertyName)
+            {
+                case "OverallProgress":
+                    this.OverallProgress = this.Process.OverallProgress;
+                    break;
+                case "OverallStatus":
+                    this.OverallStatus = this.Process.OverallStatus;
+                    break;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,17 +10,27 @@ namespace LongRunningProcess
     /// may be formed of multiple steps and child steps, which then allow progress
     /// reporting and cancellation of that process.
     /// </summary>
-    public interface IProcess
+    public interface IProcess : INotifyPropertyChanged
     {
         /// <summary>
-        /// Get the string describing what is currently being worked on in the process.
+        /// Gets or sets the status of this specific process.
         /// </summary>
-        string CurrentStatus { get; }
+        string Status { get; set; }
 
         /// <summary>
-        /// Get the completeness percentage of this process.
+        /// The statuses of the currently running processes, in hierarchical order.
         /// </summary>
-        double PercentageComplete { get; }
+        IEnumerable<string> OverallStatus { get; }
+
+        /// <summary>
+        /// Get the progress of this process on its own as a percentage completed.
+        /// </summary>
+        double Progress { get; }
+
+        /// <summary>
+        /// Gets the overall progress of the process including subproccesses, as a percentage.
+        /// </summary>
+        double OverallProgress { get; }
 
         /// <summary>
         /// The duration type of this process.
@@ -27,19 +38,14 @@ namespace LongRunningProcess
         ProcessDurationType DurationType { get; set; }
 
         /// <summary>
-        /// Return whether or not this process has been completed.
+        /// Gets or sets whether or not this process has been completed.
         /// </summary>
-        bool Completed { get; }
+        bool Completed { get; set; }
 
         /// <summary>
         /// Get a cancellation token for the current process.
         /// </summary>
         CancellationToken CancellationToken { get; }
-
-        /// <summary>
-        /// Event for when a property is changed.
-        /// </summary>
-        event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// Create a step in the current process, with a defined name, weighting as part
@@ -64,17 +70,6 @@ namespace LongRunningProcess
         /// </summary>
         /// <param name="amount">The amount to increment by.</param>
         void Increment(double amount);
-
-        /// <summary>
-        /// Mark this current process, and all child processes, as complete.
-        /// </summary>
-        void Complete();
-
-        /// <summary>
-        /// Update the status describing the process.
-        /// </summary>
-        /// <param name="status">The new status of the process.</param>
-        void Status(string status);
 
         /// <summary>
         /// Cancels the process.

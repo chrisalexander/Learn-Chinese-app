@@ -10,7 +10,7 @@ namespace LongRunningProcess.Tests.Process
     {
         Establish context = () => Process = new LongRunningProcess.Process(Status, null);
 
-        It Should_have_its_own_status = () => Process.CurrentStatus.ShouldEqual(Status);
+        It Should_have_its_own_status = () => string.Join(string.Empty, Process.OverallStatus).ShouldEqual(Status);
 
         static IProcess Process;
 
@@ -22,9 +22,9 @@ namespace LongRunningProcess.Tests.Process
     {
         Establish context = () => Process = new LongRunningProcess.Process(string.Empty, null);
 
-        Because of = () => Process.Status(Status);
+        Because of = () => Process.Status = Status;
 
-        It Should_have_its_own_status = () => Process.CurrentStatus.ShouldEqual(Status);
+        It Should_have_its_own_status = () => string.Join(string.Empty, Process.OverallStatus).ShouldEqual(Status);
 
         static IProcess Process;
 
@@ -41,7 +41,7 @@ namespace LongRunningProcess.Tests.Process
                 Process = new LongRunningProcess.Process(Status, Factory);
 
                 Child = An<LongRunningProcess.IProcess>();
-                Child.WhenToldTo(c => c.CurrentStatus).Return(ChildStatus);
+                Child.WhenToldTo(c => c.OverallStatus).Return(new[] { ChildStatus });
                 Child.WhenToldTo(c => c.Completed).Return(false);
 
                 Factory.WhenToldTo(c => c.Create(Param<string>.IsAnything, Param<CancellationTokenSource>.IsAnything)).Return(Child);
@@ -49,7 +49,7 @@ namespace LongRunningProcess.Tests.Process
 
         Because of = () => Process.Step(string.Empty, 0);
 
-        It Should_have_both_statuses = () => Process.CurrentStatus.ShouldEqual(Status + "; " + ChildStatus);
+        It Should_have_both_statuses = () => string.Join(string.Empty, Process.OverallStatus).ShouldEqual(Status + ChildStatus);
 
         static IProcessFactory Factory;
 
@@ -72,11 +72,11 @@ namespace LongRunningProcess.Tests.Process
             Process = new LongRunningProcess.Process(Status, Factory);
 
             Child = An<LongRunningProcess.IProcess>();
-            Child.WhenToldTo(c => c.CurrentStatus).Return(ChildStatus);
+            Child.WhenToldTo(c => c.OverallStatus).Return(new[] { ChildStatus });
             Child.WhenToldTo(c => c.Completed).Return(true);
 
             Child2 = An<LongRunningProcess.IProcess>();
-            Child2.WhenToldTo(c => c.CurrentStatus).Return(ChildStatus2);
+            Child2.WhenToldTo(c => c.OverallStatus).Return(new[] { ChildStatus2 });
             Child2.WhenToldTo(c => c.Completed).Return(false);
 
             Factory.Stub(f => f.Create(Arg<string>.Is.Anything, Arg<CancellationTokenSource>.Is.Anything)).Return(Child).Repeat.Once();
@@ -89,7 +89,7 @@ namespace LongRunningProcess.Tests.Process
             Process.Step(string.Empty, 0);
         };
 
-        It Should_have_both_statuses = () => Process.CurrentStatus.ShouldEqual(Status + "; " + ChildStatus2);
+        It Should_have_both_statuses = () => string.Join(string.Empty, Process.OverallStatus).ShouldEqual(Status + ChildStatus2);
 
         static IProcessFactory Factory;
 

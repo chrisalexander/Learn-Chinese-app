@@ -54,7 +54,7 @@ namespace LongRunningProcess.Tests.Process
         {
             Process = new LongRunningProcess.Process(string.Empty, null);
             Process.DurationType = ProcessDurationType.Determinate;
-            Process.Complete();
+            Process.Completed = true;
         };
 
         Because of = () => Process.Increment(101);
@@ -75,7 +75,8 @@ namespace LongRunningProcess.Tests.Process
             Process.DurationType = ProcessDurationType.Determinate;
 
             Child = An<IProcess>();
-            Child.WhenToldTo(c => c.PercentageComplete).Return(50);
+            Child.WhenToldTo(c => c.OverallProgress).Return(50);
+            Child.WhenToldTo(c => c.OverallStatus).Return(new[] { string.Empty });
 
             Factory.WhenToldTo(c => c.Create(Param<string>.IsAnything, Param<CancellationTokenSource>.IsAnything)).Return(Child);
         };

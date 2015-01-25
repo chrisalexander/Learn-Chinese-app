@@ -42,7 +42,7 @@ namespace LangDB
             }
             finally
             {
-                process.Complete();
+                process.Completed = true;
             }
         }
 
@@ -67,7 +67,7 @@ namespace LangDB
                 await Task.Run(() => serializer.Serialize(jsonWriter, database));
             }
 
-            process.Complete();
+            process.Completed = true;
         }
 
         /// <summary>

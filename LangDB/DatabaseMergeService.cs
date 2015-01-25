@@ -22,7 +22,7 @@ namespace LangDB
         /// <param name="newEntries">The new (and complete) list of entries to merge on.</param>
         /// <param name="process">The process.</param>
         /// <returns>Statistics regarding the merge.</returns>
-        public async Task<IDatabaseAcquisitionResult> Merge(ILanguageDatabase database, IList<LanguageEntry> newEntries, IProcess process)
+        public Task<IDatabaseAcquisitionResult> Merge(ILanguageDatabase database, IList<LanguageEntry> newEntries, IProcess process)
         {
             var foundEntryIds = new HashSet<string>();
 
@@ -90,9 +90,9 @@ namespace LangDB
                 database.Entries[entry.Id] = entry;
             }
 
-            process.Complete();
+            process.Completed = true;
 
-            return result;
+            return Task.FromResult((IDatabaseAcquisitionResult)result);
         }
     }
 }

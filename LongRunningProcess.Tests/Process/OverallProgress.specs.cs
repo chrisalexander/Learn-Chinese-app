@@ -15,9 +15,9 @@ namespace LongRunningProcess.Tests.Process
     {
         Establish context = () => Process = new LongRunningProcess.Process(string.Empty, null);
 
-        Because of = () => Process.Complete();
+        Because of = () => Process.Completed = true;
 
-        It Should_be_at_100_percent = () => Process.PercentageComplete.ShouldEqual(100);
+        It Should_be_at_100_percent = () => Process.OverallProgress.ShouldEqual(100);
 
         static IProcess Process;
     }
@@ -29,7 +29,7 @@ namespace LongRunningProcess.Tests.Process
 
         Because of = () => Process.Increment(50);
 
-        It Should_be_at_50_percent = () => Process.PercentageComplete.ShouldEqual(50);
+        It Should_be_at_50_percent = () => Process.OverallProgress.ShouldEqual(50);
 
         static IProcess Process;
     }
@@ -41,7 +41,7 @@ namespace LongRunningProcess.Tests.Process
 
         Because of = () => Process.Increment(101);
 
-        It Should_be_capped_at_100_percent = () => Process.PercentageComplete.ShouldEqual(100);
+        It Should_be_capped_at_100_percent = () => Process.OverallProgress.ShouldEqual(100);
 
         static IProcess Process;
     }
@@ -56,14 +56,15 @@ namespace LongRunningProcess.Tests.Process
             Process = new LongRunningProcess.Process(string.Empty, Factory);
 
             Child = An<IProcess>();
-            Child.WhenToldTo(c => c.PercentageComplete).Return(50);
+            Child.WhenToldTo(c => c.OverallProgress).Return(50);
+            Child.WhenToldTo(c => c.OverallStatus).Return(new[] { string.Empty });
 
             Factory.WhenToldTo(c => c.Create(Param<string>.IsAnything, Param<CancellationTokenSource>.IsAnything)).Return(Child);
         };
 
         Because of = () => Process.Step(string.Empty, 50);
 
-        It Should_compute_the_correct_percentage = () => Process.PercentageComplete.ShouldEqual(25);
+        It Should_compute_the_correct_percentage = () => Process.OverallProgress.ShouldEqual(25);
 
         static IProcessFactory Factory;
 
@@ -82,10 +83,12 @@ namespace LongRunningProcess.Tests.Process
             Process = new LongRunningProcess.Process(string.Empty, Factory);
 
             Child = An<IProcess>();
-            Child.WhenToldTo(c => c.PercentageComplete).Return(10);
+            Child.WhenToldTo(c => c.OverallProgress).Return(10);
+            Child.WhenToldTo(c => c.OverallStatus).Return(new[] { string.Empty });
 
             Child2 = An<IProcess>();
-            Child2.WhenToldTo(c => c.PercentageComplete).Return(20);
+            Child2.WhenToldTo(c => c.OverallProgress).Return(20);
+            Child.WhenToldTo(c => c.OverallStatus).Return(new[] { string.Empty });
 
             Factory.Stub(f => f.Create(Arg<string>.Is.Anything, Arg<CancellationTokenSource>.Is.Anything)).Return(Child).Repeat.Once();
             Factory.Stub(f => f.Create(Arg<string>.Is.Anything, Arg<CancellationTokenSource>.Is.Anything)).Return(Child2).Repeat.Once();
@@ -97,7 +100,7 @@ namespace LongRunningProcess.Tests.Process
             Process.Step(string.Empty, 50);
         };
 
-        It Should_combine_two_child_percentages = () => Process.PercentageComplete.ShouldEqual(14);
+        It Should_combine_two_child_percentages = () => Process.OverallProgress.ShouldEqual(14);
 
         static IProcessFactory Factory;
 
@@ -118,10 +121,12 @@ namespace LongRunningProcess.Tests.Process
             Process = new LongRunningProcess.Process(string.Empty, Factory);
 
             Child = An<IProcess>();
-            Child.WhenToldTo(c => c.PercentageComplete).Return(99);
+            Child.WhenToldTo(c => c.OverallProgress).Return(99);
+            Child.WhenToldTo(c => c.OverallStatus).Return(new[] { string.Empty });
 
             Child2 = An<IProcess>();
-            Child2.WhenToldTo(c => c.PercentageComplete).Return(98);
+            Child2.WhenToldTo(c => c.OverallProgress).Return(98);
+            Child.WhenToldTo(c => c.OverallStatus).Return(new[] { string.Empty });
 
             Factory.Stub(f => f.Create(Arg<string>.Is.Anything, Arg<CancellationTokenSource>.Is.Anything)).Return(Child).Repeat.Once();
             Factory.Stub(f => f.Create(Arg<string>.Is.Anything, Arg<CancellationTokenSource>.Is.Anything)).Return(Child2).Repeat.Once();
@@ -133,7 +138,7 @@ namespace LongRunningProcess.Tests.Process
             Process.Step(string.Empty, 50);
         };
 
-        It Should_cap_the_percentage_complete = () => Process.PercentageComplete.ShouldEqual(100);
+        It Should_cap_the_percentage_complete = () => Process.OverallProgress.ShouldEqual(100);
 
         static IProcessFactory Factory;
 
@@ -154,10 +159,12 @@ namespace LongRunningProcess.Tests.Process
             Process = new LongRunningProcess.Process(string.Empty, Factory);
 
             Child = An<IProcess>();
-            Child.WhenToldTo(c => c.PercentageComplete).Return(10);
+            Child.WhenToldTo(c => c.OverallProgress).Return(10);
+            Child.WhenToldTo(c => c.OverallStatus).Return(new[] { string.Empty });
 
             Child2 = An<IProcess>();
-            Child2.WhenToldTo(c => c.PercentageComplete).Return(20);
+            Child2.WhenToldTo(c => c.OverallProgress).Return(20);
+            Child.WhenToldTo(c => c.OverallStatus).Return(new[] { string.Empty });
 
             Factory.Stub(f => f.Create(Arg<string>.Is.Anything, Arg<CancellationTokenSource>.Is.Anything)).Return(Child).Repeat.Once();
             Factory.Stub(f => f.Create(Arg<string>.Is.Anything, Arg<CancellationTokenSource>.Is.Anything)).Return(Child2).Repeat.Once();
@@ -170,7 +177,7 @@ namespace LongRunningProcess.Tests.Process
             Process.Increment(50);
         };
 
-        It Should_combine_two_child_percentages = () => Process.PercentageComplete.ShouldEqual(19);
+        It Should_combine_two_child_percentages = () => Process.OverallProgress.ShouldEqual(19);
 
         static IProcessFactory Factory;
 
