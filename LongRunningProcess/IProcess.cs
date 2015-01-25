@@ -14,7 +14,7 @@ namespace LongRunningProcess
         /// <summary>
         /// Get the string describing what is currently being worked on in the process.
         /// </summary>
-        string CurrentState { get; }
+        string CurrentStatus { get; }
 
         /// <summary>
         /// Get the completeness percentage of this process.

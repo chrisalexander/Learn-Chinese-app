@@ -49,7 +49,7 @@ namespace LongRunningProcess.Tests.Process
             Factory = An<IProcessFactory>();
 
             Process = new LongRunningProcess.Process(string.Empty, Factory);
-            Process.PropertyChanged += (sender, args) => PropertyChanged = PropertyChanged || args.PropertyName.Equals("CurrentState");
+            Process.PropertyChanged += (sender, args) => PropertyChanged = PropertyChanged || args.PropertyName.Equals("CurrentStatus");
 
             Child = MockRepository.GenerateStub<IProcess>();
 
@@ -79,7 +79,7 @@ namespace LongRunningProcess.Tests.Process
             Factory = An<IProcessFactory>();
 
             Process = new LongRunningProcess.Process(string.Empty, Factory);
-            Process.PropertyChanged += (sender, args) => PropertyChanged = PropertyChanged || args.PropertyName.Equals("CurrentState");
+            Process.PropertyChanged += (sender, args) => PropertyChanged = PropertyChanged || args.PropertyName.Equals("CurrentStatus");
 
             Child = MockRepository.GenerateStub<IProcess>();
 
@@ -88,7 +88,7 @@ namespace LongRunningProcess.Tests.Process
             Process.Step(string.Empty, 0);
         };
 
-        Because of = () => Child.Raise(c => c.PropertyChanged += null, null, new PropertyChangedEventArgs("CurrentState"));
+        Because of = () => Child.Raise(c => c.PropertyChanged += null, null, new PropertyChangedEventArgs("CurrentStatus"));
 
         It Should_have_notified_state_changed = () => PropertyChanged.ShouldBeTrue();
 

@@ -62,12 +62,12 @@ namespace LongRunningProcess
         /// <summary>
         /// Get the string describing what is currently being worked on in the process.
         /// </summary>
-        public string CurrentState
+        public string CurrentStatus
         {
             get
             {
                 var childStatus = this.childProcesses.FirstOrDefault(c => !c.Process.Completed);
-                return this.status + (childStatus != null ? "; " + childStatus.Process.CurrentState : string.Empty);
+                return this.status + (childStatus != null ? "; " + childStatus.Process.CurrentStatus : string.Empty);
             }
         }
 
@@ -162,8 +162,8 @@ namespace LongRunningProcess
                         break;
                     // When a child's state string or completedness changes, so does ours.
                     case "Completed":
-                    case "CurrentState":
-                        this.OnPropertyChanged("CurrentState");
+                    case "CurrentStatus":
+                        this.OnPropertyChanged("CurrentStatus");
                         break;
                 }
             };
@@ -174,7 +174,7 @@ namespace LongRunningProcess
 
             this.AssessDurationType();
             this.OnPropertyChanged("PercentageComplete");
-            this.OnPropertyChanged("CurrentState");
+            this.OnPropertyChanged("CurrentStatus");
 
             return process;
         }
@@ -207,7 +207,7 @@ namespace LongRunningProcess
         public void Status(string status)
         {
             this.status = status;
-            this.OnPropertyChanged("CurrentState");
+            this.OnPropertyChanged("CurrentStatus");
         }
 
         /// <summary>

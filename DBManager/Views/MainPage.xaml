@@ -89,7 +89,7 @@
                 <Button Grid.Row="0" Grid.Column="1" Command="{Binding CancelCommand}"  Visibility="{Binding Running, Converter={StaticResource BooleanToVisibilityConverter}}">Cancel</Button>
             </Grid>
             
-            <TextBlock Grid.Row="9" Grid.Column="2" Text="{Binding Process.CurrentState}" Style="{StaticResource BaseTextBlockStyle}" Visibility="{Binding Running, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <TextBlock Grid.Row="9" Grid.Column="2" Text="{Binding Process.CurrentStatus}" Style="{StaticResource BaseTextBlockStyle}" Visibility="{Binding Running, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </Grid>
         
     </Grid>
