@@ -1,4 +1,5 @@
 ﻿using LanguageModel;
+using System;
 using System.Collections.Generic;
 
 namespace LangDB
@@ -25,5 +26,15 @@ namespace LangDB
         /// The path to the database file.
         /// </summary>
         public string Path { get; set; }
+
+        /// <summary>
+        /// The source of the data.
+        /// </summary>
+        public string Source { get; set; }
+
+        /// <summary>
+        /// The time the file was last updated.
+        /// </summary>
+        public DateTime Updated { get; set; }
     }
 }

@@ -18,5 +18,15 @@ namespace LangDB
         /// The path to the database file.
         /// </summary>
         string Path { get; set; }
+
+        /// <summary>
+        /// The source of the data.
+        /// </summary>
+        string Source { get; set; }
+
+        /// <summary>
+        /// The time the file was last updated.
+        /// </summary>
+        DateTime Updated { get; set; }
     }
 }
