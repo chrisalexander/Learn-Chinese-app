@@ -25,7 +25,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ProgressBar IsIndeterminate="False" Maximum="100" Value="{Binding OverallProgress}" Visibility="{Binding Enabled, Converter={StaticResource BooleanToInvisibilityConverter}}" />
+        <ProgressBar IsIndeterminate="False" Foreground="#8ec8e6" Maximum="100" Value="{Binding OverallProgress}" Visibility="{Binding Enabled, Converter={StaticResource BooleanToInvisibilityConverter}}" />
         
         <TextBlock Text="DB Manager" Grid.Row="1" Grid.Column="0" Style="{StaticResource HeaderTextBlockStyle}" Margin="20,20,20,20" />
         
