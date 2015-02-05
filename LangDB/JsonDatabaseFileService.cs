@@ -37,7 +37,7 @@ namespace LangDB
                 using (var jsonReader = new JsonTextReader(streamReader))
                 {
                     var serializer = this.GetSerializer();
-                    return await Task.Run(() => serializer.Deserialize<LanguageDatabase>(jsonReader));
+                    return await process.RunInBackground((progress, token) => serializer.Deserialize<LanguageDatabase>(jsonReader));
                 }
             }
             finally
@@ -64,7 +64,7 @@ namespace LangDB
                 this.ConfigureWriter(jsonWriter);
 
                 var serializer = this.GetSerializer();
-                await Task.Run(() => serializer.Serialize(jsonWriter, database));
+                await process.RunInBackground((progress, token) => serializer.Serialize(jsonWriter, database));
             }
 
             process.Completed = true;

@@ -4,8 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Windows.Foundation;
 
 namespace LangDB
 {
@@ -22,7 +25,20 @@ namespace LangDB
         /// <param name="newEntries">The new (and complete) list of entries to merge on.</param>
         /// <param name="process">The process.</param>
         /// <returns>Statistics regarding the merge.</returns>
-        public Task<IDatabaseAcquisitionResult> Merge(ILanguageDatabase database, IList<LanguageEntry> newEntries, IProcess process)
+        public async Task<IDatabaseAcquisitionResult> Merge(ILanguageDatabase database, IList<LanguageEntry> newEntries, IProcess process)
+        {
+            return await process.RunInBackground((progress, token) => this.ExecuteMerge(database, newEntries, progress, token), true);
+        }
+
+        /// <summary>
+        /// Executes the merge.
+        /// </summary>
+        /// <param name="database">The database to merge with.</param>
+        /// <param name="newEntries">The new (and complete) list of entries to merge on.</param>
+        /// <param name="progress">The progress object.</param>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>Statistics regarding the merge.</returns>
+        private IDatabaseAcquisitionResult ExecuteMerge(ILanguageDatabase database, IList<LanguageEntry> newEntries, IProgress<double> progress, CancellationToken token)
         {
             var foundEntryIds = new HashSet<string>();
 
@@ -32,14 +48,12 @@ namespace LangDB
 
             var increment = 100.0 / (newEntries.Count + database.Entries.Count);
 
-            var token = process.CancellationToken;
-
             var entriesToAdd = new List<LanguageEntry>();
 
             foreach (var entry in newEntries)
             {
                 foundEntryIds.Add(entry.Id);
-                process.Increment(increment);
+                progress.Report(increment);
                 token.ThrowIfCancellationRequested();
 
                 LanguageEntry existingEntry;
@@ -73,7 +87,7 @@ namespace LangDB
                     entriesToRemove.Add(oldEntry.Key);
                 }
 
-                process.Increment(increment);
+                progress.Report(increment);
 
                 token.ThrowIfCancellationRequested();
             }
@@ -90,9 +104,7 @@ namespace LangDB
                 database.Entries[entry.Id] = entry;
             }
 
-            process.Completed = true;
-
-            return Task.FromResult((IDatabaseAcquisitionResult)result);
+            return result;
         }
     }
 }

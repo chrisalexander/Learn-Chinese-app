@@ -33,7 +33,7 @@ namespace LangDB
             deleteStep.DurationType = ProcessDurationType.Determinate;
 
             await temporaryFile.DeleteAsync();
-            deleteStep.Increment(50);
+            deleteStep.Report(50);
             await archiveFolder.DeleteAsync();
             deleteStep.Completed = true;
 
@@ -58,7 +58,7 @@ namespace LangDB
 
             await download.StartAsync().AsTask(process.CancellationToken, new Progress<DownloadOperation>((operation) =>
             {
-                process.Increment(operation.Progress.BytesReceived / operation.Progress.TotalBytesToReceive);
+                process.Report(operation.Progress.BytesReceived / operation.Progress.TotalBytesToReceive);
             }));
 
             process.Completed = true;
@@ -99,7 +99,7 @@ namespace LangDB
                         process.CancellationToken.ThrowIfCancellationRequested();
                     }
 
-                    process.Increment(stepSize);
+                    process.Report(stepSize);
                 }
             }
 

@@ -293,6 +293,9 @@ namespace DBManager.ViewModels
             IDatabaseAcquisitionResult result = null;
             Exception error = null;
 
+            this.OverallProgress = 0;
+            this.OverallStatus = new[] { "Starting..." };
+
             try
             {
                 result = await this.dbService.AcquireAndParseArchiveAsync(new Uri(this.uri), this.targetFile, new Regex(this.regex), this.CreateProcess());

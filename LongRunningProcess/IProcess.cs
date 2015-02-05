@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace LongRunningProcess
     /// may be formed of multiple steps and child steps, which then allow progress
     /// reporting and cancellation of that process.
     /// </summary>
-    public interface IProcess : INotifyPropertyChanged
+    public interface IProcess : INotifyPropertyChanged, IProgress<double>
     {
         /// <summary>
         /// Gets or sets the status of this specific process.
@@ -64,17 +65,30 @@ namespace LongRunningProcess
         IProcess Step(string name, double weighting);
 
         /// <summary>
-        /// Increment the completion percentage of the curret process by the specified amount.
-        /// Note if the total goes over 100 without being flagged as complete, the process
-        /// will become of duration type Indeterminate.
-        /// </summary>
-        /// <param name="amount">The amount to increment by.</param>
-        void Increment(double amount);
-
-        /// <summary>
         /// Cancels the process.
         /// </summary>
         /// <returns>When cancellation is completed.</returns>
         Task CancelAsync();
+
+        /// <summary>
+        /// Executes the given function in a background thread.
+        /// Note the function requires two parameters; a progress object and a
+        /// cancellation token.
+        /// </summary>
+        /// <typeparam name="T">The type that is returned from the function.</typeparam>
+        /// <param name="function">The function that is executed.</param>
+        /// <param name="completes">Whether or not the function completes the process, defaults that it does not.</param>
+        /// <returns>The return value, when complete.</returns>
+        Task<T> RunInBackground<T>(Func<IProgress<double>, CancellationToken, T> function, bool completes = false);
+
+        /// <summary>
+        /// Executes the given action in a background thread.
+        /// Note the action requires two parameters; a progress object and a
+        /// cancellation token.
+        /// </summary>
+        /// <param name="function">The action that is executed.</param>
+        /// <param name="completes">Whether or not the action completes the process, defaults that it does not.</param>
+        /// <returns>When complete.</returns>
+        Task RunInBackground(Action<IProgress<double>, CancellationToken> action, bool completes = false);
     }
 }

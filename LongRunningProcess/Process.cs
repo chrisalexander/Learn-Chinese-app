@@ -241,7 +241,7 @@ namespace LongRunningProcess
         /// Increment the completion percentage.
         /// </summary>
         /// <param name="amount">The amount to increment by.</param>
-        public void Increment(double amount)
+        public void Report(double amount)
         {
             this.Progress += amount;
         }
@@ -264,6 +264,51 @@ namespace LongRunningProcess
             var previousCompleted = this.Completed;
             
             this.Completed = true;
+        }
+
+        /// <summary>
+        /// Executes the given function in a background thread.
+        /// Note the function requires two parameters; a progress object and a
+        /// cancellation token.
+        /// </summary>
+        /// <typeparam name="T">The type that is returned from the function.</typeparam>
+        /// <param name="function">The function that is executed.</param>
+        /// <param name="completes">Whether or not the function completes the process, defaults that it does not.</param>
+        /// <returns>The return value, when complete.</returns>
+        public async Task<T> RunInBackground<T>(Func<IProgress<double>, CancellationToken, T> function, bool completes = false)
+        {
+            var progress = new Progress<double>(this.ReportThrottled);
+            var token = this.CancellationToken;
+
+            var result = await Task.Factory.StartNew(() => function(progress, token), TaskCreationOptions.LongRunning);
+
+            if (completes)
+            {
+                this.Completed = true;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Executes the given action in a background thread.
+        /// Note the action requires two parameters; a progress object and a
+        /// cancellation token.
+        /// </summary>
+        /// <param name="action">The action that is executed.</param>
+        /// <param name="completes">Whether or not the action completes the process, defaults that it does not.</param>
+        /// <returns>When complete.</returns>
+        public async Task RunInBackground(Action<IProgress<double>, CancellationToken> action, bool completes = false)
+        {
+            var progress = new Progress<double>(this.ReportThrottled);
+            var token = this.CancellationToken;
+
+            await Task.Factory.StartNew(() => action(progress, token), TaskCreationOptions.LongRunning);
+
+            if (completes)
+            {
+                this.Completed = true;
+            }
         }
 
         /// <summary>
@@ -312,6 +357,28 @@ namespace LongRunningProcess
             }
 
             this.OverallStatus = statuses;
+        }
+
+
+        /// <summary>
+        /// Increment the completion percentage, but throttling changes to once per actual change in the
+        /// output percentage.
+        /// </summary>
+        /// <param name="amount">The amount to increment by.</param>
+        private void ReportThrottled(double amount)
+        {
+            var currentProgress = this.progress;
+            // Determine whether there has actually be a change to the value.
+            if (Math.Round(currentProgress + amount) != Math.Round(currentProgress))
+            {
+                // If there has, then set it on the main Progress to get notifications.
+                this.Progress += amount;
+            }
+            else
+            {
+                // Skip the notifications and just make a note for now.
+                this.progress += amount;
+            }
         }
     }
 }

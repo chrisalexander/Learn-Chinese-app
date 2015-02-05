@@ -40,7 +40,7 @@ namespace LongRunningProcess.Tests.Process
             Process.DurationType = ProcessDurationType.Determinate;
         };
 
-        Because of = () => Process.Increment(101);
+        Because of = () => Process.Report(101);
 
         It Should_become_indeterminate = () => Process.DurationType.ShouldEqual(ProcessDurationType.Indeterminate);
 
@@ -57,7 +57,7 @@ namespace LongRunningProcess.Tests.Process
             Process.Completed = true;
         };
 
-        Because of = () => Process.Increment(101);
+        Because of = () => Process.Report(101);
 
         It Should_be_determinate = () => Process.DurationType.ShouldEqual(ProcessDurationType.Determinate);
 

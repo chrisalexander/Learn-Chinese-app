@@ -26,17 +26,19 @@ namespace LangDB
 
             var entries = new List<LanguageEntry>();
 
-            foreach (var line in lines)
+            await process.RunInBackground((progress, token) =>
             {
-                var entry = await this.ParseLineAsync(line, regex);
-                if (entry != null)
+                foreach (var line in lines)
                 {
-                    entries.Add(entry);
+                    var entry = this.ParseLine(line, regex);
+                    if (entry != null)
+                    {
+                        entries.Add(entry);
+                    }
+                    progress.Report(stepSize);
+                    token.ThrowIfCancellationRequested();
                 }
-                process.Increment(stepSize);
-            }
-
-            process.Completed = true;
+            }, true);
 
             return entries;
         }
@@ -49,32 +51,41 @@ namespace LangDB
         /// <returns>The language entry.</returns>
         public async Task<LanguageEntry> ParseLineAsync(string line, Regex regex)
         {
-            return await Task.Run(() =>
+            return await Task.Run(() => this.ParseLine(line, regex));
+        }
+
+        /// <summary>
+        /// Helper which synchronously parses a line.
+        /// </summary>
+        /// <param name="line">The line to parse.</param>
+        /// <param name="regex">The configuration regex to use.</param>
+        /// <returns>The language entry.</returns>
+        private LanguageEntry ParseLine(string line, Regex regex)
+        {
+            // Disregard comment lines
+            if (line.StartsWith("#"))
             {
-                // Disregard comment lines
-                if (line.StartsWith("#"))
-                {
-                    return null;
-                }
+                return null;
+            }
 
-                var groups = regex.Match(line).Groups;
+            var groups = regex.Match(line).Groups;
 
-                var english = new List<string>();
+            var english = new List<string>();
 
-                for (var i = 0; i < groups["english"].Captures.Count; i++)
-                {
-                    english.Add(groups["english"].Captures[i].Value);
-                }
+            for (var i = 0; i < groups["english"].Captures.Count; i++)
+            {
+                english.Add(groups["english"].Captures[i].Value);
+            }
 
-                LanguageEntry entry = null;
+            LanguageEntry entry = null;
 
-                try {
-                    entry = new LanguageEntry(groups["traditional"].Value, groups["simplified"].Value, groups["pinyin"].Value, english);
-                }
-                catch (Exception) {}
+            try
+            {
+                entry = new LanguageEntry(groups["traditional"].Value, groups["simplified"].Value, groups["pinyin"].Value, english);
+            }
+            catch (Exception) { }
 
-                return entry;
-            });
+            return entry;
         }
     }
 }

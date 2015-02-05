@@ -27,7 +27,7 @@ namespace LongRunningProcess.Tests.Process
     {
         Establish context = () => Process = new LongRunningProcess.Process(string.Empty, null);
 
-        Because of = () => Process.Increment(50);
+        Because of = () => Process.Report(50);
 
         It Should_be_at_50_percent = () => Process.OverallProgress.ShouldEqual(50);
 
@@ -39,7 +39,7 @@ namespace LongRunningProcess.Tests.Process
     {
         Establish context = () => Process = new LongRunningProcess.Process(string.Empty, null);
 
-        Because of = () => Process.Increment(101);
+        Because of = () => Process.Report(101);
 
         It Should_be_capped_at_100_percent = () => Process.OverallProgress.ShouldEqual(100);
 
@@ -174,7 +174,7 @@ namespace LongRunningProcess.Tests.Process
         {
             Process.Step(string.Empty, 40);
             Process.Step(string.Empty, 50);
-            Process.Increment(50);
+            Process.Report(50);
         };
 
         It Should_combine_two_child_percentages = () => Process.OverallProgress.ShouldEqual(19);

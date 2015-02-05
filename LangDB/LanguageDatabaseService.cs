@@ -72,6 +72,11 @@ namespace LangDB
             {
                 database = await this.fileService.LoadAsync(file, process.Step("Loading database", 10));
             }
+            catch (TaskCanceledException)
+            {
+                // Ensure cancellations are correctly rethrown.
+                throw;
+            }
             catch (Exception)
             {
             }
