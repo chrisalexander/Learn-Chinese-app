@@ -28,7 +28,7 @@ namespace LanguageModel.Tests.ChineseWord
     {
         Because of = () => Exception = Catch.Exception(() => new LanguageModel.ChineseWord(Traditional, Simplified, Pinyin));
 
-        It Should_have_thrown = () => Exception.ShouldBeOfType<ArgumentException>();
+        It Should_have_thrown = () => Exception.ShouldBeOfExactType<ArgumentException>();
 
         static Exception Exception;
 

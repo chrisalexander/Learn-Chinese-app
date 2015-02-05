@@ -43,7 +43,7 @@ namespace LanguageModel.Tests.PinyinSyllable
     {
         Because of = () => Exception = Catch.Exception(() => new LanguageModel.PinyinSyllable(string.Empty));
 
-        It Should_have_thrown_the_right_exception = () => Exception.ShouldBeOfType<ArgumentOutOfRangeException>();
+        It Should_have_thrown_the_right_exception = () => Exception.ShouldBeOfExactType<ArgumentOutOfRangeException>();
 
         static Exception Exception;
     }
