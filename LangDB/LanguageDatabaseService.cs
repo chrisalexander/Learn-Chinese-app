@@ -1,4 +1,5 @@
-﻿using LanguageModel;
+﻿using DBUtils;
+using LanguageModel;
 using LongRunningProcess;
 using System;
 using System.Collections.Generic;
@@ -26,9 +27,9 @@ namespace LangDB
         private readonly IDatabaseParsingService parsingService;
 
         /// <summary>
-        /// The language database file service.
+        /// The database file service.
         /// </summary>
-        private readonly ILanguageDatabaseFileService fileService;
+        private readonly IDatabaseFileService<ILanguageDatabase> fileService;
 
         /// <summary>
         /// The database merge service.
@@ -46,7 +47,7 @@ namespace LangDB
         public LanguageDatabaseService(
             IArchiveAcquisitionService archiveAcquisitionService,
             IDatabaseParsingService parsingService,
-            ILanguageDatabaseFileService fileService,
+            IDatabaseFileService<ILanguageDatabase> fileService,
             IDatabaseMergeService mergeService)
         {
             this.archiveAcquisitionService = archiveAcquisitionService;
@@ -70,7 +71,7 @@ namespace LangDB
             // If the language database fails to load, then we simply create an empty one.
             try
             {
-                database = await this.fileService.LoadAsync(file, process.Step("Loading database", 10));
+                database = await this.fileService.LoadAsync<LanguageDatabase>(file, process.Step("Loading database", 10));
             }
             catch (TaskCanceledException)
             {

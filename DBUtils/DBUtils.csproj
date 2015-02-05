@@ -5,11 +5,11 @@
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EEE40438-CADD-4587-8DAB-C51368800598}</ProjectGuid>
+    <ProjectGuid>{237932D3-746D-4161-B3A7-20820A354D4D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LangDB</RootNamespace>
-    <AssemblyName>LangDB</AssemblyName>
+    <RootNamespace>DBUtils</RootNamespace>
+    <AssemblyName>DBUtils</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,36 +35,26 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\DBUtils\DBUtils.csproj">
-      <Project>{237932d3-746d-4161-b3a7-20820a354d4d}</Project>
-      <Name>DBUtils</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LanguageModel\LanguageModel.csproj">
-      <Project>{c310d1de-a16c-41ed-9d18-73da836f59a7}</Project>
-      <Name>LanguageModel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LongRunningProcess\LongRunningProcess.csproj">
       <Project>{ef45a007-c8a8-4285-b3dd-1be875c3a04f}</Project>
       <Name>LongRunningProcess</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArchiveAcquisitionService.cs" />
-    <Compile Include="DatabaseAcquisitionResult.cs" />
-    <Compile Include="DatabaseMergeService.cs" />
-    <Compile Include="DatabaseParsingService.cs" />
-    <Compile Include="IArchiveAcquisitionService.cs" />
-    <Compile Include="IDatabaseAcquisitionResult.cs" />
-    <Compile Include="IDatabaseMergeService.cs" />
-    <Compile Include="IDatabaseParsingService.cs" />
-    <Compile Include="ILanguageDatabase.cs" />
-    <Compile Include="ILanguageDatabaseService.cs" />
-    <Compile Include="LangDBModule.cs" />
-    <Compile Include="LanguageDatabase.cs" />
-    <Compile Include="LanguageDatabaseService.cs" />
+    <Compile Include="DBUtilsModule.cs" />
+    <Compile Include="IDatabase.cs" />
+    <Compile Include="IDatabaseFileService.cs" />
+    <Compile Include="JsonDatabaseFileService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <TargetPlatform Include="Windows, Version=8.1" />
+    <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Composition.AttributedModel">
       <HintPath>..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\System.Composition.AttributedModel.dll</HintPath>
     </Reference>
@@ -84,16 +74,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <TargetPlatform Include="Windows, Version=8.1" />
-    <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
-  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
-    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
-    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

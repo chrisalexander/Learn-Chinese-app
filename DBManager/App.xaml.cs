@@ -1,4 +1,5 @@
-﻿using LangDB;
+﻿using DBUtils;
+using LangDB;
 using LongRunningProcess;
 using Microsoft.Practices.Prism.Mvvm;
 using System;
@@ -25,7 +26,7 @@ namespace DBManager
         /// <summary>
         /// List of the assembly modules to include in the container.
         /// </summary>
-        private IEnumerable<Type> assemblyModules = new[] { typeof(App), typeof(LangDBModule), typeof(LongRunningProcessModule) };
+        private IEnumerable<Type> assemblyModules = new[] { typeof(App), typeof(LangDBModule), typeof(LongRunningProcessModule), typeof(DBUtilsModule) };
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code

@@ -1,4 +1,5 @@
-﻿using LanguageModel;
+﻿using DBUtils;
+using LanguageModel;
 using System;
 using System.Collections.Generic;
 
@@ -7,17 +8,12 @@ namespace LangDB
     /// <summary>
     /// Interface defining a language database.
     /// </summary>
-    public interface ILanguageDatabase
+    public interface ILanguageDatabase : IDatabase
     {
         /// <summary>
         /// The entries in the database.
         /// </summary>
         IDictionary<string, LanguageEntry> Entries { get; }
-
-        /// <summary>
-        /// The path to the database file.
-        /// </summary>
-        string Path { get; set; }
 
         /// <summary>
         /// The source of the data.

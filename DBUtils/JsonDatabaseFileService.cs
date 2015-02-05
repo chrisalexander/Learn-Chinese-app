@@ -9,13 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace LangDB
+namespace DBUtils
 {
     /// <summary>
-    /// JSON implementation of the language database file service.
+    /// JSON implementation of the database file service.
     /// </summary>
-    [Export(typeof(ILanguageDatabaseFileService))]
-    public class JsonDatabaseFileService : ILanguageDatabaseFileService
+    /// <typeparam name="T">The type of the database.</typeparam>
+    [Export(typeof(IDatabaseFileService<>))]
+    public class JsonDatabaseFileService<T> : IDatabaseFileService<T> where T : IDatabase
     {
         /// <summary>
         /// Maintain a local cached serializer.
@@ -25,10 +26,11 @@ namespace LangDB
         /// <summary>
         /// Load from JSON file.
         /// </summary>
+        /// <typeparam name="Z">The concrete type implementation of T to load in to.</typeparam>
         /// <param name="file">The file to load the database from.</param>
         /// <param name="process">The process.</param>
         /// <returns>The loaded database.</returns>
-        public async Task<ILanguageDatabase> LoadAsync(IStorageFile file, IProcess process)
+        public async Task<Z> LoadAsync<Z>(IStorageFile file, IProcess process) where Z : T
         {
             try
             {
@@ -37,7 +39,7 @@ namespace LangDB
                 using (var jsonReader = new JsonTextReader(streamReader))
                 {
                     var serializer = this.GetSerializer();
-                    return await process.RunInBackground((progress, token) => serializer.Deserialize<LanguageDatabase>(jsonReader));
+                    return await process.RunInBackground((progress, token) => serializer.Deserialize<Z>(jsonReader));
                 }
             }
             finally
@@ -53,7 +55,7 @@ namespace LangDB
         /// <param name="file">The file to save it to.</param>
         /// <param name="process">The process.</param>
         /// <returns>When complete.</returns>
-        public async Task SaveAsync(ILanguageDatabase database, IStorageFile file, IProcess process)
+        public async Task SaveAsync(T database, IStorageFile file, IProcess process)
         {
             database.Path = file.Path;
 

@@ -200,6 +200,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\DBUtils\DBUtils.csproj">
+      <Project>{237932d3-746d-4161-b3a7-20820a354d4d}</Project>
+      <Name>DBUtils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LangDB\LangDB.csproj">
       <Project>{eee40438-cadd-4587-8dab-c51368800598}</Project>
       <Name>LangDB</Name>
