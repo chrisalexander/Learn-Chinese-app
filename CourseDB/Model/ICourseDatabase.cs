@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace CourseDB
+namespace CourseDB.Model
 {
     /// <summary>
     /// The course database interface.

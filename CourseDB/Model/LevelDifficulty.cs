@@ -1,5 +1,5 @@
 ﻿
-namespace CourseDB
+namespace CourseDB.Model
 {
     /// <summary>
     /// Enumeration of potential difficulties.

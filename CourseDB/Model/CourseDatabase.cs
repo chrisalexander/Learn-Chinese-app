@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CourseDB
+namespace CourseDB.Model
 {
     /// <summary>
     /// A course database contains a taught language course, consisting of levels

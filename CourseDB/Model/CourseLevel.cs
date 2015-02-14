@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CourseDB
+namespace CourseDB.Model
 {
     /// <summary>
     /// A level in a course.
