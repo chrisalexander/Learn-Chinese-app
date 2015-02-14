@@ -12,7 +12,7 @@ namespace CourseDB.Model
         /// <summary>
         /// ID of the course.
         /// </summary>
-        Guid Id { get; set; }
+        CourseId Id { get; set; }
 
         /// <summary>
         /// The name of the course.
