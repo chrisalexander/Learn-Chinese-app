@@ -40,11 +40,11 @@ namespace CourseDB.Model
         /// <summary>
         /// The ordered list of entries that form this level.
         /// </summary>
-        public IList<ILevelEntry> Entries { get; private set; }
+        public IList<ILevelEntry> Entries { get; set; }
 
         /// <summary>
         /// List of IDs prerequisite levels for this level.
         /// </summary>
-        public IList<LevelId> Prerequisites { get; private set; }
+        public IList<LevelId> Prerequisites { get; set; }
     }
 }

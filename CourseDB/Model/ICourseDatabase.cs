@@ -30,6 +30,11 @@ namespace CourseDB.Model
         DateTime Updated { get; set; }
 
         /// <summary>
+        /// The path to the database file.
+        /// </summary>
+        string Path { get; set; }
+
+        /// <summary>
         /// The course's levels.
         /// </summary>
         IList<ICourseLevel> Levels { get; }

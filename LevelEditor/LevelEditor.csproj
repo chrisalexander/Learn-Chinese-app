@@ -103,6 +103,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <ProjectReference Include="..\CourseDB\CourseDB.csproj">
+      <Project>{9ae0b5ca-c13f-451d-8ce9-bc34f44d0c37}</Project>
+      <Name>CourseDB</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LangDB\LangDB.csproj">
       <Project>{eee40438-cadd-4587-8dab-c51368800598}</Project>
       <Name>LangDB</Name>

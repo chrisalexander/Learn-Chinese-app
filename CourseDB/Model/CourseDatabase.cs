@@ -45,6 +45,6 @@ namespace CourseDB.Model
         /// <summary>
         /// The ordered list of levels in the course.
         /// </summary>
-        public IList<ICourseLevel> Levels { get; private set; }
+        public IList<ICourseLevel> Levels { get; set; }
     }
 }
