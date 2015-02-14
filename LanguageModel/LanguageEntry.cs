@@ -30,7 +30,7 @@ namespace LanguageModel
         /// <param name="chinese">The Chinese word.</param>
         /// <param name="english">The English phrases.</param>
         [JsonConstructor]
-        private LanguageEntry(ChineseWord chinese, IEnumerable<string> english)
+        private LanguageEntry(IChineseWord chinese, IEnumerable<string> english)
         {
             this.Chinese = chinese;
             this.English = english;
@@ -87,7 +87,7 @@ namespace LanguageModel
         /// <summary>
         /// The Chinese word.
         /// </summary>
-        public ChineseWord Chinese { get; private set; }
+        public IChineseWord Chinese { get; private set; }
 
         /// <summary>
         /// The English translations and notes of the Chinese word.

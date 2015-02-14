@@ -9,7 +9,7 @@ namespace LanguageModel
         /// <summary>
         /// Mandarin form.
         /// </summary>
-        PinyinSyllable Mandarin { get; }
+        IPinyinSyllable Mandarin { get; }
 
         /// <summary>
         /// Simplified character.

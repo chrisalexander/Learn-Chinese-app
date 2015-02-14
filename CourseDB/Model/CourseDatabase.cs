@@ -14,7 +14,7 @@ namespace CourseDB.Model
         /// </summary>
         public CourseDatabase()
         {
-            this.Levels = new List<CourseLevel>();
+            this.Levels = new List<ICourseLevel>();
         }
 
         /// <summary>
@@ -45,6 +45,6 @@ namespace CourseDB.Model
         /// <summary>
         /// The ordered list of levels in the course.
         /// </summary>
-        public IList<CourseLevel> Levels { get; private set; }
+        public IList<ICourseLevel> Levels { get; private set; }
     }
 }

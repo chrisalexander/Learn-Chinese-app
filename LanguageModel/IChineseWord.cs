@@ -10,6 +10,6 @@ namespace LanguageModel
         /// <summary>
         /// The characters in the word.
         /// </summary>
-        IEnumerable<ChineseCharacter> Characters { get; }
+        IEnumerable<IChineseCharacter> Characters { get; }
     }
 }

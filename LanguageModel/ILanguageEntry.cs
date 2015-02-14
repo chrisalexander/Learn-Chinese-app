@@ -10,7 +10,7 @@ namespace LanguageModel
         /// <summary>
         /// The Chinese format.
         /// </summary>
-        ChineseWord Chinese { get; }
+        IChineseWord Chinese { get; }
         
         /// <summary>
         /// The English translations.

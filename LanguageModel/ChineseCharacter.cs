@@ -27,7 +27,7 @@ namespace LanguageModel
         /// <param name="simplified">Simplified character.</param>
         /// <param name="mandarin">Mandarin Pinyin.</param>
         [JsonConstructor]
-        private ChineseCharacter(char traditional, char simplified, PinyinSyllable mandarin)
+        private ChineseCharacter(char traditional, char simplified, IPinyinSyllable mandarin)
         {
             this.Traditional = traditional;
             this.Simplified = simplified;
@@ -47,6 +47,6 @@ namespace LanguageModel
         /// <summary>
         /// The mandarin pronounciation of the character, in Pinyin form.
         /// </summary>
-        public PinyinSyllable Mandarin { get; private set; }
+        public IPinyinSyllable Mandarin { get; private set; }
     }
 }

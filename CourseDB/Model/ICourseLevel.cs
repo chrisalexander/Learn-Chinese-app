@@ -20,7 +20,7 @@ namespace CourseDB.Model
         /// <summary>
         /// Entries in the level.
         /// </summary>
-        IList<LevelEntry> Entries { get; }
+        IList<ILevelEntry> Entries { get; }
 
         /// <summary>
         /// ID of the level.

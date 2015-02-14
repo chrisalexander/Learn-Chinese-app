@@ -20,7 +20,6 @@ namespace LanguageModel
             var pinyinCharacters = pinyin.Split(' ');
 
             // Check all are of equal length
-            // TODO this is going to barf on names with dots in them, punctuation, etc.
             if (traditional.Length != simplified.Length || simplified.Length != pinyinCharacters.Length)
             {
                 throw new ArgumentException("Traditional, simplified and pinyin representations must all be the same length to be a valid Chinese word");
@@ -42,7 +41,7 @@ namespace LanguageModel
         /// </summary>
         /// <param name="characters">The characters.</param>
         [JsonConstructor]
-        private ChineseWord(IEnumerable<ChineseCharacter> characters)
+        private ChineseWord(IEnumerable<IChineseCharacter> characters)
         {
             this.Characters = characters;
         }
@@ -50,6 +49,6 @@ namespace LanguageModel
         /// <summary>
         /// The characters in the word.
         /// </summary>
-        public IEnumerable<ChineseCharacter> Characters { get; private set; }
+        public IEnumerable<IChineseCharacter> Characters { get; private set; }
     }
 }
