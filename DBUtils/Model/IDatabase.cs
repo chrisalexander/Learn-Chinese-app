@@ -1,5 +1,5 @@
 ﻿
-namespace DBUtils
+namespace DBUtils.Model
 {
     /// <summary>
     /// Interface for database classes.

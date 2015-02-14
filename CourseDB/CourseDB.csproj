@@ -39,10 +39,11 @@
     <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CourseDatabase.cs" />
-    <Compile Include="CourseLevel.cs" />
-    <Compile Include="ICourseDatabase.cs" />
-    <Compile Include="LevelDifficulty.cs" />
+    <Compile Include="CourseDBModule.cs" />
+    <Compile Include="Model\CourseDatabase.cs" />
+    <Compile Include="Model\CourseLevel.cs" />
+    <Compile Include="Model\ICourseDatabase.cs" />
+    <Compile Include="Model\LevelDifficulty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,15 +1,12 @@
-﻿using LongRunningProcess;
+﻿using DBUtils.Model;
+using LongRunningProcess;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Composition;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace DBUtils
+namespace DBUtils.Services
 {
     /// <summary>
     /// JSON implementation of the database file service.

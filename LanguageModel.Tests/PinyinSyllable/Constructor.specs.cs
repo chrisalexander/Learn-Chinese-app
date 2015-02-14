@@ -1,10 +1,5 @@
 ﻿using Machine.Specifications;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LanguageModel;
 
 namespace LanguageModel.Tests.PinyinSyllable
 {

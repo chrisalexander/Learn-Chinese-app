@@ -1,4 +1,5 @@
-﻿using LangDB;
+﻿using LangDB.Model;
+using LangDB.Services;
 using LongRunningProcess;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
@@ -12,11 +13,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Windows.UI.Popups;
 using Windows.UI.Notifications;
-using Windows.Data.Xml.Dom;
-using LangDB.Services;
-using LangDB.Model;
+using Windows.UI.Popups;
 
 namespace DBManager.ViewModels
 {

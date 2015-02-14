@@ -42,9 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBUtilsModule.cs" />
-    <Compile Include="IDatabase.cs" />
-    <Compile Include="IDatabaseFileService.cs" />
-    <Compile Include="JsonDatabaseFileService.cs" />
+    <Compile Include="Model\IDatabase.cs" />
+    <Compile Include="Services\IDatabaseFileService.cs" />
+    <Compile Include="Services\JsonDatabaseFileService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@ namespace CourseDB.Model
     /// A course database contains a taught language course, consisting of levels
     /// and course metadata.
     /// </summary>
-    public class CourseDatabase : CourseDB.ICourseDatabase
+    public class CourseDatabase : ICourseDatabase
     {
         /// <summary>
         /// Construct a course database.

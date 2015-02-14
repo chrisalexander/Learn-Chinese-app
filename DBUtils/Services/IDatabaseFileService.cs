@@ -1,8 +1,9 @@
-﻿using LongRunningProcess;
+﻿using DBUtils.Model;
+using LongRunningProcess;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace DBUtils
+namespace DBUtils.Services
 {
     /// <summary>
     /// Interface for services which can work with database files.
