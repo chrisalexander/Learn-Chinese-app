@@ -7,7 +7,7 @@ namespace LanguageModel
     /// <summary>
     /// A Chinese word is formed of multiple characters.
     /// </summary>
-    public class ChineseWord
+    public class ChineseWord : IChineseWord
     {
         /// <summary>
         /// Creates a new word from the traditional, simplified and pinyin representations.

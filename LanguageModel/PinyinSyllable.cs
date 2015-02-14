@@ -6,7 +6,7 @@ namespace LanguageModel
     /// <summary>
     /// Represents the pronunciation of a character in Pinyin form.
     /// </summary>
-    public class PinyinSyllable
+    public class PinyinSyllable : IPinyinSyllable
     {
         /// <summary>
         /// Constructs the syllable from the complete Pinyin string.

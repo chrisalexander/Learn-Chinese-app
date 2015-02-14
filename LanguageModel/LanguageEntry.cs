@@ -9,7 +9,7 @@ namespace LanguageModel
     /// <summary>
     /// A language entry is a Chinese word and its English equivalents.
     /// </summary>
-    public class LanguageEntry
+    public class LanguageEntry : ILanguageEntry
     {
         /// <summary>
         /// Creates a new entry with all of the requirements.

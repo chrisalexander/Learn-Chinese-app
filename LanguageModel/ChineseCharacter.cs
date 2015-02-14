@@ -5,7 +5,7 @@ namespace LanguageModel
     /// <summary>
     /// Represents a Chinese character, in its written and pronounced forms.
     /// </summary>
-    public class ChineseCharacter
+    public class ChineseCharacter : IChineseCharacter
     {
         /// <summary>
         /// Constructs the character from raw data.
