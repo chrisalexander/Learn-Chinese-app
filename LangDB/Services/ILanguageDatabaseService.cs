@@ -1,10 +1,11 @@
-﻿using LongRunningProcess;
+﻿using LangDB.Model;
+using LongRunningProcess;
 using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace LangDB
+namespace LangDB.Services
 {
     /// <summary>
     /// Interface for services which provide high-level operations on databases.

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace LangDB
+namespace LangDB.Model
 {
     /// <summary>
     /// A language database contains the language data as well as information about its storage.

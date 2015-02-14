@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace LangDB
+namespace LangDB.Services
 {
     /// <summary>
     /// Interface for services which parse raw database files in to language model components.

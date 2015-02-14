@@ -15,6 +15,8 @@ using Windows.Storage.Pickers;
 using Windows.UI.Popups;
 using Windows.UI.Notifications;
 using Windows.Data.Xml.Dom;
+using LangDB.Services;
+using LangDB.Model;
 
 namespace DBManager.ViewModels
 {

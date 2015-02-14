@@ -49,19 +49,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArchiveAcquisitionService.cs" />
-    <Compile Include="DatabaseAcquisitionResult.cs" />
-    <Compile Include="DatabaseMergeService.cs" />
-    <Compile Include="DatabaseParsingService.cs" />
-    <Compile Include="IArchiveAcquisitionService.cs" />
-    <Compile Include="IDatabaseAcquisitionResult.cs" />
-    <Compile Include="IDatabaseMergeService.cs" />
-    <Compile Include="IDatabaseParsingService.cs" />
-    <Compile Include="ILanguageDatabase.cs" />
-    <Compile Include="ILanguageDatabaseService.cs" />
+    <Compile Include="Services\ArchiveAcquisitionService.cs" />
+    <Compile Include="Model\DatabaseAcquisitionResult.cs" />
+    <Compile Include="Services\DatabaseMergeService.cs" />
+    <Compile Include="Services\DatabaseParsingService.cs" />
+    <Compile Include="Services\IArchiveAcquisitionService.cs" />
+    <Compile Include="Model\IDatabaseAcquisitionResult.cs" />
+    <Compile Include="Services\IDatabaseMergeService.cs" />
+    <Compile Include="Services\IDatabaseParsingService.cs" />
+    <Compile Include="Model\ILanguageDatabase.cs" />
+    <Compile Include="Services\ILanguageDatabaseService.cs" />
     <Compile Include="LangDBModule.cs" />
-    <Compile Include="LanguageDatabase.cs" />
-    <Compile Include="LanguageDatabaseService.cs" />
+    <Compile Include="Model\LanguageDatabase.cs" />
+    <Compile Include="Services\LanguageDatabaseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +88,7 @@
     <TargetPlatform Include="Windows, Version=8.1" />
     <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">

@@ -1,4 +1,5 @@
 ﻿using DBUtils;
+using LangDB.Model;
 using LanguageModel;
 using LongRunningProcess;
 using System;
@@ -8,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace LangDB
+namespace LangDB.Services
 {
     /// <summary>
     /// Database service for language operations.

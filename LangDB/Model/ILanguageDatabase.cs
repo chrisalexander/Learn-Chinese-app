@@ -3,7 +3,7 @@ using LanguageModel;
 using System;
 using System.Collections.Generic;
 
-namespace LangDB
+namespace LangDB.Model
 {
     /// <summary>
     /// Interface defining a language database.

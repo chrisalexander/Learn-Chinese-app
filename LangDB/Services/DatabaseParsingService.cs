@@ -6,7 +6,7 @@ using System.Composition;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace LangDB
+namespace LangDB.Services
 {
     [Export(typeof(IDatabaseParsingService))]
     public class DatabaseParsingService : IDatabaseParsingService

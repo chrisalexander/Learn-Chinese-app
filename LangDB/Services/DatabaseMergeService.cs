@@ -1,4 +1,5 @@
-﻿using LanguageModel;
+﻿using LangDB.Model;
+using LanguageModel;
 using LongRunningProcess;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
 
-namespace LangDB
+namespace LangDB.Services
 {
     /// <summary>
     /// Basic implementation of database merging.

@@ -1,39 +1,40 @@
-﻿
-namespace LangDB
+﻿using System;
+
+namespace LangDB.Model
 {
     /// <summary>
-    /// Communicates the results of a database acquisition.
+    /// Interface for acquisition results.
     /// </summary>
-    public class DatabaseAcquisitionResult : IDatabaseAcquisitionResult
+    public interface IDatabaseAcquisitionResult
     {
         /// <summary>
         /// The number of entries added.
         /// </summary>
-        public int Added { get; set; }
+        int Added { get; }
 
         /// <summary>
-        /// The number of entries removed.
+        /// The number of modified entries.
         /// </summary>
-        public int Removed { get; set; }
+        int Modified { get; }
 
         /// <summary>
-        /// The number of entries modified.
+        /// The number of removed entries.
         /// </summary>
-        public int Modified { get; set; }
+        int Removed { get; }
 
         /// <summary>
         /// The number of unmodified entries.
         /// </summary>
-        public int Unmodified { get; set; }
+        int Unmodified { get; }
 
         /// <summary>
         /// The number of entries that used to be in the database.
         /// </summary>
-        public int OldTotal { get; set; }
+        int OldTotal { get; }
 
         /// <summary>
         /// The total number of entries now in the database.
         /// </summary>
-        public int NewTotal { get; set; }
+        int NewTotal { get; }
     }
 }

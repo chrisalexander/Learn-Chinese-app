@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LangDB
+namespace LangDB.Services
 {
     /// <summary>
     /// Interface for services to acquire archives and read them.

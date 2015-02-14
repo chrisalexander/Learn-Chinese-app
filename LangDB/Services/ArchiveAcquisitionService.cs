@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Windows.Networking.BackgroundTransfer;
 using Windows.Storage;
 
-namespace LangDB
+namespace LangDB.Services
 {
     [Export(typeof(IArchiveAcquisitionService))]
     public class ArchiveAcquisitionService : IArchiveAcquisitionService

@@ -1,9 +1,10 @@
-﻿using LanguageModel;
+﻿using LangDB.Model;
+using LanguageModel;
 using LongRunningProcess;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace LangDB
+namespace LangDB.Services
 {
     /// <summary>
     /// Interface for services which merge new data in to databases.
