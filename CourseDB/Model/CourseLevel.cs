@@ -13,13 +13,14 @@ namespace CourseDB.Model
         /// </summary>
         public CourseLevel()
         {
-            this.EntryIds = new List<string>();
+            this.Entries = new List<LevelEntry>();
+            this.Prerequisites = new List<LevelId>();
         }
 
         /// <summary>
         /// The level ID.
         /// </summary>
-        public Guid Id { get; set; }
+        public LevelId Id { get; set; }
 
         /// <summary>
         /// The name of the level.
@@ -37,8 +38,13 @@ namespace CourseDB.Model
         public LevelDifficulty Difficulty { get; set; }
 
         /// <summary>
-        /// The ordered list of IDs of language entries that form this level.
+        /// The ordered list of entries that form this level.
         /// </summary>
-        public IList<string> EntryIds { get; private set; }
+        public IList<LevelEntry> Entries { get; private set; }
+
+        /// <summary>
+        /// List of IDs prerequisite levels for this level.
+        /// </summary>
+        public IList<LevelId> Prerequisites { get; private set; }
     }
 }
