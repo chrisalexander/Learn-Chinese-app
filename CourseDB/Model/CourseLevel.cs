@@ -6,7 +6,7 @@ namespace CourseDB.Model
     /// <summary>
     /// A level in a course.
     /// </summary>
-    public class CourseLevel
+    public class CourseLevel : ICourseLevel
     {
         /// <summary>
         /// Construct a course level.

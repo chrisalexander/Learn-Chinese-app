@@ -41,9 +41,14 @@
   <ItemGroup>
     <Compile Include="CourseDBModule.cs" />
     <Compile Include="Model\CourseDatabase.cs" />
+    <Compile Include="Model\CourseId.cs" />
     <Compile Include="Model\CourseLevel.cs" />
     <Compile Include="Model\ICourseDatabase.cs" />
+    <Compile Include="Model\ICourseLevel.cs" />
+    <Compile Include="Model\ILevelEntry.cs" />
     <Compile Include="Model\LevelDifficulty.cs" />
+    <Compile Include="Model\LevelEntry.cs" />
+    <Compile Include="Model\LevelId.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

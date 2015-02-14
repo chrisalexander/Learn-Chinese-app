@@ -36,6 +36,10 @@
   <ItemGroup>
     <Compile Include="ChineseCharacter.cs" />
     <Compile Include="ChineseWord.cs" />
+    <Compile Include="IChineseCharacter.cs" />
+    <Compile Include="IChineseWord.cs" />
+    <Compile Include="ILanguageEntry.cs" />
+    <Compile Include="IPinyinSyllable.cs" />
     <Compile Include="LanguageEntry.cs" />
     <Compile Include="LanguageModelModule.cs" />
     <Compile Include="Tone.cs" />

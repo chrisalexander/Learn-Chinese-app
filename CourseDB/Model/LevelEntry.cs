@@ -4,7 +4,7 @@ namespace CourseDB.Model
     /// <summary>
     /// An entry within a level.
     /// </summary>
-    public class LevelEntry
+    public class LevelEntry : ILevelEntry
     {
         /// <summary>
         /// The ID of the entry in the entry database.
