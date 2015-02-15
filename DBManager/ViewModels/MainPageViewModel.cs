@@ -42,7 +42,7 @@ namespace DBManager.ViewModels
         /// <summary>
         /// The target file to store the database in.
         /// </summary>
-        private StorageFile targetFile;
+        private IStorageFile targetFile;
 
         /// <summary>
         /// The regex to use to separate data in a line of the file.
@@ -198,19 +198,7 @@ namespace DBManager.ViewModels
         /// <returns>When complete.</returns>
         private async Task PickDatabaseFileAsync()
         {
-            var picker = new FileOpenPicker();
-            picker.ViewMode = PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            picker.FileTypeFilter.Add(".langdb");
-
-            var file = await picker.PickSingleFileAsync();
-
-            if (file == null)
-            {
-                return;
-            }
-
-            this.targetFile = file;
+            this.targetFile = await this.dbService.FileService.OpenAsync(new [] { ".langdb" }, PickerLocationId.DocumentsLibrary, this.processFactory.Create("Pick file"));
             this.OnPropertyChanged("StoragePath");
         }
 
@@ -220,52 +208,7 @@ namespace DBManager.ViewModels
         /// <returns>When complete.</returns>
         private async Task PickDatabaseFolderAsync()
         {
-            var picker = new FolderPicker();
-            picker.ViewMode = PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            picker.FileTypeFilter.Add("*");
-
-            var folder = await picker.PickSingleFolderAsync();
-
-            if (folder == null)
-            {
-                return;
-            }
-
-            StorageFile file = null;
-
-            var existingFile = await folder.TryGetItemAsync("Chinese.langdb");
-            if (existingFile != null)
-            {
-                // There is already a file with the expected name in the folder, does the user want to use that?
-                var messageDialog = new MessageDialog("There is already a language database in this folder, would you like to merge with it?", "Existing language database found");
-                
-                messageDialog.Commands.Add(new UICommand("Merge with existing file", new UICommandInvokedHandler((IUICommand cmd) =>
-                {
-                    file = existingFile as StorageFile;
-                })));
-                
-                messageDialog.Commands.Add(new UICommand("Pick again", new UICommandInvokedHandler((IUICommand cmd) =>
-                {
-                    file = null;
-                })));
-
-                messageDialog.DefaultCommandIndex = 0;
-                messageDialog.CancelCommandIndex = 1;
-                await messageDialog.ShowAsync();
-            }
-            else
-            {
-                file = await folder.CreateFileAsync("Chinese.langdb", CreationCollisionOption.OpenIfExists);
-            }
-
-            // If the user cancelled picking a file then don't set it.
-            if (file == null)
-            {
-                return;
-            }
-
-            this.targetFile = file;
+            this.targetFile = await this.dbService.FileService.CreateAsync("Chinese.langdb", PickerLocationId.DocumentsLibrary, this.processFactory.Create("Create database file"));
             this.OnPropertyChanged("StoragePath");
         }
 

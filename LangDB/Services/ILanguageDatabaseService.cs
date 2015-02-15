@@ -1,4 +1,5 @@
-﻿using LangDB.Model;
+﻿using DBUtils.Services;
+using LangDB.Model;
 using LongRunningProcess;
 using System;
 using System.Text.RegularExpressions;
@@ -21,5 +22,10 @@ namespace LangDB.Services
         /// <param name="process">The process.</param>
         /// <returns>When complete.</returns>
         Task<IDatabaseAcquisitionResult> AcquireAndParseArchiveAsync(Uri uri, IStorageFile file, Regex regex, IProcess process);
+
+        /// <summary>
+        /// The file service to use for other database requests.
+        /// </summary>
+        IDatabaseFileService<ILanguageDatabase> FileService { get; }
     }
 }

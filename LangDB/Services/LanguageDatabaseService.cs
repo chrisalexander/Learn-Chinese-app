@@ -56,6 +56,17 @@ namespace LangDB.Services
         }
 
         /// <summary>
+        /// The file service to use for other database requests.
+        /// </summary>
+        public IDatabaseFileService<ILanguageDatabase> FileService
+        {
+            get
+            {
+                return this.fileService;
+            }
+        }
+
+        /// <summary>
         /// Acquire an archive from a URI, and merge with an existing file or create a new one if it exists.
         /// </summary>
         /// <param name="uri">The URI of the archive.</param>
