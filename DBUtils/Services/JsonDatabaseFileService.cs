@@ -13,7 +13,7 @@ namespace DBUtils.Services
     /// </summary>
     /// <typeparam name="T">The type of the database.</typeparam>
     [Export(typeof(IDatabaseFileService<>))]
-    public class JsonDatabaseFileService<T> : IDatabaseFileService<T> where T : IDatabase
+    public class JsonDatabaseFileService<T> : WindowsDatabaseFileService<T> where T : IDatabase
     {
         /// <summary>
         /// Maintain a local cached serializer.
@@ -27,7 +27,7 @@ namespace DBUtils.Services
         /// <param name="file">The file to load the database from.</param>
         /// <param name="process">The process.</param>
         /// <returns>The loaded database.</returns>
-        public async Task<Z> LoadAsync<Z>(IStorageFile file, IProcess process) where Z : T
+        public async override Task<Z> LoadAsync<Z>(IStorageFile file, IProcess process)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace DBUtils.Services
         /// <param name="file">The file to save it to.</param>
         /// <param name="process">The process.</param>
         /// <returns>When complete.</returns>
-        public async Task SaveAsync(T database, IStorageFile file, IProcess process)
+        public async override Task SaveAsync(T database, IStorageFile file, IProcess process)
         {
             database.Path = file.Path;
 
