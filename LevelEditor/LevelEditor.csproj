@@ -115,6 +115,10 @@
       <Project>{eee40438-cadd-4587-8dab-c51368800598}</Project>
       <Name>LangDB</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LongRunningProcess\LongRunningProcess.csproj">
+      <Project>{ef45a007-c8a8-4285-b3dd-1be875c3a04f}</Project>
+      <Name>LongRunningProcess</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">

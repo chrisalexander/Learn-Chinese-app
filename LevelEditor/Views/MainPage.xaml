@@ -23,12 +23,30 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <TextBlock Text="Level Editor" Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderTextBlockStyle}" Margin="20,20,20,20" />
 
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Language database:" Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" />
+            <TextBlock Text="{Binding LanguageDatabase.Path}" Grid.Row="0" Grid.Column="1" Style="{StaticResource BaseTextBlockStyle}" />
+            <Button Grid.Row="0" Grid.Column="2" Command="{Binding PickLanguageDatabaseCommand}" IsEnabled="{Binding Enabled}">Choose</Button>
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -43,15 +61,16 @@
 
             <TextBlock Text="Database:" Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" />
             <TextBlock Text="(Dropdown)" Grid.Row="0" Grid.Column="1" Style="{StaticResource BaseTextBlockStyle}" />
-            
-            <Button Grid.Row="0" Grid.Column="2">New</Button>
-            <Button Grid.Row="0" Grid.Column="3">Close</Button>
-            <Button Grid.Row="0" Grid.Column="4">Delete</Button>
 
-            <Button Grid.Row="0" Grid.Column="6">Save</Button>
+            <Button Grid.Row="0" Grid.Column="2" IsEnabled="{Binding Enabled}">New</Button>
+            <Button Grid.Row="0" Grid.Column="3" IsEnabled="{Binding Enabled}">Open</Button>
+            <Button Grid.Row="0" Grid.Column="4" IsEnabled="{Binding Enabled}">Close</Button>
+            <Button Grid.Row="0" Grid.Column="5" IsEnabled="{Binding Enabled}">Delete</Button>
+
+            <Button Grid.Row="0" Grid.Column="7" IsEnabled="{Binding Enabled}">Save</Button>
         </Grid>
 
-        <Grid Grid.Row="2" Grid.Column="0" DataContext="{Binding SelectedDatabase}">
+        <Grid Grid.Row="3" Grid.Column="0" DataContext="{Binding SelectedDatabase}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*" />
