@@ -41,7 +41,7 @@ namespace LanguageModel
         /// </summary>
         /// <param name="characters">The characters.</param>
         [JsonConstructor]
-        private ChineseWord(IEnumerable<IChineseCharacter> characters)
+        private ChineseWord(IEnumerable<ChineseCharacter> characters)
         {
             this.Characters = characters;
         }
