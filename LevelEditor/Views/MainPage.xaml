@@ -28,7 +28,7 @@
 
         <TextBlock Text="Level Editor" Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderTextBlockStyle}" Margin="20,20,20,20" />
 
-        <Grid Grid.Row="1" Grid.Column="0">
+        <Grid Grid.Row="1" Grid.Column="0" Margin="20,20,20,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -40,11 +40,11 @@
             </Grid.RowDefinitions>
 
             <TextBlock Text="Language database:" Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" />
-            <TextBlock Text="{Binding LanguageDatabase.Path}" Grid.Row="0" Grid.Column="1" Style="{StaticResource BaseTextBlockStyle}" />
+            <TextBlock Text="{Binding LanguageDatabase.Path}" Grid.Row="0" Grid.Column="1" Style="{StaticResource BaseTextBlockStyle}" Margin="20,0,20,0" />
             <Button Grid.Row="0" Grid.Column="2" Command="{Binding PickLanguageDatabaseCommand}" IsEnabled="{Binding Enabled}">Choose</Button>
         </Grid>
 
-        <Grid Grid.Row="2" Grid.Column="0">
+        <Grid Grid.Row="2" Grid.Column="0" Margin="20,20,20,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -60,12 +60,12 @@
             </Grid.RowDefinitions>
 
             <TextBlock Text="Database:" Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" />
-            <TextBlock Text="(Dropdown)" Grid.Row="0" Grid.Column="1" Style="{StaticResource BaseTextBlockStyle}" />
+            <TextBlock Text="(Dropdown)" Grid.Row="0" Grid.Column="1" Style="{StaticResource BaseTextBlockStyle}" Margin="20,0,20,0" />
 
-            <Button Grid.Row="0" Grid.Column="2" IsEnabled="{Binding Enabled}">New</Button>
-            <Button Grid.Row="0" Grid.Column="3" IsEnabled="{Binding Enabled}">Open</Button>
-            <Button Grid.Row="0" Grid.Column="4" IsEnabled="{Binding Enabled}">Close</Button>
-            <Button Grid.Row="0" Grid.Column="5" IsEnabled="{Binding Enabled}">Delete</Button>
+            <Button Grid.Row="0" Grid.Column="2" Command="{Binding NewCourseDatabaseCommand}" IsEnabled="{Binding Enabled}">New</Button>
+            <Button Grid.Row="0" Grid.Column="3" Command="{Binding OpenCourseDatabaseCommand}" IsEnabled="{Binding Enabled}">Open</Button>
+            <Button Grid.Row="0" Grid.Column="4" Command="{Binding CloseCourseDatabaseCommand}" IsEnabled="{Binding Enabled}">Close</Button>
+            <Button Grid.Row="0" Grid.Column="5" Command="{Binding DeleteCourseDatabaseCommand}" IsEnabled="{Binding Enabled}">Delete</Button>
 
             <Button Grid.Row="0" Grid.Column="7" IsEnabled="{Binding Enabled}">Save</Button>
         </Grid>

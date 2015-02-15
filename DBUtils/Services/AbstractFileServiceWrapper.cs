@@ -1,6 +1,7 @@
 ﻿using DBUtils.Model;
 using LongRunningProcess;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -74,12 +75,12 @@ namespace DBUtils.Services
         /// <summary>
         /// Create a database file, asking the user for the location, with the specified filename.
         /// </summary>
-        /// <param name="fileName">The name of the file to create.</param>
+        /// <param name="fileName">The name of the file to create, without extension.</param>
         /// <param name="process">The process.</param>
         /// <returns>The created storage file.</returns>
         public Task<IStorageFile> CreateAsync(string fileName, IProcess process)
         {
-            return this.FileService.CreateAsync(fileName, this.DefaultPickerLocation, process);
+            return this.FileService.CreateAsync(fileName + this.Extensions.First(), this.DefaultPickerLocation, process);
         }
 
         /// <summary>

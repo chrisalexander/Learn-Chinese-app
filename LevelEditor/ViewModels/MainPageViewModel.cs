@@ -1,13 +1,15 @@
-﻿using LangDB.Model;
+﻿using CourseDB.Model;
+using CourseDB.Services;
+using LangDB.Model;
 using LangDB.Services;
 using LongRunningProcess;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
+using System;
 using System.Collections.ObjectModel;
 using System.Composition;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.Storage.Pickers;
 
 namespace LevelEditor.ViewModels
 {
@@ -21,6 +23,11 @@ namespace LevelEditor.ViewModels
         /// The language database service.
         /// </summary>
         private ILanguageDatabaseService languageDatabaseService;
+
+        /// <summary>
+        /// The course database service.
+        /// </summary>
+        private ICourseDatabaseService courseDatabaseService;
 
         /// <summary>
         /// The process factory.
@@ -51,14 +58,21 @@ namespace LevelEditor.ViewModels
         /// MEF importing constructor.
         /// </summary>
         /// <param name="languageDatabaseService">The language database service.</param>
+        /// <param name="courseDatabaseService">The course database service.</param>
+        /// <param name="processFactory">The process factory.</param>
         [ImportingConstructor]
-        public MainPageViewModel(ILanguageDatabaseService languageDatabaseService, IProcessFactory processFactory)
+        public MainPageViewModel(ILanguageDatabaseService languageDatabaseService, ICourseDatabaseService courseDatabaseService, IProcessFactory processFactory)
         {
             this.languageDatabaseService = languageDatabaseService;
+            this.courseDatabaseService = courseDatabaseService;
             this.processFactory = processFactory;
 
             this.databases = new ObservableCollection<CourseDatabaseViewModel>();
             this.PickLanguageDatabaseCommand = DelegateCommand.FromAsyncHandler(this.PickLanguageDatabaseAsync, this.CanExecuteAsync);
+            this.NewCourseDatabaseCommand = DelegateCommand.FromAsyncHandler(this.NewCourseDatabaseAsync, this.CanExecuteAsync);
+            this.OpenCourseDatabaseCommand = DelegateCommand.FromAsyncHandler(this.OpenCourseDatabaseAsync, this.CanExecuteAsync);
+            this.CloseCourseDatabaseCommand = DelegateCommand.FromAsyncHandler(this.CloseCourseDatabaseAsync, this.CanExecuteAsync);
+            this.DeleteCourseDatabaseCommand = DelegateCommand.FromAsyncHandler(this.DeleteCourseDatabaseAsync, this.CanExecuteAsync);
 
             this.Enabled = true;
         }
@@ -133,6 +147,26 @@ namespace LevelEditor.ViewModels
         public ICommand PickLanguageDatabaseCommand { get; private set; }
 
         /// <summary>
+        /// New course database command.
+        /// </summary>
+        public ICommand NewCourseDatabaseCommand { get; private set; }
+
+        /// <summary>
+        /// Open course database command.
+        /// </summary>
+        public ICommand OpenCourseDatabaseCommand { get; private set; }
+
+        /// <summary>
+        /// Close course database command.
+        /// </summary>
+        public ICommand CloseCourseDatabaseCommand { get; private set; }
+
+        /// <summary>
+        /// Delete course database command.
+        /// </summary>
+        public ICommand DeleteCourseDatabaseCommand { get; private set; }
+
+        /// <summary>
         /// Whether commands can execute is based on whether we are currently executing.
         /// </summary>
         /// <returns>Whether the command can be executed.</returns>
@@ -149,6 +183,55 @@ namespace LevelEditor.ViewModels
         {
             this.Enabled = false;
             this.LanguageDatabase = await this.languageDatabaseService.OpenAsync(this.processFactory.Create("Pick file"));
+            this.Enabled = true;
+        }
+
+        /// <summary>
+        /// Execute new course database command.
+        /// </summary>
+        /// <returns>When complete.</returns>
+        private async Task NewCourseDatabaseAsync()
+        {
+            this.Enabled = false;
+            
+            var database = new CourseDatabase();
+            database.Id = new CourseId();
+            database.Id.Id = Guid.NewGuid();
+            
+            var file = await this.courseDatabaseService.CreateAsync(database.Id.Id.ToString(), this.processFactory.Create("Create course database"));
+            
+            this.Databases.Add(new CourseDatabaseViewModel(database, file));
+            
+            this.Enabled = true;
+        }
+
+        /// <summary>
+        /// Execute open course database command.
+        /// </summary>
+        /// <returns>When complete.</returns>
+        private async Task OpenCourseDatabaseAsync()
+        {
+            this.Enabled = false;
+            this.Enabled = true;
+        }
+
+        /// <summary>
+        /// Execute close course database command.
+        /// </summary>
+        /// <returns>When complete.</returns>
+        private async Task CloseCourseDatabaseAsync()
+        {
+            this.Enabled = false;
+            this.Enabled = true;
+        }
+
+        /// <summary>
+        /// Execute delete course database command.
+        /// </summary>
+        /// <returns>When complete.</returns>
+        private async Task DeleteCourseDatabaseAsync()
+        {
+            this.Enabled = false;
             this.Enabled = true;
         }
     }

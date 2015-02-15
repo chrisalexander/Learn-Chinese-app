@@ -1,7 +1,10 @@
 ﻿
 namespace CourseDB
 {
-    class CourseDBModule
+    /// <summary>
+    /// Module class for CourseDB.
+    /// </summary>
+    public class CourseDBModule
     {
     }
 }

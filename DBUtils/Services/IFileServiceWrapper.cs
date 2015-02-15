@@ -19,7 +19,7 @@ namespace DBUtils.Services
         /// <summary>
         /// Create a database file, asking the user for the location, with the specified filename.
         /// </summary>
-        /// <param name="fileName">The name of the file to create.</param>
+        /// <param name="fileName">The name of the file to create, without extension.</param>
         /// <param name="process">The process.</param>
         /// <returns>The created storage file.</returns>
         Task<IStorageFile> CreateAsync(string fileName, IProcess process);

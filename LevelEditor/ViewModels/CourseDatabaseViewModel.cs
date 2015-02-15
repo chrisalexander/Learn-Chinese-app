@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Composition;
 using System.Linq;
+using Windows.Storage;
 
 namespace LevelEditor.ViewModels
 {
@@ -45,6 +46,11 @@ namespace LevelEditor.ViewModels
         private ObservableCollection<CourseLevelViewModel> levels;
 
         /// <summary>
+        /// The storage file that this database is linked to.
+        /// </summary>
+        private IStorageFile storageFile;
+
+        /// <summary>
         /// The currently selected level.
         /// </summary>
         private CourseLevelViewModel selectedLevel;
@@ -53,7 +59,8 @@ namespace LevelEditor.ViewModels
         /// Construct a new view model from a source.
         /// </summary>
         /// <param name="source">The source database.</param>
-        public CourseDatabaseViewModel(ICourseDatabase source)
+        /// <param name="storageFile">The storage file the data came from.</param>
+        public CourseDatabaseViewModel(ICourseDatabase source, IStorageFile storageFile)
         {
             this.Id = source.Id;
             this.Name = source.Name;
@@ -61,6 +68,8 @@ namespace LevelEditor.ViewModels
             this.Updated = source.Updated;
             this.Path = source.Path;
             this.Levels = new ObservableCollection<CourseLevelViewModel>(source.Levels.Select(level => new CourseLevelViewModel(level)));
+
+            this.storageFile = storageFile;
         }
 
         /// <summary>
@@ -173,6 +182,22 @@ namespace LevelEditor.ViewModels
             set
             {
                 this.SetProperty(ref this.selectedLevel, value);
+            }
+        }
+
+        /// <summary>
+        /// The linked source storage file.
+        /// </summary>
+        public IStorageFile StorageFile
+        {
+            get
+            {
+                return this.storageFile;
+            }
+
+            set
+            {
+                this.SetProperty(ref this.storageFile, value);
             }
         }
 

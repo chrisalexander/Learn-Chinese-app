@@ -1,4 +1,5 @@
-﻿using DBUtils;
+﻿using CourseDB;
+using DBUtils;
 using LangDB;
 using LongRunningProcess;
 using Microsoft.Practices.Prism.Mvvm;
@@ -26,7 +27,7 @@ namespace LevelEditor
         /// <summary>
         /// List of the assembly modules to include in the container.
         /// </summary>
-        private IEnumerable<Type> assemblyModules = new[] { typeof(App), typeof(LangDBModule), typeof(LongRunningProcessModule), typeof(DBUtilsModule) };
+        private IEnumerable<Type> assemblyModules = new[] { typeof(App), typeof(LangDBModule), typeof(LongRunningProcessModule), typeof(DBUtilsModule), typeof(CourseDBModule) };
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code

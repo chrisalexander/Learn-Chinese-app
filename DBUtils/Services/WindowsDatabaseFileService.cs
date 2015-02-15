@@ -24,28 +24,21 @@ namespace DBUtils.Services
         /// <returns>The created file.</returns>
         public async Task<IStorageFile> CreateAsync(IStorageFolder folder, string fileName, IProcess process)
         {
-            IStorageItem existingItem;
+            IStorageFile existingFile;
             try
             {
-                existingItem = await folder.GetItemAsync(fileName);
+                existingFile = await folder.GetFileAsync(fileName);
             }
             catch (Exception)
             {
-                existingItem = null;
+                existingFile = null;
             }
 
             // If nothing already exists then create it and we're done.
-            if (existingItem == null)
+            if (existingFile == null)
             {
                 process.Completed = true;
                 return await folder.CreateFileAsync(fileName, CreationCollisionOption.FailIfExists);
-            }
-
-            var existingFile = existingItem as StorageFile;
-
-            if (existingFile == null)
-            {
-                throw new InvalidOperationException("The specified file name already exists but is not a file");
             }
 
             var canUse = await this.CanUseFileAsync(folder, existingFile);
