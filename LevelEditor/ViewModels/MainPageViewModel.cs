@@ -148,7 +148,7 @@ namespace LevelEditor.ViewModels
         private async Task PickLanguageDatabaseAsync()
         {
             this.Enabled = false;
-            this.LanguageDatabase = await this.languageDatabaseService.FileService.OpenAsync<LanguageDatabase>(new[] { ".langdb" }, PickerLocationId.DocumentsLibrary, this.processFactory.Create("Pick file"));
+            this.LanguageDatabase = await this.languageDatabaseService.OpenAsync(this.processFactory.Create("Pick file"));
             this.Enabled = true;
         }
     }

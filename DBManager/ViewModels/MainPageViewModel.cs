@@ -198,7 +198,7 @@ namespace DBManager.ViewModels
         /// <returns>When complete.</returns>
         private async Task PickDatabaseFileAsync()
         {
-            this.targetFile = await this.dbService.FileService.OpenAsync(new [] { ".langdb" }, PickerLocationId.DocumentsLibrary, this.processFactory.Create("Pick file"));
+            this.targetFile = await this.dbService.OpenWithoutParseAsync(this.processFactory.Create("Pick file"));
             this.OnPropertyChanged("StoragePath");
         }
 
@@ -208,7 +208,7 @@ namespace DBManager.ViewModels
         /// <returns>When complete.</returns>
         private async Task PickDatabaseFolderAsync()
         {
-            this.targetFile = await this.dbService.FileService.CreateAsync("Chinese.langdb", PickerLocationId.DocumentsLibrary, this.processFactory.Create("Create database file"));
+            this.targetFile = await this.dbService.CreateAsync("Chinese.langdb", this.processFactory.Create("Create database file"));
             this.OnPropertyChanged("StoragePath");
         }
 

@@ -11,7 +11,7 @@ namespace LangDB.Services
     /// <summary>
     /// Interface for services which provide high-level operations on databases.
     /// </summary>
-    public interface ILanguageDatabaseService
+    public interface ILanguageDatabaseService : IFileServiceWrapper<LanguageDatabase, ILanguageDatabase>
     {
         /// <summary>
         /// Acquire an archive from a URI, and merge with an existing file or create a new one if it exists.
@@ -22,10 +22,5 @@ namespace LangDB.Services
         /// <param name="process">The process.</param>
         /// <returns>When complete.</returns>
         Task<IDatabaseAcquisitionResult> AcquireAndParseArchiveAsync(Uri uri, IStorageFile file, Regex regex, IProcess process);
-
-        /// <summary>
-        /// The file service to use for other database requests.
-        /// </summary>
-        IDatabaseFileService<ILanguageDatabase> FileService { get; }
     }
 }

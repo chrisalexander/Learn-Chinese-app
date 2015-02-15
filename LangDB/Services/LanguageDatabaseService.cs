@@ -2,10 +2,12 @@
 using LangDB.Model;
 using LongRunningProcess;
 using System;
+using System.Collections.Generic;
 using System.Composition;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.Storage.Pickers;
 
 namespace LangDB.Services
 {
@@ -13,7 +15,7 @@ namespace LangDB.Services
     /// Database service for language operations.
     /// </summary>
     [Export(typeof(ILanguageDatabaseService))]
-    public class LanguageDatabaseService : ILanguageDatabaseService
+    public class LanguageDatabaseService : AbstractFileServiceWrapper<LanguageDatabase, ILanguageDatabase>, ILanguageDatabaseService
     {
         /// <summary>
         /// The archive acquisition service.
@@ -36,6 +38,11 @@ namespace LangDB.Services
         private readonly IDatabaseMergeService mergeService;
 
         /// <summary>
+        /// The supported file extensions of language databases.
+        /// </summary>
+        private readonly IEnumerable<string> extensions = new[] { ".langdb" };
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="archiveAcquisitionService">The archive acquisition service.</param>
@@ -56,13 +63,35 @@ namespace LangDB.Services
         }
 
         /// <summary>
-        /// The file service to use for other database requests.
+        /// Provide the file service to the abstract wrapper.
         /// </summary>
-        public IDatabaseFileService<ILanguageDatabase> FileService
+        protected override IDatabaseFileService<ILanguageDatabase> FileService
         {
             get
             {
                 return this.fileService;
+            }
+        }
+
+        /// <summary>
+        /// Provide the default picker location to the abstract wrapper.
+        /// </summary>
+        protected override PickerLocationId DefaultPickerLocation
+        {
+            get
+            {
+                return PickerLocationId.DocumentsLibrary;
+            }
+        }
+
+        /// <summary>
+        /// Provide the supported extensions to the abstract wrapper.
+        /// </summary>
+        protected override IEnumerable<string> Extensions
+        {
+            get
+            {
+                return this.extensions;
             }
         }
 
