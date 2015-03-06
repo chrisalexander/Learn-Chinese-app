@@ -2,17 +2,19 @@
     x:Class="LevelEditor.Views.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:LevelEditor"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="using:Microsoft.Practices.Prism.Mvvm"
     xmlns:vcl="using:VisibilityControlLibrary"
+    xmlns:converters="using:LevelEditor.Converters"
     mc:Ignorable="d"
+    Name="Page"
     prism:ViewModelLocator.AutoWireViewModel="true">
 
     <Page.Resources>
         <vcl:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <vcl:BooleanToInvisibilityConverter x:Key="BooleanToInvisibilityConverter" />
+        <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -60,17 +62,18 @@
             </Grid.RowDefinitions>
 
             <TextBlock Text="Database:" Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" />
-            <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Databases}" SelectedItem="{Binding SelectedDatabase}" DisplayMemberPath="Name" Width="500" Margin="20,0,20,0"></ComboBox>
-
+            
             <Button Grid.Row="0" Grid.Column="2" Command="{Binding NewCourseDatabaseCommand}" IsEnabled="{Binding Enabled}">New</Button>
             <Button Grid.Row="0" Grid.Column="3" Command="{Binding OpenCourseDatabaseCommand}" IsEnabled="{Binding Enabled}">Open</Button>
-            <Button Grid.Row="0" Grid.Column="4" Command="{Binding CloseCourseDatabaseCommand}" IsEnabled="{Binding Enabled}">Close</Button>
-            <Button Grid.Row="0" Grid.Column="5" Command="{Binding DeleteCourseDatabaseCommand}" IsEnabled="{Binding Enabled}">Delete</Button>
+            <Button Grid.Row="0" Grid.Column="4" Command="{Binding CloseCourseDatabaseCommand}" IsEnabled="{Binding Enabled}" Visibility="{Binding SelectedDatabase, Converter={StaticResource NullVisibilityConverter}}">Close</Button>
+            <Button Grid.Row="0" Grid.Column="5" Command="{Binding DeleteCourseDatabaseCommand}" IsEnabled="{Binding Enabled}" Visibility="{Binding SelectedDatabase, Converter={StaticResource NullVisibilityConverter}}">Delete</Button>
 
+            <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Databases}" SelectedItem="{Binding SelectedDatabase}" DisplayMemberPath="Name" Width="500" Margin="20,0,20,0"></ComboBox>
+            
             <Button Grid.Row="0" Grid.Column="7" IsEnabled="{Binding Enabled}">Save</Button>
         </Grid>
 
-        <Grid Grid.Row="3" Grid.Column="0" DataContext="{Binding SelectedDatabase}">
+        <Grid Grid.Row="3" Grid.Column="0" DataContext="{Binding SelectedDatabase}" Visibility="{Binding DataContext.SelectedDatabase, Converter={StaticResource NullVisibilityConverter}, ElementName=Page}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*" />
@@ -82,6 +85,7 @@
             <!-- Database view -->
             <Grid Grid.Column="0" Grid.Row="0">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -92,6 +96,9 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="Database" Grid.Row="0" Grid.Column="0" Style="{StaticResource SubheaderTextBlockStyle}" Margin="20,20,20,20" />
+
+                <TextBlock Text="Name" Grid.Row="1" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" Margin="20,0,20,0" />
+                <TextBox Text="{Binding Name}" Grid.Row="1" Grid.Column="1" Margin="20,0,20,0" />
             </Grid>
 
             <Grid Grid.Column="1" Grid.Row="0" DataContext="{Binding SelectedLevel}">

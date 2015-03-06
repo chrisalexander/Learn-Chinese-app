@@ -1,4 +1,6 @@
-﻿using Windows.Storage;
+﻿using System.Linq;
+using Windows.Storage;
+using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using CourseDB.Model;
 using CourseDB.Services;
@@ -200,12 +202,19 @@ namespace LevelEditor.ViewModels
             database.Id = new CourseId();
             database.Id.Id = Guid.NewGuid();
             database.Name = database.Id.Id.ToString();
-            
-            var file = await this.courseDatabaseService.CreateAsync(database.Id.Id.ToString(), this.processFactory.Create("Create course database"));
 
-            await this.courseDatabaseService.SaveAsync(database, file, this.processFactory.Create("Create blank database"));
+            try
+            {
+                var file = await this.courseDatabaseService.CreateAsync(database.Id.Id.ToString(), this.processFactory.Create("Create course database"));
 
-            this.CompleteDatabaseLoad(database, file);
+                await this.courseDatabaseService.SaveAsync(database, file, this.processFactory.Create("Create blank database"));
+
+                this.CompleteDatabaseLoad(database, file);
+            }
+            catch (Exception e)
+            {
+                this.ShowError("Create database", e.Message);
+            }
 
             this.Enabled = true;
         }
@@ -218,12 +227,19 @@ namespace LevelEditor.ViewModels
         {
             this.Enabled = false;
 
-            var databaseFile = await this.courseDatabaseService.OpenWithoutParseAsync(this.processFactory.Create("Open course database"));
-
-            if (databaseFile != null)
+            try
             {
-                var database = await this.courseDatabaseService.LoadAsync(databaseFile, this.processFactory.Create("Parse course database"));
-                this.CompleteDatabaseLoad(database, databaseFile);
+                var databaseFile = await this.courseDatabaseService.OpenWithoutParseAsync(this.processFactory.Create("Open course database"));
+
+                if (databaseFile != null)
+                {
+                    var database = await this.courseDatabaseService.LoadAsync(databaseFile, this.processFactory.Create("Parse course database"));
+                    this.CompleteDatabaseLoad(database, databaseFile);
+                }
+            }
+            catch (Exception e)
+            {
+                this.ShowError("Open database", e.Message);
             }
 
             this.Enabled = true;
@@ -270,6 +286,13 @@ namespace LevelEditor.ViewModels
         private void CompleteDatabaseLoad(ICourseDatabase database, IStorageFile file)
         {
             var newDatabase = new CourseDatabaseViewModel(database, file);
+
+            if (this.Databases.Any(db => db.Id.Equals(database.Id)))
+            {
+                this.ShowError("Add Database", "This database is already opened.");
+                return;
+            }
+
             this.Databases.Add(newDatabase);
             this.SelectedDatabase = newDatabase;
         }
@@ -280,6 +303,7 @@ namespace LevelEditor.ViewModels
         private void RemoveCurrentDatabaseSelection()
         {
             this.Databases.Remove(this.SelectedDatabase);
+
             if (this.Databases.Count > 0)
             {
                 this.SelectedDatabase = this.Databases[0];
@@ -316,6 +340,23 @@ namespace LevelEditor.ViewModels
             await messageDialog.ShowAsync();
 
             return canUse;
+        }
+
+        /// <summary>
+        /// Show an error to the user.
+        /// </summary>
+        /// <param name="action">What was happening.</param>
+        /// <param name="errorDescription">The error message.</param>
+        /// <returns>When shown.</returns>
+        private void ShowError(string action, string errorDescription)
+        {
+            var toastTemplate = ToastTemplateType.ToastText02;
+            var toastXml = ToastNotificationManager.GetTemplateContent(toastTemplate);
+            var toastTextElements = toastXml.GetElementsByTagName("text");
+            toastTextElements[0].AppendChild(toastXml.CreateTextNode("Error: " + action));
+            toastTextElements[1].AppendChild(toastXml.CreateTextNode(errorDescription));
+            var toast = new ToastNotification(toastXml);
+            ToastNotificationManager.CreateToastNotifier().Show(toast);
         }
     }
 }
