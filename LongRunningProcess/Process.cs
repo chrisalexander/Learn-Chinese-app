@@ -27,7 +27,7 @@ namespace LongRunningProcess
         /// <summary>
         /// The child processes of this process.
         /// </summary>
-        private IList<ChildProcess> childProcesses;
+        private readonly IList<ChildProcess> childProcesses;
 
         /// <summary>
         /// The duration type of this process.

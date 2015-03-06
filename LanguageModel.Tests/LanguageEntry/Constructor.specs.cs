@@ -39,6 +39,6 @@ namespace LanguageModel.Tests.LanguageEntry
 
         static string Pinyin = "Zhong1 guo2";
 
-        static IEnumerable<string> English = new[] { "China", "Middle Kingdom" };
+        static readonly IEnumerable<string> English = new[] { "China", "Middle Kingdom" };
     }
 }

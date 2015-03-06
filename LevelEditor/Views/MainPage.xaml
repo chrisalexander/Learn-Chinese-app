@@ -60,7 +60,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock Text="Database:" Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" />
-            <TextBlock Text="(Dropdown)" Grid.Row="0" Grid.Column="1" Style="{StaticResource BaseTextBlockStyle}" Margin="20,0,20,0" />
+            <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Databases}" SelectedItem="{Binding SelectedDatabase}" DisplayMemberPath="Name" Width="500" Margin="20,0,20,0"></ComboBox>
 
             <Button Grid.Row="0" Grid.Column="2" Command="{Binding NewCourseDatabaseCommand}" IsEnabled="{Binding Enabled}">New</Button>
             <Button Grid.Row="0" Grid.Column="3" Command="{Binding OpenCourseDatabaseCommand}" IsEnabled="{Binding Enabled}">Open</Button>

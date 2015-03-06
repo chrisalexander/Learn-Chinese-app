@@ -195,15 +195,15 @@ namespace DBUtils.Services
 
             var messageDialog = new MessageDialog("There is already a file with that name in this folder, would you like to use it?", "Existing file found");
 
-            messageDialog.Commands.Add(new UICommand("Use existing file", new UICommandInvokedHandler((IUICommand cmd) =>
+            messageDialog.Commands.Add(new UICommand("Use existing file", cmd =>
             {
                 canUse = true;
-            })));
+            }));
 
-            messageDialog.Commands.Add(new UICommand("Pick again", new UICommandInvokedHandler((IUICommand cmd) =>
+            messageDialog.Commands.Add(new UICommand("Pick again", cmd =>
             {
                 canUse = false;
-            })));
+            }));
 
             messageDialog.DefaultCommandIndex = 0;
             messageDialog.CancelCommandIndex = 1;

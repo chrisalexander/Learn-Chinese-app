@@ -1,4 +1,6 @@
-﻿using CourseDB.Model;
+﻿using Windows.Storage;
+using Windows.UI.Popups;
+using CourseDB.Model;
 using CourseDB.Services;
 using LangDB.Model;
 using LangDB.Services;
@@ -22,17 +24,17 @@ namespace LevelEditor.ViewModels
         /// <summary>
         /// The language database service.
         /// </summary>
-        private ILanguageDatabaseService languageDatabaseService;
+        private readonly ILanguageDatabaseService languageDatabaseService;
 
         /// <summary>
         /// The course database service.
         /// </summary>
-        private ICourseDatabaseService courseDatabaseService;
+        private readonly ICourseDatabaseService courseDatabaseService;
 
         /// <summary>
         /// The process factory.
         /// </summary>
-        private IProcessFactory processFactory;
+        private readonly IProcessFactory processFactory;
 
         /// <summary>
         /// The databases in the view.
@@ -197,11 +199,14 @@ namespace LevelEditor.ViewModels
             var database = new CourseDatabase();
             database.Id = new CourseId();
             database.Id.Id = Guid.NewGuid();
+            database.Name = database.Id.Id.ToString();
             
             var file = await this.courseDatabaseService.CreateAsync(database.Id.Id.ToString(), this.processFactory.Create("Create course database"));
-            
-            this.Databases.Add(new CourseDatabaseViewModel(database, file));
-            
+
+            await this.courseDatabaseService.SaveAsync(database, file, this.processFactory.Create("Create blank database"));
+
+            this.CompleteDatabaseLoad(database, file);
+
             this.Enabled = true;
         }
 
@@ -212,6 +217,15 @@ namespace LevelEditor.ViewModels
         private async Task OpenCourseDatabaseAsync()
         {
             this.Enabled = false;
+
+            var databaseFile = await this.courseDatabaseService.OpenWithoutParseAsync(this.processFactory.Create("Open course database"));
+
+            if (databaseFile != null)
+            {
+                var database = await this.courseDatabaseService.LoadAsync(databaseFile, this.processFactory.Create("Parse course database"));
+                this.CompleteDatabaseLoad(database, databaseFile);
+            }
+
             this.Enabled = true;
         }
 
@@ -222,6 +236,9 @@ namespace LevelEditor.ViewModels
         private async Task CloseCourseDatabaseAsync()
         {
             this.Enabled = false;
+
+            this.RemoveCurrentDatabaseSelection();
+
             this.Enabled = true;
         }
 
@@ -232,7 +249,73 @@ namespace LevelEditor.ViewModels
         private async Task DeleteCourseDatabaseAsync()
         {
             this.Enabled = false;
+
+            var canDelete = await this.CanDeleteDatabaseAsync(this.SelectedDatabase.Name);
+
+            if (canDelete)
+            {
+                var database = this.SelectedDatabase;
+                this.RemoveCurrentDatabaseSelection();
+                await this.courseDatabaseService.DeleteAsync(database.StorageFile, this.processFactory.Create("Delete database"));
+            }
+
             this.Enabled = true;
+        }
+
+        /// <summary>
+        /// Helper that takes a database and its file and add them to the UI.
+        /// </summary>
+        /// <param name="database">The parsed database.</param>
+        /// <param name="file">The file the database came from.</param>
+        private void CompleteDatabaseLoad(ICourseDatabase database, IStorageFile file)
+        {
+            var newDatabase = new CourseDatabaseViewModel(database, file);
+            this.Databases.Add(newDatabase);
+            this.SelectedDatabase = newDatabase;
+        }
+
+        /// <summary>
+        /// Remove the current database selection from the selection and the list of databases.
+        /// </summary>
+        private void RemoveCurrentDatabaseSelection()
+        {
+            this.Databases.Remove(this.SelectedDatabase);
+            if (this.Databases.Count > 0)
+            {
+                this.SelectedDatabase = this.Databases[0];
+            }
+            else
+            {
+                this.SelectedDatabase = null;
+            }
+        }
+
+        /// <summary>
+        /// Check whether the user really wants to delete the database.
+        /// </summary>
+        /// <param name="databaseName">The name of the database to delete.</param>
+        /// <returns>Whether the user wishes to delete the file.</returns>
+        private async Task<bool> CanDeleteDatabaseAsync(string databaseName)
+        {
+            var canUse = false;
+
+            var messageDialog = new MessageDialog("Would you like to delete the level database " + databaseName, "Are you sure?");
+
+            messageDialog.Commands.Add(new UICommand("Delete file", cmd =>
+            {
+                canUse = true;
+            }));
+
+            messageDialog.Commands.Add(new UICommand("Cancel", cmd =>
+            {
+                canUse = false;
+            }));
+
+            messageDialog.DefaultCommandIndex = 1;
+            messageDialog.CancelCommandIndex = 1;
+            await messageDialog.ShowAsync();
+
+            return canUse;
         }
     }
 }
