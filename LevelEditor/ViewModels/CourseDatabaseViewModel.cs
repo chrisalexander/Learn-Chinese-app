@@ -1,4 +1,7 @@
-﻿using CourseDB.Model;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
+using CourseDB.Model;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -70,6 +73,9 @@ namespace LevelEditor.ViewModels
             this.Levels = new ObservableCollection<CourseLevelViewModel>(source.Levels.Select(level => new CourseLevelViewModel(level)));
 
             this.storageFile = storageFile;
+
+            this.NewLevelCommand = DelegateCommand.FromAsyncHandler(this.NewLevelAsync);
+            this.RemoveLevelCommand = DelegateCommand.FromAsyncHandler(this.RemoveLevelAsync);
         }
 
         /// <summary>
@@ -202,6 +208,16 @@ namespace LevelEditor.ViewModels
         }
 
         /// <summary>
+        /// Command for adding a new level.
+        /// </summary>
+        public ICommand NewLevelCommand { get; private set; }
+
+        /// <summary>
+        /// Command for removing a level.
+        /// </summary>
+        public ICommand RemoveLevelCommand { get; private set; }
+
+        /// <summary>
         /// Convert the view model to the model class.
         /// </summary>
         /// <returns>The view model data in model format.</returns>
@@ -219,6 +235,37 @@ namespace LevelEditor.ViewModels
             source.Levels = (IList<ICourseLevel>)levels;
 
             return source;
+        }
+
+        /// <summary>
+        /// Create a new level, and select it.
+        /// </summary>
+        /// <returns>When complete.</returns>
+        private async Task NewLevelAsync()
+        {
+            var level = new CourseLevel();
+            level.Name = "New level";
+
+            var levelViewModel = new CourseLevelViewModel(level);
+
+            this.Levels.Add(levelViewModel);
+            this.SelectedLevel = levelViewModel;
+        }
+
+        /// <summary>
+        /// Deletes the currently selected level.
+        /// </summary>
+        /// <returns>When complete.</returns>
+        private async Task RemoveLevelAsync()
+        {
+            if (this.SelectedLevel == null)
+            {
+                return;
+            }
+
+            this.Levels.Remove(this.SelectedLevel);
+
+            this.SelectedLevel = this.Levels.Count > 0 ? this.Levels[0] : null;
         }
     }
 }
