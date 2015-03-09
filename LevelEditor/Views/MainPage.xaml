@@ -168,6 +168,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
@@ -181,6 +182,37 @@
 
                     <TextBlock Text="Description" Grid.Row="3" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" Margin="20,20,20,0" />
                     <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" Margin="20,20,20,0" TextWrapping="Wrap" AcceptsReturn="True" Height="100" />
+
+                    <TextBlock Text="Entries" Grid.Row="4" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" Margin="20,20,20,0" />
+                    <Grid Grid.Row="4" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Button Grid.Row="0" Grid.Column="0" Command="{Binding NewEntryCommand}" IsEnabled="{Binding DataContext.Enabled, ElementName=Page}" Margin="20,20,0,0">New</Button>
+                        <Button Grid.Row="0" Grid.Column="1" Command="{Binding RemoveEntryCommand}" IsEnabled="{Binding DataContext.Enabled, ElementName=Page}" Margin="0,20,0,0">Remove</Button>
+                    </Grid>
+
+                    <ListBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding Entries}" SelectedItem="{Binding SelectedEntry, Mode=TwoWay}" Margin="20,20,0,0" VerticalAlignment="Stretch">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Text="{Binding Name}" Grid.Column="0" Grid.Row="0" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Grid>
 
                 <!-- Entry view -->
