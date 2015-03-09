@@ -35,5 +35,14 @@ namespace CourseDB.Model
         {
             return this.Id.GetHashCode();
         }
+
+        /// <summary>
+        /// Provides a string format of the ID.
+        /// </summary>
+        /// <returns>The ID as a string.</returns>
+        public override string ToString()
+        {
+            return "Course: " + this.Id;
+        }
     }
 }
