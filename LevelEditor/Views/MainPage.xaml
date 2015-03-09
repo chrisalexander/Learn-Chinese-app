@@ -73,7 +73,7 @@
             <Button Grid.Row="0" Grid.Column="7" IsEnabled="{Binding Enabled}">Save</Button>
         </Grid>
 
-        <Grid Grid.Row="3" Grid.Column="0" DataContext="{Binding SelectedDatabase}" Visibility="{Binding DataContext.SelectedDatabase, Converter={StaticResource NullVisibilityConverter}, ElementName=Page}">
+        <Grid Grid.Row="3" Grid.Column="0" DataContext="{Binding SelectedDatabase}" Visibility="{Binding DataContext.SelectedDatabase, Converter={StaticResource NullVisibilityConverter}, ElementName=Page}" Name="Database">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*" />
@@ -99,9 +99,12 @@
 
                 <TextBlock Text="Name" Grid.Row="1" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" Margin="20,0,20,0" />
                 <TextBox Text="{Binding Name}" Grid.Row="1" Grid.Column="1" Margin="20,0,20,0" />
+
+                <TextBlock Text="Description" Grid.Row="2" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" Margin="20,20,20,0" />
+                <TextBox Text="{Binding Description}" Grid.Row="2" Grid.Column="1" Margin="20,20,20,0" TextWrapping="Wrap" AcceptsReturn="True" Height="100" />
             </Grid>
 
-            <Grid Grid.Column="1" Grid.Row="0" DataContext="{Binding SelectedLevel}">
+            <Grid Grid.Column="1" Grid.Row="0" DataContext="{Binding SelectedLevel}" Visibility="{Binding DataContext.SelectedLevel, Converter={StaticResource NullVisibilityConverter}, ElementName=Database}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
