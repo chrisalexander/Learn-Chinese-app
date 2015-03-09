@@ -165,6 +165,8 @@ namespace DBUtils.Services
                 targetFile = await this.CreateAsync(fileName, location, process.Step("Create file", 50));
             }
 
+            database.Path = targetFile.Path;
+
             await this.SaveAsync(database, targetFile, process.Step("Save file", 50));
 
             process.Completed = true;

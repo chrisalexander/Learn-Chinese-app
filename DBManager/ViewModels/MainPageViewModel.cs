@@ -207,7 +207,7 @@ namespace DBManager.ViewModels
         /// <returns>When complete.</returns>
         private async Task PickDatabaseFolderAsync()
         {
-            this.targetFile = await this.dbService.CreateAsync("Chinese.langdb", this.processFactory.Create("Create database file"));
+            this.targetFile = await this.dbService.CreateAsync("Chinese", this.processFactory.Create("Create database file"));
             this.OnPropertyChanged("StoragePath");
         }
 

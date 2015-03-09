@@ -134,13 +134,24 @@ namespace LangDB.Services
 
             var result = await this.mergeService.Merge(database, entries, process.Step("Merging databases", 30));
 
-            database.Updated = DateTime.Now;
-
-            await this.fileService.SaveAsync(database, file, process.Step("Saving database", 10));
+            await this.SaveAsync(database, file, process.Step("Saving database", 10));
 
             process.Completed = true;
 
             return result;
+        }
+
+        /// <summary>
+        /// Provide metadata regarding the database prior to save.
+        /// </summary>
+        /// <param name="database">The database.</param>
+        /// <param name="process">The process.</param>
+        /// <returns>When complete.</returns>
+        protected override async Task PreSaveStep(ILanguageDatabase database, IProcess process)
+        {
+            database.Updated = DateTime.Now;
+
+            process.Completed = true;
         }
     }
 }

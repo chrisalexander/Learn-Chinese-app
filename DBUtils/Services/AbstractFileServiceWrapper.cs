@@ -52,9 +52,11 @@ namespace DBUtils.Services
         /// <param name="file">The file to save it to.</param>
         /// <param name="process">The process.</param>
         /// <returns>When complete.</returns>
-        public Task SaveAsync(T database, IStorageFile file, IProcess process)
+        public async Task SaveAsync(T database, IStorageFile file, IProcess process)
         {
-            return this.FileService.SaveAsync(database, file, process);
+            await this.PreSaveStep(database, process.Step("Pre-save", 10));
+
+            await this.FileService.SaveAsync(database, file, process.Step("Save", 90));
         }
 
         /// <summary>
@@ -121,11 +123,25 @@ namespace DBUtils.Services
         /// <param name="fileName">The name of the database file to save.</param>
         /// <param name="process">The process.</param>
         /// <returns>When complete.</returns>
-        public Task SaveAsync(T database, string fileName, IProcess process)
+        public async Task SaveAsync(T database, string fileName, IProcess process)
         {
-            return this.FileService.SaveAsync(database, fileName, this.DefaultPickerLocation, process);
+            await this.PreSaveStep(database, process.Step("Pre-save", 10));
+
+            await this.FileService.SaveAsync(database, fileName, this.DefaultPickerLocation, process.Step("Save", 90));
         }
 
         #endregion
+
+        /// <summary>
+        /// Virtual method which allows implementers to provide pre-save modifications to the database,
+        /// such as configuring metadata and other cleanup tasks.
+        /// </summary>
+        /// <param name="database">The database to be saved.</param>
+        /// <param name="process">The process.</param>
+        /// <returns>When complete.</returns>
+        protected virtual async Task PreSaveStep(T database, IProcess process)
+        {
+            process.Completed = true;
+        }
     }
 }

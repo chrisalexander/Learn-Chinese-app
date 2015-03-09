@@ -1,12 +1,11 @@
-﻿using CourseDB.Model;
+﻿using System;
+using System.Threading.Tasks;
+using CourseDB.Model;
 using DBUtils.Services;
-using System;
 using System.Collections.Generic;
 using System.Composition;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage.Pickers;
+using LongRunningProcess;
 
 namespace CourseDB.Services
 {
@@ -67,6 +66,19 @@ namespace CourseDB.Services
             {
                 return this.extensions;
             }
+        }
+
+        /// <summary>
+        /// Provide metadata regarding the database prior to save.
+        /// </summary>
+        /// <param name="database">The database.</param>
+        /// <param name="process">The process.</param>
+        /// <returns>When complete.</returns>
+        protected override async Task PreSaveStep(ICourseDatabase database, IProcess process)
+        {
+            database.Updated = DateTime.Now;
+
+            process.Completed = true;
         }
     }
 }
