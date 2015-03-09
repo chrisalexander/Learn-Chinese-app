@@ -244,7 +244,9 @@ namespace LevelEditor.ViewModels
         private async Task NewLevelAsync()
         {
             var level = new CourseLevel();
-            level.Name = "New level";
+            level.Id = new LevelId();
+            level.Id.Id = Guid.NewGuid();
+            level.Name = level.Id.Id.ToString();
 
             var levelViewModel = new CourseLevelViewModel(level);
 

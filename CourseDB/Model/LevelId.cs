@@ -16,5 +16,14 @@ namespace CourseDB.Model
         /// The ID of the level.
         /// </summary>
         public Guid Id { get; set; }
+
+        /// <summary>
+        /// Get a string representation of the ID.
+        /// </summary>
+        /// <returns>String representation of the ID.</returns>
+        public override string ToString()
+        {
+            return "Level: " + this.Id + "; " + this.CourseId;
+        }
     }
 }
