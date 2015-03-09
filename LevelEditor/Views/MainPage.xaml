@@ -70,7 +70,7 @@
 
             <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Databases}" SelectedItem="{Binding SelectedDatabase, Mode=TwoWay}" DisplayMemberPath="Name" Width="500" Margin="20,0,20,0"></ComboBox>
             
-            <Button Grid.Row="0" Grid.Column="7" IsEnabled="{Binding Enabled}">Save</Button>
+            <Button Grid.Row="0" Grid.Column="7" Command="{Binding SaveCommand}" IsEnabled="{Binding Enabled}">Save</Button>
         </Grid>
 
         <Grid Grid.Row="3" Grid.Column="0" DataContext="{Binding SelectedDatabase}" Visibility="{Binding DataContext.SelectedDatabase, Converter={StaticResource NullVisibilityConverter}, ElementName=Page}" Name="Database">

@@ -232,7 +232,7 @@ namespace LevelEditor.ViewModels
 
             var levels = new List<CourseLevel>();
             levels.AddRange(this.Levels.Select(entry => entry.ToSource()));
-            source.Levels = (IList<ICourseLevel>)levels;
+            source.Levels = levels;
 
             return source;
         }

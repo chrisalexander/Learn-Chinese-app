@@ -207,7 +207,7 @@ namespace LevelEditor.ViewModels
             
             var entries = new List<LevelEntry>();
             entries.AddRange(this.Entries.Select(entry => entry.ToSource()));
-            source.Entries = (IList<ILevelEntry>)entries;
+            source.Entries = entries;
 
             source.Prerequisites = this.Prerequisites.ToList();
             return source;

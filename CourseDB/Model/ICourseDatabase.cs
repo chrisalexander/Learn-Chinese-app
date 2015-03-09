@@ -32,7 +32,7 @@ namespace CourseDB.Model
         /// <summary>
         /// The course's levels.
         /// </summary>
-        IList<ICourseLevel> Levels { get; }
+        IList<CourseLevel> Levels { get; }
         
     }
 }

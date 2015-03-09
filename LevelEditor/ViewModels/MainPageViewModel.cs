@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Windows.Storage;
 using Windows.UI.Notifications;
 using Windows.UI.Popups;
@@ -77,6 +78,7 @@ namespace LevelEditor.ViewModels
             this.OpenCourseDatabaseCommand = DelegateCommand.FromAsyncHandler(this.OpenCourseDatabaseAsync, this.CanExecuteAsync);
             this.CloseCourseDatabaseCommand = DelegateCommand.FromAsyncHandler(this.CloseCourseDatabaseAsync, this.CanExecuteAsync);
             this.DeleteCourseDatabaseCommand = DelegateCommand.FromAsyncHandler(this.DeleteCourseDatabaseAsync, this.CanExecuteAsync);
+            this.SaveCommand = DelegateCommand.FromAsyncHandler(this.SaveAsync, this.CanExecuteAsync);
 
             this.Enabled = true;
         }
@@ -169,6 +171,11 @@ namespace LevelEditor.ViewModels
         /// Delete course database command.
         /// </summary>
         public ICommand DeleteCourseDatabaseCommand { get; private set; }
+
+        /// <summary>
+        /// Save all command.
+        /// </summary>
+        public ICommand SaveCommand { get; private set; }
 
         /// <summary>
         /// Whether commands can execute is based on whether we are currently executing.
@@ -274,6 +281,33 @@ namespace LevelEditor.ViewModels
                 this.RemoveCurrentDatabaseSelection();
                 await this.courseDatabaseService.DeleteAsync(database.StorageFile, this.processFactory.Create("Delete database"));
             }
+
+            this.Enabled = true;
+        }
+
+        /// <summary>
+        /// Save the data.
+        /// </summary>
+        /// <returns>When complete</returns>
+        private async Task SaveAsync()
+        {
+            this.Enabled = false;
+
+            var process = this.processFactory.Create("Save all courses");
+            var weight = 100.0 / this.Databases.Count;
+
+            var tasks = new List<Task>();
+
+            foreach (var course in this.Databases)
+            {
+                var innerCourse = course;
+                var processStep = process.Step("Save course " + innerCourse.Name, weight);
+                var courseSource = await process.RunInBackground((progress, token) => innerCourse.ToSource());
+                var task = this.courseDatabaseService.SaveAsync(courseSource, innerCourse.StorageFile, processStep);
+                tasks.Add(task);
+            }
+
+            await Task.WhenAll(tasks);
 
             this.Enabled = true;
         }

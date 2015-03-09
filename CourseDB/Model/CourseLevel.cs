@@ -13,7 +13,7 @@ namespace CourseDB.Model
         /// </summary>
         public CourseLevel()
         {
-            this.Entries = new List<ILevelEntry>();
+            this.Entries = new List<LevelEntry>();
             this.Prerequisites = new List<LevelId>();
         }
 
@@ -40,7 +40,7 @@ namespace CourseDB.Model
         /// <summary>
         /// The ordered list of entries that form this level.
         /// </summary>
-        public IList<ILevelEntry> Entries { get; set; }
+        public IList<LevelEntry> Entries { get; set; }
 
         /// <summary>
         /// List of IDs prerequisite levels for this level.
