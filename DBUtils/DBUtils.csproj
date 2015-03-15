@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBUtilsModule.cs" />
+    <Compile Include="Model\AbstractId.cs" />
+    <Compile Include="Model\DescendantAbstractId.cs" />
     <Compile Include="Model\IDatabase.cs" />
     <Compile Include="Services\AbstractFileServiceWrapper.cs" />
     <Compile Include="Services\ICommonFileService.cs" />
@@ -50,10 +52,6 @@
     <Compile Include="Services\JsonDatabaseFileService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\WindowsDatabaseFileService.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <TargetPlatform Include="Windows, Version=8.1" />
-    <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -77,6 +75,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <TargetPlatform Include="Windows, Version=8.1" />
+    <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
