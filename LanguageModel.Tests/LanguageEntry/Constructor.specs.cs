@@ -7,7 +7,7 @@ namespace LanguageModel.Tests.LanguageEntry
     [Subject(typeof(LanguageModel.LanguageEntry))]
     public class When_constructed
     {
-        Because of = () => Entry = new LanguageModel.LanguageEntry(Traditional, Simplified, Pinyin, English);
+        Because Of = () => Entry = new LanguageModel.LanguageEntry(Traditional, Simplified, Pinyin, English);
 
         It Should_have_the_english = () =>
         {

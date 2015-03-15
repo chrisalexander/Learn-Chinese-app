@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DBUtils.Model
+﻿namespace DBUtils.Model
 {
     /// <summary>
     /// Abstract ID which also contains an ancestor ID for which

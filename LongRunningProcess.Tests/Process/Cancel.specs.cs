@@ -8,7 +8,7 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_cancelled
     {
-        Establish context = () =>
+        Establish Context = () =>
         {
             TokenSource = new CancellationTokenSource();
             Token = TokenSource.Token;
@@ -16,7 +16,7 @@ namespace LongRunningProcess.Tests.Process
             Process = new LongRunningProcess.Process(string.Empty, null, TokenSource);
         };
 
-        Because of = () => Process.CancelAsync().Await();
+        Because Of = () => Process.CancelAsync().Await();
 
         It Should_cancel_the_task = () => Token.IsCancellationRequested.ShouldBeTrue();
 
@@ -32,7 +32,7 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_cancelled_with_children : WithFakes
     {
-        Establish context = () =>
+        Establish Context = () =>
         {
             Factory = An<IProcessFactory>();
 
@@ -50,7 +50,7 @@ namespace LongRunningProcess.Tests.Process
             Process.Step(string.Empty, 50);
         };
 
-        Because of = () => Process.CancelAsync().Await();
+        Because Of = () => Process.CancelAsync().Await();
 
         It Should_cancel_the_task = () => Token.IsCancellationRequested.ShouldBeTrue();
 

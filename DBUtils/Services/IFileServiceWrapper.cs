@@ -1,9 +1,5 @@
 ﻿using DBUtils.Model;
 using LongRunningProcess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -12,9 +8,9 @@ namespace DBUtils.Services
     /// <summary>
     /// Interface for wrappers which use a file service and expose a user-safe way of accessing it.
     /// </summary>
-    /// <typeparam name="Z">The concrete type of the database to expose.</typeparam>
+    /// <typeparam name="TZ">The concrete type of the database to expose.</typeparam>
     /// <typeparam name="T">The interface type of the database.</typeparam>
-    public interface IFileServiceWrapper<Z, T> : ICommonFileService<T> where Z : T where T : IDatabase
+    public interface IFileServiceWrapper<TZ, T> : ICommonFileService<T> where TZ : T where T : IDatabase
     {
         /// <summary>
         /// Create a database file, asking the user for the location, with the specified filename.
@@ -29,7 +25,7 @@ namespace DBUtils.Services
         /// </summary>
         /// <param name="process">The process.</param>
         /// <returns>The loaded database.</returns>
-        Task<Z> OpenAsync(IProcess process);
+        Task<TZ> OpenAsync(IProcess process);
 
         /// <summary>
         /// Allow the user to specify a database file to open but not parse.
@@ -44,7 +40,7 @@ namespace DBUtils.Services
         /// <param name="file">The file to load the database from.</param>
         /// <param name="process">The process.</param>
         /// <returns>The loaded database.</returns>
-        Task<Z> LoadAsync(IStorageFile file, IProcess process);
+        Task<TZ> LoadAsync(IStorageFile file, IProcess process);
 
         /// <summary>
         /// Save the database to a file of the user's choosing.

@@ -42,6 +42,7 @@
     <Compile Include="IPinyinSyllable.cs" />
     <Compile Include="LanguageEntry.cs" />
     <Compile Include="LanguageModelModule.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Tone.cs" />
     <Compile Include="PinyinSyllable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

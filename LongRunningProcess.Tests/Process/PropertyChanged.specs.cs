@@ -9,7 +9,7 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_child_changes_percentage : WithFakes
     {
-        Establish context = () =>
+        Establish Context = () =>
         {
             Factory = An<IProcessFactory>();
 
@@ -26,7 +26,7 @@ namespace LongRunningProcess.Tests.Process
             Child.WhenToldTo(c => c.OverallProgress).Return(10);
         };
 
-        Because of = () => Child.Raise(c => c.PropertyChanged += null, null, new PropertyChangedEventArgs("OverallProgress"));
+        Because Of = () => Child.Raise(c => c.PropertyChanged += null, null, new PropertyChangedEventArgs("OverallProgress"));
 
         It Should_have_notified_percentage_changed = () => PropertyChanged.ShouldBeTrue();
 
@@ -42,7 +42,7 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_child_completes : WithFakes
     {
-        Establish context = () =>
+        Establish Context = () =>
         {
             Factory = An<IProcessFactory>();
 
@@ -59,7 +59,7 @@ namespace LongRunningProcess.Tests.Process
             Child.Completed = true;
         };
 
-        Because of = () => Child.Raise(c => c.PropertyChanged += null, null, new PropertyChangedEventArgs("Completed"));
+        Because Of = () => Child.Raise(c => c.PropertyChanged += null, null, new PropertyChangedEventArgs("Completed"));
 
         It Should_have_notified_state_changed = () => PropertyChanged.ShouldBeTrue();
 
@@ -75,7 +75,7 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_child_changes_state : WithFakes
     {
-        Establish context = () =>
+        Establish Context = () =>
         {
             Factory = An<IProcessFactory>();
 
@@ -90,7 +90,7 @@ namespace LongRunningProcess.Tests.Process
             Process.Step(string.Empty, 0);
         };
 
-        Because of = () => Child.Raise(c => c.PropertyChanged += null, null, new PropertyChangedEventArgs("Status"));
+        Because Of = () => Child.Raise(c => c.PropertyChanged += null, null, new PropertyChangedEventArgs("Status"));
 
         It Should_have_notified_state_changed = () => PropertyChanged.ShouldBeTrue();
 

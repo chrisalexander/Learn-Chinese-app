@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using CourseDB.Model;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Composition;
@@ -66,8 +64,8 @@ namespace LevelEditor.ViewModels
             this.Entries = new ObservableCollection<LevelEntryViewModel>(source.Entries.Select(entry => new LevelEntryViewModel(entry)));
             this.Prerequisites = new ObservableCollection<LevelId>(source.Prerequisites);
 
-            this.NewEntryCommand = DelegateCommand.FromAsyncHandler(this.NewEntryAsync);
-            this.RemoveEntryCommand = DelegateCommand.FromAsyncHandler(this.RemoveEntryAsync);
+            this.NewEntryCommand = new DelegateCommand(this.NewEntry);
+            this.RemoveEntryCommand = new DelegateCommand(this.RemoveEntry);
         }
 
         /// <summary>
@@ -205,9 +203,9 @@ namespace LevelEditor.ViewModels
             source.Description = this.Description;
             source.Difficulty = this.Difficulty;
             
-            var entries = new List<LevelEntry>();
-            entries.AddRange(this.Entries.Select(entry => entry.ToSource()));
-            source.Entries = entries;
+            var levelEntries = new List<LevelEntry>();
+            levelEntries.AddRange(this.Entries.Select(entry => entry.ToSource()));
+            source.Entries = levelEntries;
 
             source.Prerequisites = this.Prerequisites.ToList();
             return source;
@@ -217,7 +215,7 @@ namespace LevelEditor.ViewModels
         /// Create a new entry, and select it.
         /// </summary>
         /// <returns>When complete.</returns>
-        private async Task NewEntryAsync()
+        private void NewEntry()
         {
             var entry = new LevelEntry();
             entry.EntryId = Guid.NewGuid().ToString();
@@ -232,7 +230,7 @@ namespace LevelEditor.ViewModels
         /// Deletes the currently selected entry.
         /// </summary>
         /// <returns>When complete.</returns>
-        private async Task RemoveEntryAsync()
+        private void RemoveEntry()
         {
             if (this.SelectedEntry == null)
             {

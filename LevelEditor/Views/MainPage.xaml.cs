@@ -1,12 +1,11 @@
 ﻿using Microsoft.Practices.Prism.Mvvm;
-using Windows.UI.Xaml.Controls;
 
 namespace LevelEditor.Views
 {
     /// <summary>
     /// The view code for the main page.
     /// </summary>
-    public sealed partial class MainPage : Page, IView
+    public sealed partial class MainPage : IView
     {
         /// <summary>
         /// Constructor for the main page.

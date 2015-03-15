@@ -8,9 +8,9 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_marked_complete
     {
-        Establish context = () => Process = new LongRunningProcess.Process(string.Empty, null);
+        Establish Context = () => Process = new LongRunningProcess.Process(string.Empty, null);
 
-        Because of = () => Process.Completed = true;
+        Because Of = () => Process.Completed = true;
 
         It Should_be_at_100_percent = () => Process.OverallProgress.ShouldEqual(100);
 
@@ -20,9 +20,9 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_incremented
     {
-        Establish context = () => Process = new LongRunningProcess.Process(string.Empty, null);
+        Establish Context = () => Process = new LongRunningProcess.Process(string.Empty, null);
 
-        Because of = () => Process.Report(50);
+        Because Of = () => Process.Report(50);
 
         It Should_be_at_50_percent = () => Process.OverallProgress.ShouldEqual(50);
 
@@ -32,9 +32,9 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_incremented_over_100
     {
-        Establish context = () => Process = new LongRunningProcess.Process(string.Empty, null);
+        Establish Context = () => Process = new LongRunningProcess.Process(string.Empty, null);
 
-        Because of = () => Process.Report(101);
+        Because Of = () => Process.Report(101);
 
         It Should_be_capped_at_100_percent = () => Process.OverallProgress.ShouldEqual(100);
 
@@ -44,7 +44,7 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_there_is_one_child_with_progress : WithFakes
     {
-        Establish context = () =>
+        Establish Context = () =>
         {
             Factory = An<IProcessFactory>();
 
@@ -57,7 +57,7 @@ namespace LongRunningProcess.Tests.Process
             Factory.WhenToldTo(c => c.Create(Param<string>.IsAnything, Param<CancellationTokenSource>.IsAnything)).Return(Child);
         };
 
-        Because of = () => Process.Step(string.Empty, 50);
+        Because Of = () => Process.Step(string.Empty, 50);
 
         It Should_compute_the_correct_percentage = () => Process.OverallProgress.ShouldEqual(25);
 
@@ -71,7 +71,7 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_there_are_multiple_children : WithFakes
     {
-        Establish context = () =>
+        Establish Context = () =>
         {
             Factory = MockRepository.GenerateStub<IProcessFactory>();
 
@@ -89,7 +89,7 @@ namespace LongRunningProcess.Tests.Process
             Factory.Stub(f => f.Create(Arg<string>.Is.Anything, Arg<CancellationTokenSource>.Is.Anything)).Return(Child2).Repeat.Once();
         };
 
-        Because of = () =>
+        Because Of = () =>
         {
             Process.Step(string.Empty, 40);
             Process.Step(string.Empty, 50);
@@ -109,9 +109,9 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_there_are_multiple_overflow_children : WithFakes
     {
-        Establish context = () =>
+        Establish Context = () =>
         {
-            Factory = MockRepository.GenerateStub<LongRunningProcess.IProcessFactory>();
+            Factory = MockRepository.GenerateStub<IProcessFactory>();
 
             Process = new LongRunningProcess.Process(string.Empty, Factory);
 
@@ -127,7 +127,7 @@ namespace LongRunningProcess.Tests.Process
             Factory.Stub(f => f.Create(Arg<string>.Is.Anything, Arg<CancellationTokenSource>.Is.Anything)).Return(Child2).Repeat.Once();
         };
 
-        Because of = () =>
+        Because Of = () =>
         {
             Process.Step(string.Empty, 60);
             Process.Step(string.Empty, 50);
@@ -147,9 +147,9 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_there_are_multiple_children_and_increment : WithFakes
     {
-        Establish context = () =>
+        Establish Context = () =>
         {
-            Factory = MockRepository.GenerateStub<LongRunningProcess.IProcessFactory>();
+            Factory = MockRepository.GenerateStub<IProcessFactory>();
 
             Process = new LongRunningProcess.Process(string.Empty, Factory);
 
@@ -165,7 +165,7 @@ namespace LongRunningProcess.Tests.Process
             Factory.Stub(f => f.Create(Arg<string>.Is.Anything, Arg<CancellationTokenSource>.Is.Anything)).Return(Child2).Repeat.Once();
         };
 
-        Because of = () =>
+        Because Of = () =>
         {
             Process.Step(string.Empty, 40);
             Process.Step(string.Empty, 50);

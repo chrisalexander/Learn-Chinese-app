@@ -4,7 +4,7 @@ namespace CourseDB
     /// <summary>
     /// Module class for CourseDB.
     /// </summary>
-    public class CourseDBModule
+    public class CourseDbModule
     {
     }
 }

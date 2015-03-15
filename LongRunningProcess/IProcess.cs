@@ -60,7 +60,6 @@ namespace LongRunningProcess
         /// </summary>
         /// <param name="name">Name of the process step, user-facing.</param>
         /// <param name="weighting">Weighting as a percentage of the total process.</param>
-        /// <param name="durationType">The type of the duration.</param>
         /// <returns></returns>
         IProcess Step(string name, double weighting);
 
@@ -86,7 +85,7 @@ namespace LongRunningProcess
         /// Note the action requires two parameters; a progress object and a
         /// cancellation token.
         /// </summary>
-        /// <param name="function">The action that is executed.</param>
+        /// <param name="action">The action that is executed.</param>
         /// <param name="completes">Whether or not the action completes the process, defaults that it does not.</param>
         /// <returns>When complete.</returns>
         Task RunInBackground(Action<IProgress<double>, CancellationToken> action, bool completes = false);

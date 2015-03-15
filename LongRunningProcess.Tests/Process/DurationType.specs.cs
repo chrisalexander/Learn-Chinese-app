@@ -7,7 +7,7 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_duration_is_default
     {
-        Establish context = () => Process = new LongRunningProcess.Process(string.Empty, null);
+        Establish Context = () => Process = new LongRunningProcess.Process(string.Empty, null);
 
         It Should_be_indeterminate_by_default = () => Process.DurationType.ShouldEqual(ProcessDurationType.Indeterminate);
 
@@ -17,9 +17,9 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_duration_is_set
     {
-        Establish context = () => Process = new LongRunningProcess.Process(string.Empty, null);
+        Establish Context = () => Process = new LongRunningProcess.Process(string.Empty, null);
 
-        Because of = () => Process.DurationType = ProcessDurationType.Determinate;
+        Because Of = () => Process.DurationType = ProcessDurationType.Determinate;
 
         It Should_be_determinate = () => Process.DurationType.ShouldEqual(ProcessDurationType.Determinate);
 
@@ -29,13 +29,13 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_process_is_over_100_but_not_complete
     {
-        Establish context = () =>
+        Establish Context = () =>
         {
             Process = new LongRunningProcess.Process(string.Empty, null);
             Process.DurationType = ProcessDurationType.Determinate;
         };
 
-        Because of = () => Process.Report(101);
+        Because Of = () => Process.Report(101);
 
         It Should_become_indeterminate = () => Process.DurationType.ShouldEqual(ProcessDurationType.Indeterminate);
 
@@ -45,14 +45,14 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_process_is_over_100_but_complete
     {
-        Establish context = () =>
+        Establish Context = () =>
         {
             Process = new LongRunningProcess.Process(string.Empty, null);
             Process.DurationType = ProcessDurationType.Determinate;
             Process.Completed = true;
         };
 
-        Because of = () => Process.Report(101);
+        Because Of = () => Process.Report(101);
 
         It Should_be_determinate = () => Process.DurationType.ShouldEqual(ProcessDurationType.Determinate);
 
@@ -62,7 +62,7 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_children_exceed_100_weighting : WithFakes
     {
-        Establish context = () =>
+        Establish Context = () =>
         {
             Factory = An<IProcessFactory>();
 
@@ -76,7 +76,7 @@ namespace LongRunningProcess.Tests.Process
             Factory.WhenToldTo(c => c.Create(Param<string>.IsAnything, Param<CancellationTokenSource>.IsAnything)).Return(Child);
         };
 
-        Because of = () =>
+        Because Of = () =>
         {
             Process.Step(string.Empty, 50);
             Process.Step(string.Empty, 51);

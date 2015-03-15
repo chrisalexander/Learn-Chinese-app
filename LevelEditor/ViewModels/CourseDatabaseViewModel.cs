@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using CourseDB.Model;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
@@ -74,8 +73,8 @@ namespace LevelEditor.ViewModels
 
             this.storageFile = storageFile;
 
-            this.NewLevelCommand = DelegateCommand.FromAsyncHandler(this.NewLevelAsync);
-            this.RemoveLevelCommand = DelegateCommand.FromAsyncHandler(this.RemoveLevelAsync);
+            this.NewLevelCommand = new DelegateCommand(this.NewLevel);
+            this.RemoveLevelCommand = new DelegateCommand(this.RemoveLevel);
         }
 
         /// <summary>
@@ -230,9 +229,9 @@ namespace LevelEditor.ViewModels
             source.Updated = this.Updated;
             source.Path = this.Path;
 
-            var levels = new List<CourseLevel>();
-            levels.AddRange(this.Levels.Select(entry => entry.ToSource()));
-            source.Levels = levels;
+            var courseLevels = new List<CourseLevel>();
+            courseLevels.AddRange(this.Levels.Select(entry => entry.ToSource()));
+            source.Levels = courseLevels;
 
             return source;
         }
@@ -241,7 +240,7 @@ namespace LevelEditor.ViewModels
         /// Create a new level, and select it.
         /// </summary>
         /// <returns>When complete.</returns>
-        private async Task NewLevelAsync()
+        private void NewLevel()
         {
             var level = new CourseLevel();
             level.Id = new LevelId();
@@ -258,7 +257,7 @@ namespace LevelEditor.ViewModels
         /// Deletes the currently selected level.
         /// </summary>
         /// <returns>When complete.</returns>
-        private async Task RemoveLevelAsync()
+        private void RemoveLevel()
         {
             if (this.SelectedLevel == null)
             {

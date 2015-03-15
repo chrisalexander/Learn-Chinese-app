@@ -6,7 +6,7 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_getting_cancellation_token
     {
-        Establish context = () =>
+        Establish Context = () =>
         {
             TokenSource = new CancellationTokenSource();
 
@@ -15,7 +15,7 @@ namespace LongRunningProcess.Tests.Process
             Token = Process.CancellationToken;
         };
 
-        Because of = () => TokenSource.Cancel();
+        Because Of = () => TokenSource.Cancel();
 
         It Should_cancel_from_the_given_source = () => Token.IsCancellationRequested.ShouldBeTrue();
 

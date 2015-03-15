@@ -8,7 +8,7 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_there_are_no_children
     {
-        Establish context = () => Process = new LongRunningProcess.Process(Status, null);
+        Establish Context = () => Process = new LongRunningProcess.Process(Status, null);
 
         It Should_have_its_own_status = () => string.Join(string.Empty, Process.OverallStatus).ShouldEqual(Status);
 
@@ -20,9 +20,9 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_status_is_set
     {
-        Establish context = () => Process = new LongRunningProcess.Process(string.Empty, null);
+        Establish Context = () => Process = new LongRunningProcess.Process(string.Empty, null);
 
-        Because of = () => Process.Status = Status;
+        Because Of = () => Process.Status = Status;
 
         It Should_have_its_own_status = () => string.Join(string.Empty, Process.OverallStatus).ShouldEqual(Status);
 
@@ -34,20 +34,20 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_there_is_one_child : WithFakes
     {
-        Establish context = () =>
+        Establish Context = () =>
             {
                 Factory = An<IProcessFactory>();
 
                 Process = new LongRunningProcess.Process(Status, Factory);
 
-                Child = An<LongRunningProcess.IProcess>();
+                Child = An<IProcess>();
                 Child.WhenToldTo(c => c.OverallStatus).Return(new[] { ChildStatus });
                 Child.WhenToldTo(c => c.Completed).Return(false);
 
                 Factory.WhenToldTo(c => c.Create(Param<string>.IsAnything, Param<CancellationTokenSource>.IsAnything)).Return(Child);
             };
 
-        Because of = () => Process.Step(string.Empty, 0);
+        Because Of = () => Process.Step(string.Empty, 0);
 
         It Should_have_both_statuses = () => string.Join(string.Empty, Process.OverallStatus).ShouldEqual(Status + ChildStatus);
 
@@ -65,17 +65,17 @@ namespace LongRunningProcess.Tests.Process
     [Subject(typeof(LongRunningProcess.Process))]
     public class When_there_is_one_running_child : WithFakes
     {
-        Establish context = () =>
+        Establish Context = () =>
         {
             Factory = MockRepository.GenerateStub<IProcessFactory>();
 
             Process = new LongRunningProcess.Process(Status, Factory);
 
-            Child = An<LongRunningProcess.IProcess>();
+            Child = An<IProcess>();
             Child.WhenToldTo(c => c.OverallStatus).Return(new[] { ChildStatus });
             Child.WhenToldTo(c => c.Completed).Return(true);
 
-            Child2 = An<LongRunningProcess.IProcess>();
+            Child2 = An<IProcess>();
             Child2.WhenToldTo(c => c.OverallStatus).Return(new[] { ChildStatus2 });
             Child2.WhenToldTo(c => c.Completed).Return(false);
 
@@ -83,7 +83,7 @@ namespace LongRunningProcess.Tests.Process
             Factory.Stub(f => f.Create(Arg<string>.Is.Anything, Arg<CancellationTokenSource>.Is.Anything)).Return(Child2).Repeat.Once();
         };
 
-        Because of = () =>
+        Because Of = () =>
         {
             Process.Step(string.Empty, 0);
             Process.Step(string.Empty, 0);

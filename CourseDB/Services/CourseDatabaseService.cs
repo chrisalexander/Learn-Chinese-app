@@ -74,11 +74,13 @@ namespace CourseDB.Services
         /// <param name="database">The database.</param>
         /// <param name="process">The process.</param>
         /// <returns>When complete.</returns>
-        protected override async Task PreSaveStep(ICourseDatabase database, IProcess process)
+        protected override Task<bool> PreSaveStep(ICourseDatabase database, IProcess process)
         {
             database.Updated = DateTime.Now;
 
             process.Completed = true;
+
+            return Task.FromResult(true);
         }
     }
 }

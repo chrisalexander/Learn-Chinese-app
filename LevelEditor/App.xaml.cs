@@ -17,7 +17,7 @@ namespace LevelEditor
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    sealed partial class App : MvvmAppBase
+    public sealed partial class App
     {
         /// <summary>
         /// The container for MEF.
@@ -27,7 +27,7 @@ namespace LevelEditor
         /// <summary>
         /// List of the assembly modules to include in the container.
         /// </summary>
-        private readonly IEnumerable<Type> assemblyModules = new[] { typeof(App), typeof(LangDBModule), typeof(LongRunningProcessModule), typeof(DBUtilsModule), typeof(CourseDBModule) };
+        private readonly IEnumerable<Type> assemblyModules = new[] { typeof(App), typeof(LangDbModule), typeof(LongRunningProcessModule), typeof(DbUtilsModule), typeof(CourseDbModule) };
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code

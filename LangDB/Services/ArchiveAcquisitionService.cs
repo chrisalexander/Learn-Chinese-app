@@ -46,6 +46,7 @@ namespace LangDB.Services
         /// Downloads the URI to the filesystem and returns the file that was downloaded.
         /// </summary>
         /// <param name="uri">The URI to download.</param>
+        /// <param name="process">The process.</param>
         /// <returns>The file that was downloaded.</returns>
         private async Task<IStorageFile> DownloadFile(Uri uri, IProcess process)
         {
@@ -56,10 +57,9 @@ namespace LangDB.Services
             var downloader = new BackgroundDownloader();
             var download = downloader.CreateDownload(uri, destination);
 
-            await download.StartAsync().AsTask(process.CancellationToken, new Progress<DownloadOperation>((operation) =>
-            {
-                process.Report(operation.Progress.BytesReceived / operation.Progress.TotalBytesToReceive);
-            }));
+            await download.StartAsync().AsTask(
+                process.CancellationToken,
+                new Progress<DownloadOperation>(operation => process.Report((double)operation.Progress.BytesReceived / operation.Progress.TotalBytesToReceive)));
 
             process.Completed = true;
 
@@ -70,6 +70,7 @@ namespace LangDB.Services
         /// Extracts a file that is an archive in to a folder, returning the folder.
         /// </summary>
         /// <param name="file">The file to extract.</param>
+        /// <param name="process">The process.</param>
         /// <returns>The folder the file was extracted in to.</returns>
         private async Task<IStorageFolder> ExtractArchive(IStorageFile file, IProcess process)
         {
@@ -87,11 +88,11 @@ namespace LangDB.Services
                     using (var fileStream = await targetFile.OpenStreamForWriteAsync())
                     using (var archiveStream = entry.Open())
                     {
-                        const int BUFFER_SIZE = 1024;
-                        byte[] buffer = new byte[BUFFER_SIZE];
+                        const int bufferSize = 1024;
+                        var buffer = new byte[bufferSize];
 
-                        int bytesread = 0;
-                        while ((bytesread = await archiveStream.ReadAsync(buffer, 0, BUFFER_SIZE)) > 0)
+                        int bytesread;
+                        while ((bytesread = await archiveStream.ReadAsync(buffer, 0, bufferSize)) > 0)
                         {
                             await fileStream.WriteAsync(buffer, 0, bytesread);
                         }

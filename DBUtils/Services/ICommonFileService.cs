@@ -8,7 +8,7 @@ namespace DBUtils.Services
     /// <summary>
     /// Interface for methods that are common to both database file services and file service wrappers.
     /// </summary>
-    public interface ICommonFileService<T> where T : IDatabase
+    public interface ICommonFileService<in T> where T : IDatabase
     {
         /// <summary>
         /// Create a new database file in the specified folder.

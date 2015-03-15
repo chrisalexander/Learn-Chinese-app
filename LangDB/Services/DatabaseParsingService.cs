@@ -83,6 +83,7 @@ namespace LangDB.Services
             {
                 entry = new LanguageEntry(groups["traditional"].Value, groups["simplified"].Value, groups["pinyin"].Value, english);
             }
+            // ReSharper disable once EmptyGeneralCatchClause
             catch (Exception) { }
 
             return entry;

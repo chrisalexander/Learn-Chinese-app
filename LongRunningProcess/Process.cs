@@ -154,17 +154,17 @@ namespace LongRunningProcess
             }
             set
             {
-                var durationType = value;   
+                var processDurationType = value;   
 
                 // It should be indeterminate if it is 100% or more and not complete.
                 // It should be indeterminate if there are more than 100% of work to do in child processes.
                 if (this.Progress >= 100 && !this.Completed ||
                     this.childProcesses.Sum(c => c.Weighting) > 100)
                 {
-                    durationType = ProcessDurationType.Indeterminate;
+                    processDurationType = ProcessDurationType.Indeterminate;
                 }
 
-                this.SetProperty(ref this.durationType, durationType);
+                this.SetProperty(ref this.durationType, processDurationType);
             }
         }
 
@@ -202,7 +202,6 @@ namespace LongRunningProcess
         /// </summary>
         /// <param name="name">Name of the process step, user-facing.</param>
         /// <param name="weighting">Weighting as a percentage of the total process.</param>
-        /// <param name="durationType">The type of the duration.</param>
         /// <returns></returns>
         public IProcess Step(string name, double weighting)
         {
@@ -260,8 +259,6 @@ namespace LongRunningProcess
 
             await Task.Run(() => this.cancellationSource.Cancel());
 
-            var previousCompleted = this.Completed;
-            
             this.Completed = true;
         }
 
@@ -276,10 +273,10 @@ namespace LongRunningProcess
         /// <returns>The return value, when complete.</returns>
         public async Task<T> RunInBackground<T>(Func<IProgress<double>, CancellationToken, T> function, bool completes = false)
         {
-            var progress = new Progress<double>(this.ReportThrottled);
+            var taskProgress = new Progress<double>(this.ReportThrottled);
             var token = this.CancellationToken;
 
-            var result = await Task.Factory.StartNew(() => function(progress, token), TaskCreationOptions.LongRunning);
+            var result = await Task.Factory.StartNew(() => function(taskProgress, token), TaskCreationOptions.LongRunning);
 
             if (completes)
             {
@@ -299,10 +296,10 @@ namespace LongRunningProcess
         /// <returns>When complete.</returns>
         public async Task RunInBackground(Action<IProgress<double>, CancellationToken> action, bool completes = false)
         {
-            var progress = new Progress<double>(this.ReportThrottled);
+            var localProgress = new Progress<double>(this.ReportThrottled);
             var token = this.CancellationToken;
 
-            await Task.Factory.StartNew(() => action(progress, token), TaskCreationOptions.LongRunning);
+            await Task.Factory.StartNew(() => action(localProgress, token), TaskCreationOptions.LongRunning);
 
             if (completes)
             {
@@ -368,7 +365,7 @@ namespace LongRunningProcess
         {
             var currentProgress = this.progress;
             // Determine whether there has actually be a change to the value.
-            if (Math.Round(currentProgress + amount) != Math.Round(currentProgress))
+            if (Math.Abs(Math.Round(currentProgress + amount) - Math.Round(currentProgress)) > double.Epsilon)
             {
                 // If there has, then set it on the main Progress to get notifications.
                 this.Progress += amount;

@@ -11,9 +11,9 @@ namespace DBUtils.Services
     /// <summary>
     /// Abstract class that implementers can use to easily create a default wrapper for a database file service.
     /// </summary>
-    /// <typeparam name="Z">The concrete type of the database to expose on the API.</typeparam>
+    /// <typeparam name="TZ">The concrete type of the database to expose on the API.</typeparam>
     /// <typeparam name="T">The interface type of the database.</typeparam>
-    public abstract class AbstractFileServiceWrapper<Z, T> : IFileServiceWrapper<Z, T> where Z : T where T : IDatabase
+    public abstract class AbstractFileServiceWrapper<TZ, T> : IFileServiceWrapper<TZ, T> where TZ : T where T : IDatabase
     {
         /// <summary>
         /// Implementer has to provide the underlying file service for us to access.
@@ -90,9 +90,9 @@ namespace DBUtils.Services
         /// </summary>
         /// <param name="process">The process.</param>
         /// <returns>The loaded database.</returns>
-        public Task<Z> OpenAsync(IProcess process)
+        public Task<TZ> OpenAsync(IProcess process)
         {
-            return this.FileService.OpenAsync<Z>(this.Extensions, this.DefaultPickerLocation, process);
+            return this.FileService.OpenAsync<TZ>(this.Extensions, this.DefaultPickerLocation, process);
         }
 
         /// <summary>
@@ -111,9 +111,9 @@ namespace DBUtils.Services
         /// <param name="file">The file to load the database from.</param>
         /// <param name="process">The process.</param>
         /// <returns>The loaded database.</returns>
-        public Task<Z> LoadAsync(IStorageFile file, IProcess process)
+        public Task<TZ> LoadAsync(IStorageFile file, IProcess process)
         {
-            return this.FileService.LoadAsync<Z>(file, process);
+            return this.FileService.LoadAsync<TZ>(file, process);
         }
 
         /// <summary>
@@ -139,9 +139,11 @@ namespace DBUtils.Services
         /// <param name="database">The database to be saved.</param>
         /// <param name="process">The process.</param>
         /// <returns>When complete.</returns>
-        protected virtual async Task PreSaveStep(T database, IProcess process)
+        protected virtual Task<bool> PreSaveStep(T database, IProcess process)
         {
             process.Completed = true;
+
+            return Task.FromResult(true);
         }
     }
 }

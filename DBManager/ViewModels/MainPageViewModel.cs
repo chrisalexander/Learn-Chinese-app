@@ -51,7 +51,7 @@ namespace DBManager.ViewModels
         /// <summary>
         /// Whether the process is currently executing.
         /// </summary>
-        private bool executing = false;
+        private bool executing;
 
         /// <summary>
         /// The overall progress of the operation.

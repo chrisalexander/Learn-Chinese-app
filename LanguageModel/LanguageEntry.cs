@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using LanguageModel.Annotations;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -29,7 +30,7 @@ namespace LanguageModel
         /// </summary>
         /// <param name="chinese">The Chinese word.</param>
         /// <param name="english">The English phrases.</param>
-        [JsonConstructor]
+        [JsonConstructor, UsedImplicitly]
         private LanguageEntry(ChineseWord chinese, IEnumerable<string> english)
         {
             this.Chinese = chinese;

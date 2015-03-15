@@ -23,11 +23,11 @@ namespace DBUtils.Services
         /// <summary>
         /// Load from JSON file.
         /// </summary>
-        /// <typeparam name="Z">The concrete type implementation of T to load in to.</typeparam>
+        /// <typeparam name="TZ">The concrete type implementation of T to load in to.</typeparam>
         /// <param name="file">The file to load the database from.</param>
         /// <param name="process">The process.</param>
         /// <returns>The loaded database.</returns>
-        public async override Task<Z> LoadAsync<Z>(IStorageFile file, IProcess process)
+        public async override Task<TZ> LoadAsync<TZ>(IStorageFile file, IProcess process)
         {
             try
             {
@@ -35,8 +35,9 @@ namespace DBUtils.Services
                 using (var streamReader = new StreamReader(stream))
                 using (var jsonReader = new JsonTextReader(streamReader))
                 {
-                    var serializer = this.GetSerializer();
-                    return await process.RunInBackground((progress, token) => serializer.Deserialize<Z>(jsonReader));
+                    var jsonSerializer = this.GetSerializer();
+                    // ReSharper disable once AccessToDisposedClosure
+                    return await process.RunInBackground((progress, token) => jsonSerializer.Deserialize<TZ>(jsonReader));
                 }
             }
             finally
@@ -62,8 +63,10 @@ namespace DBUtils.Services
             {
                 this.ConfigureWriter(jsonWriter);
 
-                var serializer = this.GetSerializer();
-                await process.RunInBackground((progress, token) => serializer.Serialize(jsonWriter, database));
+                var jsonSerializer = this.GetSerializer();
+
+                // ReSharper disable once AccessToDisposedClosure
+                await process.RunInBackground((progress, token) => jsonSerializer.Serialize(jsonWriter, database));
             }
 
             process.Completed = true;

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using LanguageModel.Annotations;
+using Newtonsoft.Json;
 using System;
 
 namespace LanguageModel
@@ -16,7 +17,7 @@ namespace LanguageModel
         {
             if (complete.Length < 1)
             {
-                throw new ArgumentOutOfRangeException("Complete must be at least one character");
+                throw new ArgumentOutOfRangeException("complete");
             }
 
             var lastChar = complete[complete.Length - 1];
@@ -38,13 +39,13 @@ namespace LanguageModel
         /// <summary>
         /// Constructor for deserialization.
         /// </summary>
-        /// <param name="Letters">The letters.</param>
-        /// <param name="Tone">The tone.</param>
-        [JsonConstructor]
-        private PinyinSyllable(string Letters, Tone Tone)
+        /// <param name="letters">The letters.</param>
+        /// <param name="tone">The tone.</param>
+        [JsonConstructor, UsedImplicitly]
+        private PinyinSyllable(string letters, Tone tone)
         {
-            this.Letters = Letters;
-            this.Tone = Tone;
+            this.Letters = letters;
+            this.Tone = tone;
         }
 
         /// <summary>

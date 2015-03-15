@@ -76,7 +76,7 @@ namespace LevelEditor.ViewModels
             this.PickLanguageDatabaseCommand = DelegateCommand.FromAsyncHandler(this.PickLanguageDatabaseAsync, this.CanExecuteAsync);
             this.NewCourseDatabaseCommand = DelegateCommand.FromAsyncHandler(this.NewCourseDatabaseAsync, this.CanExecuteAsync);
             this.OpenCourseDatabaseCommand = DelegateCommand.FromAsyncHandler(this.OpenCourseDatabaseAsync, this.CanExecuteAsync);
-            this.CloseCourseDatabaseCommand = DelegateCommand.FromAsyncHandler(this.CloseCourseDatabaseAsync, this.CanExecuteAsync);
+            this.CloseCourseDatabaseCommand = new DelegateCommand(this.CloseCourseDatabase, this.CanExecuteAsync);
             this.DeleteCourseDatabaseCommand = DelegateCommand.FromAsyncHandler(this.DeleteCourseDatabaseAsync, this.CanExecuteAsync);
             this.SaveCommand = DelegateCommand.FromAsyncHandler(this.SaveAsync, this.CanExecuteAsync);
 
@@ -256,7 +256,7 @@ namespace LevelEditor.ViewModels
         /// Execute close course database command.
         /// </summary>
         /// <returns>When complete.</returns>
-        private async Task CloseCourseDatabaseAsync()
+        private void CloseCourseDatabase()
         {
             this.Enabled = false;
 

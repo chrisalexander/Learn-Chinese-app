@@ -5,15 +5,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="using:Microsoft.Practices.Prism.Mvvm"
-    xmlns:vcl="using:VisibilityControlLibrary"
     xmlns:converters="using:LevelEditor.Converters"
     mc:Ignorable="d"
     Name="Page"
     prism:ViewModelLocator.AutoWireViewModel="true">
 
     <Page.Resources>
-        <vcl:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <vcl:BooleanToInvisibilityConverter x:Key="BooleanToInvisibilityConverter" />
         <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />
     </Page.Resources>
 

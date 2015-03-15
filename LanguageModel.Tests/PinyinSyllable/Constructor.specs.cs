@@ -6,7 +6,7 @@ namespace LanguageModel.Tests.PinyinSyllable
     [Subject(typeof(LanguageModel.PinyinSyllable))]
     public class When_constructing_with_complete_character
     {
-        Because of = () => Syllable = new LanguageModel.PinyinSyllable(Pinyin);
+        Because Of = () => Syllable = new LanguageModel.PinyinSyllable(Pinyin);
 
         It Should_have_the_right_letters = () => Syllable.Letters.ShouldEqual("kou");
 
@@ -22,7 +22,7 @@ namespace LanguageModel.Tests.PinyinSyllable
     [Subject(typeof(LanguageModel.PinyinSyllable))]
     public class When_constructing_with_incomplete_character
     {
-        Because of = () => Syllable = new LanguageModel.PinyinSyllable(Pinyin);
+        Because Of = () => Syllable = new LanguageModel.PinyinSyllable(Pinyin);
 
         It Should_have_the_right_letters = () => Syllable.Letters.ShouldEqual("kou");
 
@@ -36,7 +36,7 @@ namespace LanguageModel.Tests.PinyinSyllable
     [Subject(typeof(LanguageModel.PinyinSyllable))]
     public class When_constructing_with_invalid_input
     {
-        Because of = () => Exception = Catch.Exception(() => new LanguageModel.PinyinSyllable(string.Empty));
+        Because Of = () => Exception = Catch.Exception(() => new LanguageModel.PinyinSyllable(string.Empty));
 
         It Should_have_thrown_the_right_exception = () => Exception.ShouldBeOfExactType<ArgumentOutOfRangeException>();
 

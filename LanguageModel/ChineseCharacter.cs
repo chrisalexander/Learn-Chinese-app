@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using LanguageModel.Annotations;
+using Newtonsoft.Json;
 
 namespace LanguageModel
 {
@@ -26,7 +27,7 @@ namespace LanguageModel
         /// <param name="traditional">Traditional character.</param>
         /// <param name="simplified">Simplified character.</param>
         /// <param name="mandarin">Mandarin Pinyin.</param>
-        [JsonConstructor]
+        [JsonConstructor, UsedImplicitly]
         private ChineseCharacter(char traditional, char simplified, PinyinSyllable mandarin)
         {
             this.Traditional = traditional;

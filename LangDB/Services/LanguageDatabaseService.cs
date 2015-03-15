@@ -117,6 +117,7 @@ namespace LangDB.Services
                 // Ensure cancellations are correctly rethrown.
                 throw;
             }
+            // ReSharper disable once EmptyGeneralCatchClause
             catch (Exception)
             {
             }
@@ -147,11 +148,13 @@ namespace LangDB.Services
         /// <param name="database">The database.</param>
         /// <param name="process">The process.</param>
         /// <returns>When complete.</returns>
-        protected override async Task PreSaveStep(ILanguageDatabase database, IProcess process)
+        protected override Task<bool> PreSaveStep(ILanguageDatabase database, IProcess process)
         {
             database.Updated = DateTime.Now;
 
             process.Completed = true;
+
+            return Task.FromResult(true);
         }
     }
 }

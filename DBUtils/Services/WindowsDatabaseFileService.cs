@@ -2,7 +2,6 @@
 using LongRunningProcess;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -75,16 +74,16 @@ namespace DBUtils.Services
         /// <summary>
         /// Allow the user to specify a database file to open.
         /// </summary>
-        /// <typeparam name="Z">The concrete type to load in to.</typeparam>
+        /// <typeparam name="TZ">The concrete type to load in to.</typeparam>
         /// <param name="extensions">List of supported extensions to filter on.</param>
         /// <param name="location">The default start location.</param>
         /// <param name="process">The process.</param>
         /// <returns>The loaded database.</returns>
-        public async Task<Z> OpenAsync<Z>(IEnumerable<string> extensions, PickerLocationId location, IProcess process) where Z : T
+        public async Task<TZ> OpenAsync<TZ>(IEnumerable<string> extensions, PickerLocationId location, IProcess process) where TZ : T
         {
             var file = await this.OpenAsync(extensions, location, process.Step("Pick file", 20));
 
-            var result = await this.LoadAsync<Z>(file, process.Step("Load the database file", 80));
+            var result = await this.LoadAsync<TZ>(file, process.Step("Load the database file", 80));
 
             process.Completed = true;
 
@@ -94,7 +93,6 @@ namespace DBUtils.Services
         /// <summary>
         /// Allow the user to specify a database file to open but not parse.
         /// </summary>
-        /// <typeparam name="Z">The concrete type to load in to.</typeparam>
         /// <param name="extensions">List of supported extensions to filter on.</param>
         /// <param name="location">The default start location.</param>
         /// <param name="process">The process.</param>
@@ -127,11 +125,11 @@ namespace DBUtils.Services
         /// <summary>
         /// Load the database in the specified file.
         /// </summary>
-        /// <typeparam name="Z">The concrete type to load in to.</typeparam>
+        /// <typeparam name="TZ">The concrete type to load in to.</typeparam>
         /// <param name="file">The file to load the database from.</param>
         /// <param name="process">The process.</param>
         /// <returns>The loaded database.</returns>
-        public abstract Task<Z> LoadAsync<Z>(IStorageFile file, IProcess process) where Z : T;
+        public abstract Task<TZ> LoadAsync<TZ>(IStorageFile file, IProcess process) where TZ : T;
 
         /// <summary>
         /// Save the specified database to a given file.
@@ -154,10 +152,10 @@ namespace DBUtils.Services
         {
             IStorageFile targetFile;
 
-            if (fileName == null)
+            if (string.IsNullOrWhiteSpace(fileName))
             {
                 // If no filename has been specified, then pick any file to store in to.
-                targetFile = await this.PickNewFileAsync(Path.GetFileNameWithoutExtension(fileName), "Database", Path.GetExtension(fileName), location, process.Step("Pick file", 50));
+                targetFile = await this.PickNewFileAsync(string.Empty, "Database", string.Empty, location, process.Step("Pick file", 50));
             }
             else
             {
@@ -195,7 +193,7 @@ namespace DBUtils.Services
         {
             var canUse = false;
 
-            var messageDialog = new MessageDialog("There is already a file with that name in this folder, would you like to use it?", "Existing file found");
+            var messageDialog = new MessageDialog("There is already a file with that name " + file.Name + " in this folder " + folder.Name + ", would you like to use it?", "Existing file found");
 
             messageDialog.Commands.Add(new UICommand("Use existing file", cmd =>
             {
@@ -226,7 +224,7 @@ namespace DBUtils.Services
         private async Task<IStorageFile> PickNewFileAsync(string suggestedFileName, string extensionType, string extension, PickerLocationId location, IProcess process)
         {
             var picker = new FileSavePicker();
-            picker.FileTypeChoices.Add(extensionType, new List<string>() { extension });
+            picker.FileTypeChoices.Add(extensionType, new List<string> { extension });
             picker.SuggestedStartLocation = location;
             picker.SuggestedFileName = suggestedFileName;
 
