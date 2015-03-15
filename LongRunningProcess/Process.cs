@@ -365,7 +365,7 @@ namespace LongRunningProcess
         {
             var currentProgress = this.progress;
             // Determine whether there has actually be a change to the value.
-            if (Math.Abs(Math.Round(currentProgress + amount) - Math.Round(currentProgress)) > double.Epsilon)
+            if ((int)Math.Round(currentProgress + amount) - (int)Math.Round(currentProgress) > 0)
             {
                 // If there has, then set it on the main Progress to get notifications.
                 this.Progress += amount;

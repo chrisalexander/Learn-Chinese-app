@@ -74,6 +74,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="ProcessFactory\Create.specs.cs" />
+    <Compile Include="Process\Background.specs.cs" />
     <Compile Include="Process\Cancel.specs.cs" />
     <Compile Include="Process\CancellationToken.specs.cs" />
     <Compile Include="Process\OverallStatus.specs.cs" />

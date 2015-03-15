@@ -42,7 +42,7 @@ namespace LongRunningProcess.Tests.Process
             Process = new LongRunningProcess.Process(string.Empty, Factory, TokenSource);
 
             Child = An<IProcess>();
-            Child.WhenToldTo(c => c.CancelAsync()).Return(Task.Delay(0));
+            Child.WhenToldTo(c => c.CancelAsync()).Return(Task.Delay(100));
             Child.WhenToldTo(c => c.OverallStatus).Return(new[] { string.Empty });
 
             Factory.WhenToldTo(c => c.Create(Param<string>.IsAnything, Param<CancellationTokenSource>.IsAnything)).Return(Child);
