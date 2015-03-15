@@ -42,9 +42,9 @@ namespace LongRunningProcess.Tests.Process
 
         It Should_not_be_complete = () => Process.Completed.ShouldBeFalse();
         
-        protected static IProcess Process;
+        static IProcess Process;
 
-        protected static int NotificationFireCount;
+        static int NotificationFireCount;
     }
 
     [Subject(typeof(LongRunningProcess.Process))]
@@ -74,11 +74,11 @@ namespace LongRunningProcess.Tests.Process
 
         It Should_return_the_correct_result = () => Result.ShouldEqual("Test");
 
-        protected static IProcess Process;
+        static IProcess Process;
 
-        protected static int NotificationFireCount;
+        static int NotificationFireCount;
 
-        private static string Result;
+        static string Result;
     }
 
     [Subject(typeof(LongRunningProcess.Process))]
@@ -102,9 +102,9 @@ namespace LongRunningProcess.Tests.Process
 
         It Should_be_complete = () => Process.Completed.ShouldBeTrue();
 
-        protected static IProcess Process;
+        static IProcess Process;
 
-        protected static int NotificationFireCount;
+        static int NotificationFireCount;
     }
 
     [Subject(typeof(LongRunningProcess.Process))]
@@ -134,10 +134,10 @@ namespace LongRunningProcess.Tests.Process
 
         It Should_return_the_correct_result = () => Result.ShouldEqual("Test");
 
-        protected static IProcess Process;
+        static IProcess Process;
 
-        protected static int NotificationFireCount;
+        static int NotificationFireCount;
 
-        private static string Result;
+        static string Result;
     }
 }

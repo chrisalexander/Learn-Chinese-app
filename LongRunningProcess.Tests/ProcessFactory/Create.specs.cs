@@ -11,8 +11,8 @@ namespace LongRunningProcess.Tests.ProcessFactory
 
         It Should_create_with_the_correct_name = () => Process.Status.ShouldEqual("Test");
 
-        private static IProcessFactory Factory;
+        static IProcessFactory Factory;
 
-        private static IProcess Process;
+        static IProcess Process;
     }
 }
