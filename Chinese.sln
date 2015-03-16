@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelEditor", "LevelEditor\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBUtils.Tests", "DBUtils.Tests\DBUtils.Tests.csproj", "{DC349494-B906-43CF-8842-6F1DA5EDB2D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseDB.Tests", "CourseDB.Tests\CourseDB.Tests.csproj", "{66B5A4CD-3DA3-4B4A-B9DF-19D728854C38}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Chinese.Shared\Chinese.Shared.projitems*{9aa40e72-e0f2-4b7d-8076-7e25fbd53a80}*SharedItemsImports = 4
@@ -218,6 +220,16 @@ Global
 		{DC349494-B906-43CF-8842-6F1DA5EDB2D7}.Release|ARM.ActiveCfg = Release|Any CPU
 		{DC349494-B906-43CF-8842-6F1DA5EDB2D7}.Release|x64.ActiveCfg = Release|Any CPU
 		{DC349494-B906-43CF-8842-6F1DA5EDB2D7}.Release|x86.ActiveCfg = Release|Any CPU
+		{66B5A4CD-3DA3-4B4A-B9DF-19D728854C38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66B5A4CD-3DA3-4B4A-B9DF-19D728854C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66B5A4CD-3DA3-4B4A-B9DF-19D728854C38}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{66B5A4CD-3DA3-4B4A-B9DF-19D728854C38}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{66B5A4CD-3DA3-4B4A-B9DF-19D728854C38}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{66B5A4CD-3DA3-4B4A-B9DF-19D728854C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66B5A4CD-3DA3-4B4A-B9DF-19D728854C38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66B5A4CD-3DA3-4B4A-B9DF-19D728854C38}.Release|ARM.ActiveCfg = Release|Any CPU
+		{66B5A4CD-3DA3-4B4A-B9DF-19D728854C38}.Release|x64.ActiveCfg = Release|Any CPU
+		{66B5A4CD-3DA3-4B4A-B9DF-19D728854C38}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
