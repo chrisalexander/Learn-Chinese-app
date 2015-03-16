@@ -57,6 +57,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Model\IDs\Equality.specs.cs" />
+    <Compile Include="Model\IDs\String.specs.cs" />
+    <Compile Include="Model\IDs\TestAbstractId.cs" />
+    <Compile Include="Model\IDs\TestDescendantAbstractId.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

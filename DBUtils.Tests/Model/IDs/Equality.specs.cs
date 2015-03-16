@@ -5,6 +5,16 @@ using Machine.Specifications;
 namespace DBUtils.Tests.Model.IDs
 {
     [Subject(typeof(AbstractId))]
+    public class When_comparing_with_object
+    {
+        Establish Context = () => Id = new TestAbstractId(Guid.NewGuid());
+
+        It Should_not_equal_random_object = () => Id.Equals(new object()).ShouldBeFalse();
+
+        static TestAbstractId Id;
+    }
+
+    [Subject(typeof(AbstractId))]
     public class When_comparing_root_and_descendant
     {
         Establish Context = () =>
@@ -14,32 +24,104 @@ namespace DBUtils.Tests.Model.IDs
             Id = new TestAbstractId(guid);
         };
 
-        // ReSharper disable once SuspiciousTypeConversion.Global
         It Should_be_equal = () => Descendant.Equals(Id).ShouldBeTrue();
 
-        // ReSharper disable once SuspiciousTypeConversion.Global
         It Should_be_equal_the_other_way = () => Id.Equals(Descendant).ShouldBeTrue();
 
-        private static TestDescendantAbstractId Descendant;
+        static AbstractId Descendant;
 
-        private static TestAbstractId Id;
+        static AbstractId Id;
     }
 
 
-    public class TestAbstractId : AbstractId
+    [Subject(typeof(DescendantAbstractId<>))]
+    public class When_comparing_descendants_same
     {
-        public TestAbstractId(Guid root)
+        Establish Context = () =>
         {
-            this.RootId = root;
-        }
+            var parent = Guid.NewGuid();
+            var root = Guid.NewGuid();
+
+            DescendantOne = new TestDescendantAbstractId(new TestAbstractId(parent), root);
+            DescendantTwo = new TestDescendantAbstractId(new TestAbstractId(parent), root);
+        };
+
+        It Should_be_equal = () => DescendantOne.Equals(DescendantTwo).ShouldBeTrue();
+
+        It Should_be_equal_reverse = () => DescendantTwo.Equals(DescendantOne).ShouldBeTrue();
+
+        // ReSharper disable once PossibleUnintendedReferenceComparison
+        It Should_not_be_equal_sign = () => (DescendantOne == DescendantTwo).ShouldBeFalse();
+
+        static AbstractId DescendantOne;
+
+        static AbstractId DescendantTwo;
     }
 
-    public class TestDescendantAbstractId : DescendantAbstractId<TestAbstractId>
+    [Subject(typeof(DescendantAbstractId<>))]
+    public class When_comparing_descendants_different_parents
     {
-        public TestDescendantAbstractId(TestAbstractId parent, Guid root)
+        Establish Context = () =>
         {
-            this.ParentId = parent;
-            this.RootId = root;
-        }
+            var root = Guid.NewGuid();
+
+            DescendantOne = new TestDescendantAbstractId(new TestAbstractId(Guid.NewGuid()), root);
+            DescendantTwo = new TestDescendantAbstractId(new TestAbstractId(Guid.NewGuid()), root);
+        };
+
+        It Should_not_be_equal = () => DescendantOne.Equals(DescendantTwo).ShouldBeFalse();
+
+        It Should_not_be_equal_reverse = () => DescendantTwo.Equals(DescendantOne).ShouldBeFalse();
+
+        // ReSharper disable once PossibleUnintendedReferenceComparison
+        It Should_not_be_equal_sign = () => (DescendantOne == DescendantTwo).ShouldBeFalse();
+
+        static AbstractId DescendantOne;
+
+        static AbstractId DescendantTwo;
+    }
+
+    [Subject(typeof(DescendantAbstractId<>))]
+    public class When_comparing_descendants_different_roots
+    {
+        Establish Context = () =>
+        {
+            var parent = Guid.NewGuid();
+
+            DescendantOne = new TestDescendantAbstractId(new TestAbstractId(parent), Guid.NewGuid());
+            DescendantTwo = new TestDescendantAbstractId(new TestAbstractId(parent), Guid.NewGuid());
+        };
+
+        It Should_not_be_equal = () => DescendantOne.Equals(DescendantTwo).ShouldBeFalse();
+
+        It Should_not_be_equal_reverse = () => DescendantTwo.Equals(DescendantOne).ShouldBeFalse();
+
+        // ReSharper disable once PossibleUnintendedReferenceComparison
+        It Should_not_be_equal_sign = () => (DescendantOne == DescendantTwo).ShouldBeFalse();
+
+        static AbstractId DescendantOne;
+
+        static AbstractId DescendantTwo;
+    }
+
+    [Subject(typeof(DescendantAbstractId<>))]
+    public class When_comparing_descendants_different
+    {
+        Establish Context = () =>
+        {
+            DescendantOne = new TestDescendantAbstractId(new TestAbstractId(Guid.NewGuid()), Guid.NewGuid());
+            DescendantTwo = new TestDescendantAbstractId(new TestAbstractId(Guid.NewGuid()), Guid.NewGuid());
+        };
+
+        It Should_not_be_equal = () => DescendantOne.Equals(DescendantTwo).ShouldBeFalse();
+
+        It Should_not_be_equal_reverse = () => DescendantTwo.Equals(DescendantOne).ShouldBeFalse();
+
+        // ReSharper disable once PossibleUnintendedReferenceComparison
+        It Should_not_be_equal_sign = () => (DescendantOne == DescendantTwo).ShouldBeFalse();
+
+        static AbstractId DescendantOne;
+
+        static AbstractId DescendantTwo;
     }
 }

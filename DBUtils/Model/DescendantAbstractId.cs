@@ -40,7 +40,7 @@
         /// <returns>The ID as a string.</returns>
         public override string ToString()
         {
-            return this.RootId + (this.ParentId == null ? string.Empty : " " + this.ParentId);
+            return this.RootId + (this.ParentId == null ? string.Empty : "_" + this.ParentId);
         }
     }
 }
