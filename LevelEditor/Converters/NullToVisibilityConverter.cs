@@ -32,7 +32,7 @@ namespace LevelEditor.Converters
         /// <returns>Not supported.</returns>
         public object ConvertBack(object value, Type targetType, object parameter, string culture)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
     }
 }
