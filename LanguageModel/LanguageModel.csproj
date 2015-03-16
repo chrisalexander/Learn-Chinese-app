@@ -41,6 +41,7 @@
     <Compile Include="ILanguageEntry.cs" />
     <Compile Include="IPinyinSyllable.cs" />
     <Compile Include="LanguageEntry.cs" />
+    <Compile Include="LanguageEntryId.cs" />
     <Compile Include="LanguageModelModule.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Tone.cs" />
@@ -60,6 +61,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DBUtils\DBUtils.csproj">
+      <Project>{237932d3-746d-4161-b3a7-20820a354d4d}</Project>
+      <Name>DBUtils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

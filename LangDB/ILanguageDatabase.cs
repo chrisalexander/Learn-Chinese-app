@@ -13,7 +13,7 @@ namespace LangDB
         /// <summary>
         /// The entries in the database.
         /// </summary>
-        IDictionary<string, LanguageEntry> Entries { get; }
+        IDictionary<LanguageEntryId, LanguageEntry> Entries { get; }
 
         /// <summary>
         /// The source of the data.

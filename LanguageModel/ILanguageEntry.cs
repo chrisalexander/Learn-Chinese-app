@@ -25,6 +25,6 @@ namespace LanguageModel
         /// <summary>
         /// The ID of the entry.
         /// </summary>
-        string Id { get; }
+        LanguageEntryId Id { get; }
     }
 }

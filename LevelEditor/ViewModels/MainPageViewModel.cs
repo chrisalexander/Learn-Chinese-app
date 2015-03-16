@@ -211,7 +211,7 @@ namespace LevelEditor.ViewModels
 
             try
             {
-                var file = await this.courseDatabaseService.CreateAsync(database.Id.RootId.ToString(), this.processFactory.Create("Create course database"));
+                var file = await this.courseDatabaseService.CreateAsync(database.Id.RootId, this.processFactory.Create("Create course database"));
 
                 await this.courseDatabaseService.SaveAsync(database, file, this.processFactory.Create("Create blank database"));
 

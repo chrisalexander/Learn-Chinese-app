@@ -13,6 +13,11 @@ namespace LanguageModel
     public class LanguageEntry : ILanguageEntry
     {
         /// <summary>
+        /// The ID of the entry.
+        /// </summary>
+        private LanguageEntryId id;
+
+        /// <summary>
         /// Creates a new entry with all of the requirements.
         /// </summary>
         /// <param name="traditional">The Chinese traditional written form.</param>
@@ -23,6 +28,8 @@ namespace LanguageModel
         {
             this.Chinese = new ChineseWord(traditional, simplified, pinyin);
             this.English = english;
+
+            PopulateId();
         }
 
         /// <summary>
@@ -35,26 +42,14 @@ namespace LanguageModel
         {
             this.Chinese = chinese;
             this.English = english;
+
+            PopulateId();
         }
 
         /// <summary>
         /// ID of the entry, which is formed of the traditional + simplified characters.
         /// </summary>
-        public string Id
-        {
-            get
-            {
-                var builder = new StringBuilder();
-                
-                foreach (var character in this.Chinese.Characters)
-                {
-                    builder.Append(character.Traditional);
-                    builder.Append(character.Simplified);
-                }
-
-                return builder.ToString();
-            }
-        }
+        public LanguageEntryId Id { get { return this.id; } }
 
         /// <summary>
         /// The hash of the entry's contents.
@@ -94,5 +89,21 @@ namespace LanguageModel
         /// The English translations and notes of the Chinese word.
         /// </summary>
         public IEnumerable<string> English { get; private set; }
+
+        /// <summary>
+        /// Helper to populate the ID.
+        /// </summary>
+        private void PopulateId()
+        {
+            var builder = new StringBuilder();
+
+            foreach (var character in this.Chinese.Characters)
+            {
+                builder.Append(character.Traditional);
+                builder.Append(character.Simplified);
+            }
+
+            this.id = new LanguageEntryId(builder.ToString());
+        }
     }
 }

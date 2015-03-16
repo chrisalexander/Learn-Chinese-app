@@ -36,7 +36,7 @@ namespace LangDB.Windows
         /// <returns>Statistics regarding the merge.</returns>
         private IDatabaseAcquisitionResult ExecuteMerge(ILanguageDatabase database, IList<LanguageEntry> newEntries, IProgress<double> progress, CancellationToken token)
         {
-            var foundEntryIds = new HashSet<string>();
+            var foundEntryIds = new HashSet<LanguageEntryId>();
 
             var result = new DatabaseAcquisitionResult();
             result.NewTotal = newEntries.Count;
@@ -72,7 +72,7 @@ namespace LangDB.Windows
                 result.Unmodified++;
             }
 
-            var entriesToRemove = new List<string>();
+            var entriesToRemove = new List<LanguageEntryId>();
 
             // Work out which old entries need to be removed then remove them
             foreach (var oldEntry in database.Entries)
