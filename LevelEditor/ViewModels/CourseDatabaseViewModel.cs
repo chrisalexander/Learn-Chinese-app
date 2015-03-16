@@ -1,5 +1,5 @@
 ﻿using System.Windows.Input;
-using CourseDB.Model;
+using CourseDB;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using System;

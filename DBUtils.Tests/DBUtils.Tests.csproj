@@ -56,10 +56,10 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Model\IDs\Equality.specs.cs" />
-    <Compile Include="Model\IDs\String.specs.cs" />
-    <Compile Include="Model\IDs\TestAbstractId.cs" />
-    <Compile Include="Model\IDs\TestDescendantAbstractId.cs" />
+    <Compile Include="IDs\Equality.specs.cs" />
+    <Compile Include="IDs\String.specs.cs" />
+    <Compile Include="IDs\TestAbstractId.cs" />
+    <Compile Include="IDs\TestDescendantAbstractId.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,9 +71,7 @@
       <Name>DBUtils</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

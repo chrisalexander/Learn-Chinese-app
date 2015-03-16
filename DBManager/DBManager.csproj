@@ -200,9 +200,17 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\DBUtils.Windows\DBUtils.Windows.csproj">
+      <Project>{282E4DCF-5C86-4876-8780-A2C682293640}</Project>
+      <Name>DBUtils.Windows</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DBUtils\DBUtils.csproj">
       <Project>{237932d3-746d-4161-b3a7-20820a354d4d}</Project>
       <Name>DBUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LangDB.Windows\LangDB.Windows.csproj">
+      <Project>{D019FAA4-BB83-44AC-8EDD-09D6FE18FB0D}</Project>
+      <Name>LangDB.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\LangDB\LangDB.csproj">
       <Project>{eee40438-cadd-4587-8dab-c51368800598}</Project>

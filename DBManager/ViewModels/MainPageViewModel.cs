@@ -1,5 +1,5 @@
-﻿using LangDB.Model;
-using LangDB.Services;
+﻿using LangDB;
+using LangDB.Windows;
 using LongRunningProcess;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;

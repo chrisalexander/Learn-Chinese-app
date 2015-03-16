@@ -1,5 +1,4 @@
-﻿
-namespace LangDB
+﻿namespace LangDB
 {
     /// <summary>
     /// The module for the language DB.

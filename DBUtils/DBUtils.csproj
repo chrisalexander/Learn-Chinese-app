@@ -13,7 +13,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile32</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile151</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -42,16 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBUtilsModule.cs" />
-    <Compile Include="Model\AbstractId.cs" />
-    <Compile Include="Model\DescendantAbstractId.cs" />
-    <Compile Include="Model\IDatabase.cs" />
-    <Compile Include="Services\AbstractFileServiceWrapper.cs" />
-    <Compile Include="Services\ICommonFileService.cs" />
-    <Compile Include="Services\IDatabaseFileService.cs" />
-    <Compile Include="Services\IFileServiceWrapper.cs" />
-    <Compile Include="Services\JsonDatabaseFileService.cs" />
+    <Compile Include="AbstractId.cs" />
+    <Compile Include="DescendantAbstractId.cs" />
+    <Compile Include="IDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\WindowsDatabaseFileService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -75,10 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <TargetPlatform Include="Windows, Version=8.1" />
-    <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

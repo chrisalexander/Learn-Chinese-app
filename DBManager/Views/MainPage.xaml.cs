@@ -1,5 +1,4 @@
 ﻿using Microsoft.Practices.Prism.Mvvm;
-using Windows.UI.Xaml.Controls;
 
 namespace DBManager.Views
 {

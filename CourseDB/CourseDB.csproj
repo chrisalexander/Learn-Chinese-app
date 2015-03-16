@@ -13,7 +13,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile32</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile151</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -35,19 +35,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CourseDBModule.cs" />
-    <Compile Include="Model\Course.cs" />
-    <Compile Include="Model\CourseId.cs" />
-    <Compile Include="Model\Level.cs" />
-    <Compile Include="Model\EntryId.cs" />
-    <Compile Include="Model\ICourse.cs" />
-    <Compile Include="Model\ILevel.cs" />
-    <Compile Include="Model\ILevelEntry.cs" />
-    <Compile Include="Model\LevelDifficulty.cs" />
-    <Compile Include="Model\LevelEntry.cs" />
-    <Compile Include="Model\LevelId.cs" />
+    <Compile Include="Course.cs" />
+    <Compile Include="CourseId.cs" />
+    <Compile Include="Level.cs" />
+    <Compile Include="EntryId.cs" />
+    <Compile Include="ICourse.cs" />
+    <Compile Include="ILevel.cs" />
+    <Compile Include="ILevelEntry.cs" />
+    <Compile Include="LevelDifficulty.cs" />
+    <Compile Include="LevelEntry.cs" />
+    <Compile Include="LevelId.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\CourseDatabaseService.cs" />
-    <Compile Include="Services\ICourseDatabaseService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DBUtils\DBUtils.csproj">
@@ -78,10 +76,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <TargetPlatform Include="Windows, Version=8.1" />
-    <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

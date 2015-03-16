@@ -1,5 +1,4 @@
-﻿
-namespace CourseDB
+﻿namespace CourseDB
 {
     /// <summary>
     /// Module class for CourseDB.

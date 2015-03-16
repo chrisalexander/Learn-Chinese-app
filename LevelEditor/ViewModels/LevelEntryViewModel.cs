@@ -1,4 +1,4 @@
-﻿using CourseDB.Model;
+﻿using CourseDB;
 using Microsoft.Practices.Prism.Mvvm;
 using System.Composition;
 
