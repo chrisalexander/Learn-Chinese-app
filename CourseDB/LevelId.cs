@@ -1,5 +1,4 @@
-﻿using System;
-using DBUtils;
+﻿using DBUtils;
 
 namespace CourseDB
 {
@@ -12,10 +11,6 @@ namespace CourseDB
         /// Create a new level ID.
         /// </summary>
         /// <param name="courseId">The parent course ID.</param>
-        public LevelId(CourseId courseId)
-        {
-            this.ParentId = courseId;
-            this.RootId = Guid.NewGuid();
-        }
+        public LevelId(CourseId courseId) : base(courseId) { }
     }
 }

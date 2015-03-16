@@ -1,5 +1,4 @@
-﻿using System;
-using DBUtils;
+﻿using DBUtils;
 
 namespace CourseDB
 {
@@ -15,7 +14,6 @@ namespace CourseDB
         public EntryId(LevelId levelId)
         {
             this.ParentId = levelId;
-            this.RootId = Guid.NewGuid();
         }
     }
 }

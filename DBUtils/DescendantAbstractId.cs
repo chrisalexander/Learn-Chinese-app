@@ -13,6 +13,36 @@
         public T ParentId { get; protected set; }
 
         /// <summary>
+        /// Create a new descendent of the specified parent with the specified root.
+        /// </summary>
+        /// <param name="parentId">The parent ID.</param>
+        /// <param name="rootId">The root ID.</param>
+        protected DescendantAbstractId(T parentId, string rootId) : base(rootId)
+        {
+            this.ParentId = parentId;
+        }
+
+        /// <summary>
+        /// Create a new descendent of the specified parent and a random ID.
+        /// </summary>
+        /// <param name="parentId">The parent ID.</param>
+        protected DescendantAbstractId(T parentId)
+        {
+            this.ParentId = parentId;
+        }
+
+        /// <summary>
+        /// Create a new descendent with the specified root ID.
+        /// </summary>
+        /// <param name="rootId">The root ID.</param>
+        protected DescendantAbstractId(string rootId) : base(rootId) { }
+
+        /// <summary>
+        /// Create a new descendent with no parent and a random root.
+        /// </summary>
+        protected DescendantAbstractId() { } 
+
+        /// <summary>
         /// Gets the hash code.
         /// </summary>
         /// <returns>The hash code.</returns>

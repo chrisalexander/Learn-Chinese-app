@@ -8,9 +8,26 @@ namespace DBUtils
     public abstract class AbstractId
     {
         /// <summary>
-        /// Allow implementers read access to the root GUID.
+        /// Allow implementers read access to the root ID.
         /// </summary>
-        public Guid RootId { get; protected set; }
+        public string RootId { get; protected set; }
+
+        /// <summary>
+        /// Create a new Abstract ID with the specified root.
+        /// </summary>
+        /// <param name="rootId">The root ID.</param>
+        protected AbstractId(string rootId)
+        {
+            this.RootId = rootId;
+        }
+
+        /// <summary>
+        /// Create a new Abstract ID with a random root.
+        /// </summary>
+        protected AbstractId()
+        {
+            this.RootId = Guid.NewGuid().ToString();
+        }
 
         /// <summary>
         /// Equals comparison.
@@ -39,7 +56,7 @@ namespace DBUtils
         /// <returns>The ID as a string.</returns>
         public override string ToString()
         {
-            return this.RootId.ToString();
-        } 
+            return this.RootId;
+        }
     }
 }

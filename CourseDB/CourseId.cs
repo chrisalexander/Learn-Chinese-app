@@ -1,5 +1,4 @@
-﻿using System;
-using DBUtils;
+﻿using DBUtils;
 
 namespace CourseDB
 {
@@ -8,12 +7,5 @@ namespace CourseDB
     /// </summary>
     public class CourseId : AbstractId
     {
-        /// <summary>
-        /// Create a new course ID.
-        /// </summary>
-        public CourseId()
-        {
-            this.RootId = Guid.NewGuid();
-        }
     }
 }
