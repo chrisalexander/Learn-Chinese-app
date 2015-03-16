@@ -5,12 +5,12 @@ namespace CourseDB.Model
     /// <summary>
     /// A level in a course.
     /// </summary>
-    public class CourseLevel : ICourseLevel
+    public class Level : ILevel
     {
         /// <summary>
         /// Construct a course level.
         /// </summary>
-        public CourseLevel()
+        public Level()
         {
             this.Entries = new List<LevelEntry>();
             this.Prerequisites = new List<LevelId>();

@@ -1,29 +1,21 @@
 ﻿using System;
+using DBUtils.Model;
 
 namespace CourseDB.Model
 {
     /// <summary>
     /// A level ID.
     /// </summary>
-    public class LevelId
+    public class LevelId : DescendantAbstractId<CourseId>
     {
         /// <summary>
-        /// The ID of the course the level belongs to.
+        /// Create a new level ID.
         /// </summary>
-        public CourseId CourseId { get; set; }
-
-        /// <summary>
-        /// The ID of the level.
-        /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
-        /// Get a string representation of the ID.
-        /// </summary>
-        /// <returns>String representation of the ID.</returns>
-        public override string ToString()
+        /// <param name="courseId">The parent course ID.</param>
+        public LevelId(CourseId courseId)
         {
-            return "Level: " + this.Id + "; " + this.CourseId;
+            this.ParentId = courseId;
+            this.RootId = Guid.NewGuid();
         }
     }
 }

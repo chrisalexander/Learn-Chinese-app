@@ -55,7 +55,7 @@ namespace LevelEditor.ViewModels
         /// Construct a new view model from a source.
         /// </summary>
         /// <param name="source">The source level.</param>
-        public CourseLevelViewModel(ICourseLevel source)
+        public CourseLevelViewModel(ILevel source)
         {
             this.Id = source.Id;
             this.Name = source.Name;
@@ -194,9 +194,9 @@ namespace LevelEditor.ViewModels
         /// Convert the view model to the model class.
         /// </summary>
         /// <returns>The view model data in model format.</returns>
-        public CourseLevel ToSource()
+        public Level ToSource()
         {
-            var source = new CourseLevel();
+            var source = new Level();
             source.Id = this.Id;
             source.Id = this.Id;
             source.Name = this.Name;
@@ -218,7 +218,7 @@ namespace LevelEditor.ViewModels
         private void NewEntry()
         {
             var entry = new LevelEntry();
-            entry.EntryId = Guid.NewGuid().ToString();
+            entry.Id = new EntryId(this.Id);
 
             var entryViewModel = new LevelEntryViewModel(entry);
 

@@ -1,48 +1,19 @@
 ﻿using System;
+using DBUtils.Model;
 
 namespace CourseDB.Model
 {
     /// <summary>
     /// A course ID.
     /// </summary>
-    public class CourseId
+    public class CourseId : AbstractId
     {
         /// <summary>
-        /// The unique ID of the course.
+        /// Create a new course ID.
         /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
-        /// Equals comparison.
-        /// </summary>
-        /// <param name="obj">The object to compare to.</param>
-        /// <returns>Whether the objects are the equal.</returns>
-        public override bool Equals(object obj)
+        public CourseId()
         {
-            if (obj == null || GetType() != obj.GetType())
-            {
-                return false;
-            }
-
-            return this.Id.Equals(((CourseId)obj).Id);
-        }
-
-        /// <summary>
-        /// Gets the hash code.
-        /// </summary>
-        /// <returns>The hash code.</returns>
-        public override int GetHashCode()
-        {
-            return this.Id.GetHashCode();
-        }
-
-        /// <summary>
-        /// Provides a string format of the ID.
-        /// </summary>
-        /// <returns>The ID as a string.</returns>
-        public override string ToString()
-        {
-            return "Course: " + this.Id;
+            this.RootId = Guid.NewGuid();
         }
     }
 }

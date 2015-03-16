@@ -13,7 +13,7 @@ namespace LevelEditor.ViewModels
         /// <summary>
         /// The ID of the entry in the entry database.
         /// </summary>
-        private string entryId;
+        private EntryId entryId;
 
         /// <summary>
         /// The selected translation to be used in the level.
@@ -26,14 +26,14 @@ namespace LevelEditor.ViewModels
         /// <param name="source">The source entry.</param>
         public LevelEntryViewModel(ILevelEntry source)
         {
-            this.EntryId = source.EntryId;
+            this.EntryId = source.Id;
             this.SelectedTranslation = source.SelectedTranslation;
         }
 
         /// <summary>
         /// The ID of the entry in the entry database.
         /// </summary>
-        public string EntryId
+        public EntryId EntryId
         {
             get
             {
@@ -69,7 +69,7 @@ namespace LevelEditor.ViewModels
         public LevelEntry ToSource()
         {
             var source = new LevelEntry();
-            source.EntryId = this.EntryId;
+            source.Id = this.EntryId;
             source.SelectedTranslation = this.SelectedTranslation;
             return source;
         }

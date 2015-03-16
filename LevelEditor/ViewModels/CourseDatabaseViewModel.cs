@@ -62,7 +62,7 @@ namespace LevelEditor.ViewModels
         /// </summary>
         /// <param name="source">The source database.</param>
         /// <param name="storageFile">The storage file the data came from.</param>
-        public CourseDatabaseViewModel(ICourseDatabase source, IStorageFile storageFile)
+        public CourseDatabaseViewModel(ICourse source, IStorageFile storageFile)
         {
             this.Id = source.Id;
             this.Name = source.Name;
@@ -220,16 +220,16 @@ namespace LevelEditor.ViewModels
         /// Convert the view model to the model class.
         /// </summary>
         /// <returns>The view model data in model format.</returns>
-        public CourseDatabase ToSource()
+        public Course ToSource()
         {
-            var source = new CourseDatabase();
+            var source = new Course();
             source.Id = this.Id;
             source.Name = this.Name;
             source.Description = this.Description;
             source.Updated = this.Updated;
             source.Path = this.Path;
 
-            var courseLevels = new List<CourseLevel>();
+            var courseLevels = new List<Level>();
             courseLevels.AddRange(this.Levels.Select(entry => entry.ToSource()));
             source.Levels = courseLevels;
 
@@ -242,10 +242,9 @@ namespace LevelEditor.ViewModels
         /// <returns>When complete.</returns>
         private void NewLevel()
         {
-            var level = new CourseLevel();
-            level.Id = new LevelId();
-            level.Id.Id = Guid.NewGuid();
-            level.Name = level.Id.Id.ToString();
+            var level = new Level();
+            level.Id = new LevelId(this.Id);
+            level.Name = level.Id.ToString();
 
             var levelViewModel = new CourseLevelViewModel(level);
 

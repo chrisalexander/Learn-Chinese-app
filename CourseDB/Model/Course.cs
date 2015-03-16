@@ -7,14 +7,14 @@ namespace CourseDB.Model
     /// A course database contains a taught language course, consisting of levels
     /// and course metadata.
     /// </summary>
-    public class CourseDatabase : ICourseDatabase
+    public class Course : ICourse
     {
         /// <summary>
         /// Construct a course database.
         /// </summary>
-        public CourseDatabase()
+        public Course()
         {
-            this.Levels = new List<CourseLevel>();
+            this.Levels = new List<Level>();
         }
 
         /// <summary>
@@ -45,6 +45,6 @@ namespace CourseDB.Model
         /// <summary>
         /// The ordered list of levels in the course.
         /// </summary>
-        public IList<CourseLevel> Levels { get; set; }
+        public IList<Level> Levels { get; set; }
     }
 }

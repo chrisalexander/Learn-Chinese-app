@@ -7,7 +7,7 @@ namespace CourseDB.Model
     /// <summary>
     /// The course database interface.
     /// </summary>
-    public interface ICourseDatabase : IDatabase
+    public interface ICourse : IDatabase
     {
         /// <summary>
         /// ID of the course.
@@ -32,7 +32,7 @@ namespace CourseDB.Model
         /// <summary>
         /// The course's levels.
         /// </summary>
-        IList<CourseLevel> Levels { get; }
+        IList<Level> Levels { get; }
         
     }
 }

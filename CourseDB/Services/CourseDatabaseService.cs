@@ -13,12 +13,12 @@ namespace CourseDB.Services
     /// Service for manipulating course databases.
     /// </summary>
     [Export(typeof(ICourseDatabaseService))]
-    public class CourseDatabaseService : AbstractFileServiceWrapper<CourseDatabase, ICourseDatabase>, ICourseDatabaseService
+    public class CourseDatabaseService : AbstractFileServiceWrapper<Course, ICourse>, ICourseDatabaseService
     {
         /// <summary>
         /// The database file service.
         /// </summary>
-        private readonly IDatabaseFileService<ICourseDatabase> fileService;
+        private readonly IDatabaseFileService<ICourse> fileService;
 
         /// <summary>
         /// The supported file extensions of course databases.
@@ -30,7 +30,7 @@ namespace CourseDB.Services
         /// </summary>
         /// <param name="fileService">The file service.</param>
         [ImportingConstructor]
-        public CourseDatabaseService(IDatabaseFileService<ICourseDatabase> fileService)
+        public CourseDatabaseService(IDatabaseFileService<ICourse> fileService)
         {
             this.fileService = fileService;
         }
@@ -38,7 +38,7 @@ namespace CourseDB.Services
         /// <summary>
         /// Provide the file service to the abstract wrapper.
         /// </summary>
-        protected override IDatabaseFileService<ICourseDatabase> FileService
+        protected override IDatabaseFileService<ICourse> FileService
         {
             get
             {
@@ -74,7 +74,7 @@ namespace CourseDB.Services
         /// <param name="database">The database.</param>
         /// <param name="process">The process.</param>
         /// <returns>When complete.</returns>
-        protected override Task<bool> PreSaveStep(ICourseDatabase database, IProcess process)
+        protected override Task<bool> PreSaveStep(ICourse database, IProcess process)
         {
             database.Updated = DateTime.Now;
 

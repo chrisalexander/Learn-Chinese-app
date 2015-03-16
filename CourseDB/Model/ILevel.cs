@@ -5,7 +5,7 @@ namespace CourseDB.Model
     /// <summary>
     /// Interface for levels.
     /// </summary>
-    public interface ICourseLevel
+    public interface ILevel
     {
         /// <summary>
         /// Descripton of the level.

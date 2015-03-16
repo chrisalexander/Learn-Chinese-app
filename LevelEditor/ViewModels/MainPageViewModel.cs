@@ -205,14 +205,13 @@ namespace LevelEditor.ViewModels
         {
             this.Enabled = false;
             
-            var database = new CourseDatabase();
+            var database = new Course();
             database.Id = new CourseId();
-            database.Id.Id = Guid.NewGuid();
-            database.Name = database.Id.Id.ToString();
+            database.Name = database.Id.ToString();
 
             try
             {
-                var file = await this.courseDatabaseService.CreateAsync(database.Id.Id.ToString(), this.processFactory.Create("Create course database"));
+                var file = await this.courseDatabaseService.CreateAsync(database.Id.RootId.ToString(), this.processFactory.Create("Create course database"));
 
                 await this.courseDatabaseService.SaveAsync(database, file, this.processFactory.Create("Create blank database"));
 
@@ -317,7 +316,7 @@ namespace LevelEditor.ViewModels
         /// </summary>
         /// <param name="database">The parsed database.</param>
         /// <param name="file">The file the database came from.</param>
-        private void CompleteDatabaseLoad(ICourseDatabase database, IStorageFile file)
+        private void CompleteDatabaseLoad(ICourse database, IStorageFile file)
         {
             var newDatabase = new CourseDatabaseViewModel(database, file);
 

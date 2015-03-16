@@ -9,7 +9,7 @@ namespace CourseDB.Model
         /// <summary>
         /// The ID of the entry in the entry database.
         /// </summary>
-        public string EntryId { get; set; }
+        public EntryId Id { get; set; }
 
         /// <summary>
         /// The selected translation to be used in the level.
