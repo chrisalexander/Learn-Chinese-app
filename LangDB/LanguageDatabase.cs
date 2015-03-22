@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using KeyedItemCollection;
 using LanguageModel;
 
 namespace LangDB
@@ -14,13 +14,13 @@ namespace LangDB
         /// </summary>
         public LanguageDatabase()
         {
-            this.Entries = new Dictionary<LanguageEntryId, LanguageEntry>();
+            this.Entries = new KeyedItemCollection<LanguageEntry, LanguageEntryId>();
         }
 
         /// <summary>
         /// The entries in the database, indexed by an ID.
         /// </summary>
-        public IDictionary<LanguageEntryId, LanguageEntry> Entries { get; private set; }
+        public IKeyedItemCollection<LanguageEntry,  LanguageEntryId> Entries { get; private set; }
 
         /// <summary>
         /// The path to the database file.

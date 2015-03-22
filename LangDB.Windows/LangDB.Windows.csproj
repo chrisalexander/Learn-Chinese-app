@@ -43,6 +43,10 @@
       <Project>{237932D3-746D-4161-B3A7-20820A354D4D}</Project>
       <Name>DBUtils</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KeyedItemCollection\KeyedItemCollection.csproj">
+      <Project>{050764E9-471A-45E4-A02D-F5F89B4D7758}</Project>
+      <Name>KeyedItemCollection</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LangDB\LangDB.csproj">
       <Project>{EEE40438-CADD-4587-8DAB-C51368800598}</Project>
       <Name>LangDB</Name>

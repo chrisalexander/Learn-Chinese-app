@@ -72,7 +72,7 @@ namespace LangDB.Windows
                 result.Unmodified++;
             }
 
-            var entriesToRemove = new List<LanguageEntryId>();
+            var entriesToRemove = new List<LanguageEntry>();
 
             // Work out which old entries need to be removed then remove them
             foreach (var oldEntry in database.Entries)
@@ -80,7 +80,7 @@ namespace LangDB.Windows
                 // If it is not found in the existing set then flag it for removal
                 if (!foundEntryIds.Contains(oldEntry.Key))
                 {
-                    entriesToRemove.Add(oldEntry.Key);
+                    entriesToRemove.Add(oldEntry);
                 }
 
                 progress.Report(increment);
@@ -88,16 +88,16 @@ namespace LangDB.Windows
                 token.ThrowIfCancellationRequested();
             }
 
-            foreach (var entryId in entriesToRemove)
+            foreach (var entry in entriesToRemove)
             {
-                database.Entries.Remove(entryId);
+                database.Entries.Remove(entry);
                 result.Removed++;
             }
 
             // Apply the changes we want to make
             foreach (var entry in entriesToAdd)
             {
-                database.Entries[entry.Id] = entry;
+                database.Entries.Add(entry);
             }
 
             return result;

@@ -67,6 +67,10 @@
       <Project>{237932d3-746d-4161-b3a7-20820a354d4d}</Project>
       <Name>DBUtils</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KeyedItemCollection\KeyedItemCollection.csproj">
+      <Project>{050764e9-471a-45e4-a02d-f5f89b4d7758}</Project>
+      <Name>KeyedItemCollection</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

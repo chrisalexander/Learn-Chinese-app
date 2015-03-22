@@ -1,4 +1,5 @@
-﻿using LanguageModel.Annotations;
+﻿using KeyedItemCollection;
+using LanguageModel.Annotations;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,8 @@ namespace LanguageModel
     /// <summary>
     /// A language entry is a Chinese word and its English equivalents.
     /// </summary>
-    public class LanguageEntry : ILanguageEntry
+    public class LanguageEntry : ILanguageEntry, IKeyedItem<LanguageEntryId>
     {
-        /// <summary>
-        /// The ID of the entry.
-        /// </summary>
-        private LanguageEntryId id;
-
         /// <summary>
         /// Creates a new entry with all of the requirements.
         /// </summary>
@@ -49,7 +45,18 @@ namespace LanguageModel
         /// <summary>
         /// ID of the entry, which is formed of the traditional + simplified characters.
         /// </summary>
-        public LanguageEntryId Id { get { return this.id; } }
+        public LanguageEntryId Id { get; private set; }
+
+        /// <summary>
+        /// Gets the key.
+        /// </summary>
+        public LanguageEntryId Key
+        {
+            get
+            {
+                return this.Id;
+            }
+        }
 
         /// <summary>
         /// The hash of the entry's contents.
@@ -103,7 +110,7 @@ namespace LanguageModel
                 builder.Append(character.Simplified);
             }
 
-            this.id = new LanguageEntryId(builder.ToString());
+            this.Id = new LanguageEntryId(builder.ToString());
         }
     }
 }

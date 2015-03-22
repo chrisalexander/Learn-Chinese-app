@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using DBUtils;
+using KeyedItemCollection;
 using LanguageModel;
 
 namespace LangDB
@@ -13,7 +13,7 @@ namespace LangDB
         /// <summary>
         /// The entries in the database.
         /// </summary>
-        IDictionary<LanguageEntryId, LanguageEntry> Entries { get; }
+        IKeyedItemCollection<LanguageEntry, LanguageEntryId> Entries { get; }
 
         /// <summary>
         /// The source of the data.

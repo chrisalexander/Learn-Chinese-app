@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseDB.Windows", "CourseD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LangDB.Windows", "LangDB.Windows\LangDB.Windows.csproj", "{D019FAA4-BB83-44AC-8EDD-09D6FE18FB0D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyedItemCollection", "KeyedItemCollection\KeyedItemCollection.csproj", "{050764E9-471A-45E4-A02D-F5F89B4D7758}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Chinese.Shared\Chinese.Shared.projitems*{9aa40e72-e0f2-4b7d-8076-7e25fbd53a80}*SharedItemsImports = 4
@@ -254,6 +256,16 @@ Global
 		{D019FAA4-BB83-44AC-8EDD-09D6FE18FB0D}.Release|ARM.ActiveCfg = Release|Any CPU
 		{D019FAA4-BB83-44AC-8EDD-09D6FE18FB0D}.Release|x64.ActiveCfg = Release|Any CPU
 		{D019FAA4-BB83-44AC-8EDD-09D6FE18FB0D}.Release|x86.ActiveCfg = Release|Any CPU
+		{050764E9-471A-45E4-A02D-F5F89B4D7758}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{050764E9-471A-45E4-A02D-F5F89B4D7758}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{050764E9-471A-45E4-A02D-F5F89B4D7758}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{050764E9-471A-45E4-A02D-F5F89B4D7758}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{050764E9-471A-45E4-A02D-F5F89B4D7758}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{050764E9-471A-45E4-A02D-F5F89B4D7758}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{050764E9-471A-45E4-A02D-F5F89B4D7758}.Release|Any CPU.Build.0 = Release|Any CPU
+		{050764E9-471A-45E4-A02D-F5F89B4D7758}.Release|ARM.ActiveCfg = Release|Any CPU
+		{050764E9-471A-45E4-A02D-F5F89B4D7758}.Release|x64.ActiveCfg = Release|Any CPU
+		{050764E9-471A-45E4-A02D-F5F89B4D7758}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

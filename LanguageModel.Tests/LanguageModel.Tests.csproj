@@ -87,6 +87,10 @@
       <Project>{237932D3-746D-4161-B3A7-20820A354D4D}</Project>
       <Name>DBUtils</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KeyedItemCollection\KeyedItemCollection.csproj">
+      <Project>{050764E9-471A-45E4-A02D-F5F89B4D7758}</Project>
+      <Name>KeyedItemCollection</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LanguageModel\LanguageModel.csproj">
       <Project>{c310d1de-a16c-41ed-9d18-73da836f59a7}</Project>
       <Name>LanguageModel</Name>
