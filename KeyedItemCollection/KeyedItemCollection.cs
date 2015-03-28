@@ -48,7 +48,14 @@ namespace KeyedItemCollection
         /// <param name="item">The item.</param>
         public void Add(T item)
         {
-            this.backingDictionary.Add(item.Key, item);
+            if (this.backingDictionary.ContainsKey(item.Key))
+            {
+                this.backingDictionary[item.Key] = item;
+            }
+            else
+            {
+                this.backingDictionary.Add(item.Key, item);
+            }
         }
 
         /// <summary>
