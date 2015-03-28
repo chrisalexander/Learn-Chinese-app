@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyedItemCollection", "Keye
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleInMemorySearch", "SimpleInMemorySearch\SimpleInMemorySearch.csproj", "{56872605-FB91-4410-AD54-C480DB43DF12}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyedItemCollection.Tests", "KeyedItemCollection.Tests\KeyedItemCollection.Tests.csproj", "{DA891938-2DF6-448E-B335-319FC8D9DF76}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Chinese.Shared\Chinese.Shared.projitems*{9aa40e72-e0f2-4b7d-8076-7e25fbd53a80}*SharedItemsImports = 4
@@ -278,6 +280,16 @@ Global
 		{56872605-FB91-4410-AD54-C480DB43DF12}.Release|ARM.ActiveCfg = Release|Any CPU
 		{56872605-FB91-4410-AD54-C480DB43DF12}.Release|x64.ActiveCfg = Release|Any CPU
 		{56872605-FB91-4410-AD54-C480DB43DF12}.Release|x86.ActiveCfg = Release|Any CPU
+		{DA891938-2DF6-448E-B335-319FC8D9DF76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA891938-2DF6-448E-B335-319FC8D9DF76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA891938-2DF6-448E-B335-319FC8D9DF76}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{DA891938-2DF6-448E-B335-319FC8D9DF76}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DA891938-2DF6-448E-B335-319FC8D9DF76}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DA891938-2DF6-448E-B335-319FC8D9DF76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA891938-2DF6-448E-B335-319FC8D9DF76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA891938-2DF6-448E-B335-319FC8D9DF76}.Release|ARM.ActiveCfg = Release|Any CPU
+		{DA891938-2DF6-448E-B335-319FC8D9DF76}.Release|x64.ActiveCfg = Release|Any CPU
+		{DA891938-2DF6-448E-B335-319FC8D9DF76}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
