@@ -23,10 +23,19 @@ namespace SimpleInMemorySearch
         /// <summary>
         /// The items that terminate at this node.
         /// </summary>
-        HashSet<T> Items { get; } 
+        HashSet<T> Items { get; }
 
         /// <summary>
-        /// Index the character array with the specified weight (defaulting to 1).
+        /// Index the key enumeration with the specified weight (defaulting to 1).
+        /// </summary>
+        /// <param name="nodeValues">The array of node values to index.</param>
+        /// <param name="indexObject">The object to index at the location.</param>
+        /// <param name="weight">The weight to assign to the array, default 1.</param>
+        /// <returns>When complete.</returns>
+        void Index(IEnumerable<TZ> nodeValues, T indexObject, int weight = 1);
+
+        /// <summary>
+        /// Index the key enumerator with the specified weight (defaulting to 1).
         /// </summary>
         /// <param name="nodeValues">The array of node values to index.</param>
         /// <param name="indexObject">The object to index at the location.</param>
@@ -38,6 +47,13 @@ namespace SimpleInMemorySearch
         /// Search the tree with the given prefix, returning all matching results.
         /// </summary>
         /// <param name="prefix">The prefix nodes.</param>
+        /// <returns>The matched results, unsorted.</returns>
+        IEnumerable<ITreeResult<T, TZ>> Search(IEnumerable<TZ> prefix);
+
+        /// <summary>
+        /// Search the tree with the given prefix, previous key information and cumulative weight, returning all matching results.
+        /// </summary>
+        /// <param name="prefix">The prefix nodes.</param>
         /// <param name="previousKeys">The previous keys searched so far.</param>
         /// <param name="cumulativeWeight">The cumulative weight acquired so far.</param>
         /// <returns>The matched results, unsorted.</returns>
@@ -46,9 +62,15 @@ namespace SimpleInMemorySearch
         /// <summary>
         /// Recursively retrieve all items from this node down the tree.
         /// </summary>
+        /// <returns>All items, unsorted.</returns>
+        IEnumerable<ITreeResult<T, TZ>> AllItems();
+
+        /// <summary>
+        /// Recursively retrieve all items from this node down the tree, with the given previous keys and cumulative weight.
+        /// </summary>
         /// <param name="previousKeys">The previous keys searched so far.</param>
         /// <param name="cumulativeWeight">The cumulative weight acquired so far.</param>
         /// <returns>All items, unsorted.</returns>
-        IEnumerable<ITreeResult<T, TZ>> AllItems(IReadOnlyList<TZ> previousKeys, int cumulativeWeight);
+        IEnumerable<ITreeResult<T, TZ>> AllItems(IReadOnlyList<TZ> previousKeys, int cumulativeWeight = 0);
     }
 }

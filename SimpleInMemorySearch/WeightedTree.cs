@@ -32,10 +32,22 @@ namespace SimpleInMemorySearch
         /// <summary>
         /// The items that terminate at this node.
         /// </summary>
-        public HashSet<T> Items { get; private set; } 
+        public HashSet<T> Items { get; private set; }
 
         /// <summary>
-        /// Index the character array with the specified weight (defaulting to 1).
+        /// Index the key enumeration with the specified weight (defaulting to 1).
+        /// </summary>
+        /// <param name="nodeValues">The array of node values to index.</param>
+        /// <param name="indexObject">The object to index at the location.</param>
+        /// <param name="weight">The weight to assign to the array, default 1.</param>
+        /// <returns>When complete.</returns>
+        public void Index(IEnumerable<TZ> nodeValues, T indexObject, int weight = 1)
+        {
+            this.Index(nodeValues.GetEnumerator(), indexObject, weight);
+        }
+
+        /// <summary>
+        /// Index the key enumerator with the specified weight (defaulting to 1).
         /// </summary>
         /// <param name="nodeValues">The array of node values to index.</param>
         /// <param name="indexObject">The object to index at the location.</param>
@@ -68,11 +80,29 @@ namespace SimpleInMemorySearch
         /// Search the tree with the given prefix, returning all matching results.
         /// </summary>
         /// <param name="prefix">The prefix nodes.</param>
+        /// <returns>The matched results, unsorted.</returns>
+        public IEnumerable<ITreeResult<T, TZ>> Search(IEnumerable<TZ> prefix)
+        {
+            foreach (var item in this.Search(prefix.GetEnumerator()))
+            {
+                yield return item;
+            }
+        }
+
+        /// <summary>
+        /// Search the tree with the given prefix, previous key information and cumulative weight, returning all matching results.
+        /// </summary>
+        /// <param name="prefix">The prefix nodes.</param>
         /// <param name="previousKeys">The previous keys searched so far.</param>
         /// <param name="cumulativeWeight">The cumulative weight acquired so far.</param>
         /// <returns>The matched results, unsorted.</returns>
         public IEnumerable<ITreeResult<T, TZ>> Search(IEnumerator<TZ> prefix, IReadOnlyList<TZ> previousKeys = null, int cumulativeWeight = 0)
         {
+            if (previousKeys == null)
+            {
+                previousKeys = new List<TZ>();
+            }
+
             var updatedKeys = new List<TZ>(previousKeys);
 
             // We have reached the end of the prefix, so return all values from here
@@ -101,8 +131,31 @@ namespace SimpleInMemorySearch
             }
         }
 
-        public IEnumerable<ITreeResult<T, TZ>> AllItems(IReadOnlyList<TZ> previousKeys, int cumulativeWeight)
+        /// <summary>
+        /// Recursively retrieve all items from this node down the tree.
+        /// </summary>
+        /// <returns>All items, unsorted.</returns>
+        public IEnumerable<ITreeResult<T, TZ>> AllItems()
         {
+            foreach (var item in this.AllItems(null))
+            {
+                yield return item;
+            }
+        }
+
+        /// <summary>
+        /// Recursively retrieve all items from this node down the tree, with the given previous keys and cumulative weight.
+        /// </summary>
+        /// <param name="previousKeys">The previous keys searched so far.</param>
+        /// <param name="cumulativeWeight">The cumulative weight acquired so far.</param>
+        /// <returns>All items, unsorted.</returns>
+        public IEnumerable<ITreeResult<T, TZ>> AllItems(IReadOnlyList<TZ> previousKeys, int cumulativeWeight = 0)
+        {
+            if (previousKeys == null)
+            {
+                previousKeys = new List<TZ>();
+            }
+
             cumulativeWeight += this.Weight;
 
             // Return all this node's items

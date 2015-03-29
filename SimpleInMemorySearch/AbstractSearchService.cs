@@ -49,7 +49,7 @@ namespace SimpleInMemorySearch
             {
                 foreach (var keyword in keywords)
                 {
-                    this.weightedTree.Index(keyword.Keyword.ToCharArray().AsEnumerable().GetEnumerator(), item.Key, keyword.Score);
+                    this.weightedTree.Index(keyword.Keyword.ToCharArray(), item.Key, keyword.Score);
                 }
             });
         }
@@ -61,7 +61,7 @@ namespace SimpleInMemorySearch
         /// <returns>The search results matching the term.</returns>
         public async Task<IEnumerable<ISearchResult<T, TZ>>> Search(string term)
         {
-            var results = this.weightedTree.Search(term.ToCharArray().AsEnumerable().GetEnumerator());
+            var results = this.weightedTree.Search(term.ToCharArray());
 
             return await Task.Run(() => results.Select(r => new SearchResult<T, TZ>(r.Result, r.Score, tz => this.itemCache[tz])).OrderByDescending(r => r.Relevancy));
         }
