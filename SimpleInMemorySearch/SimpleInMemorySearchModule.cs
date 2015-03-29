@@ -1,7 +1,7 @@
 ﻿namespace SimpleInMemorySearch
 {
     /// <summary>
-    /// Search module.
+    /// PrefixSearch module.
     /// </summary>
     public class SimpleInMemorySearchModule
     {

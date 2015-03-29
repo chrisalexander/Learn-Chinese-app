@@ -50,6 +50,8 @@
     <Compile Include="ScoredItemKeyword.cs" />
     <Compile Include="SearchResult.cs" />
     <Compile Include="SimpleInMemorySearchModule.cs" />
+    <Compile Include="TreeResult.cs" />
+    <Compile Include="WeightedTree.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

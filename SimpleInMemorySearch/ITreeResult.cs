@@ -22,6 +22,6 @@ namespace SimpleInMemorySearch
         /// <summary>
         /// The score associated with the match.
         /// </summary>
-        int Score { get; }
+        double Score { get; }
     }
 }

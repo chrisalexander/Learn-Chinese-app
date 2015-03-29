@@ -29,7 +29,8 @@ namespace SimpleInMemorySearch
         protected AbstractSearchService()
         {
             this.itemCache = new KeyedItemCollection<T, TZ>();
-        } 
+            this.weightedTree = new WeightedTree<TZ, char>();
+        }
 
         /// <summary>
         /// Adds the item to the index.
@@ -44,10 +45,13 @@ namespace SimpleInMemorySearch
             var keywords = this.Keywords(item);
 
             // Create all the tasks to index the terms
-            var indexTasks = keywords.Select(keyword => this.weightedTree.Index(keyword.Keyword.ToCharArray(), item.Key, keyword.Score));
-            
-            // Wait for indexing to be completed
-            await Task.WhenAll(indexTasks);
+            await Task.Run(() =>
+            {
+                foreach (var keyword in keywords)
+                {
+                    this.weightedTree.Index(keyword.Keyword.ToCharArray().AsEnumerable().GetEnumerator(), item.Key, keyword.Score);
+                }
+            });
         }
 
         /// <summary>
@@ -57,9 +61,9 @@ namespace SimpleInMemorySearch
         /// <returns>The search results matching the term.</returns>
         public async Task<IEnumerable<ISearchResult<T, TZ>>> Search(string term)
         {
-            var results = await this.weightedTree.Search(term.ToCharArray());
+            var results = this.weightedTree.Search(term.ToCharArray().AsEnumerable().GetEnumerator());
 
-            return results.Select(r => new SearchResult<T, TZ>(r.Result, r.Score, tz => this.itemCache[tz]));
+            return await Task.Run(() => results.Select(r => new SearchResult<T, TZ>(r.Result, r.Score, tz => this.itemCache[tz])).OrderByDescending(r => r.Relevancy));
         }
 
         /// <summary>

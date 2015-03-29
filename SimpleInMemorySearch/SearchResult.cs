@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices.WindowsRuntime;
 using KeyedItemCollection;
 
 namespace SimpleInMemorySearch
@@ -17,7 +16,7 @@ namespace SimpleInMemorySearch
         /// <param name="key">The key of the result.</param>
         /// <param name="relevancy">The overall relevancy.</param>
         /// <param name="accessorFunction">Function to access a result object from the key.</param>
-        public SearchResult(TZ key, int relevancy, Func<TZ, T> accessorFunction)
+        public SearchResult(TZ key, double relevancy, Func<TZ, T> accessorFunction)
         {
             this.Relevancy = relevancy;
             this.Key = key;
@@ -28,7 +27,7 @@ namespace SimpleInMemorySearch
         /// <summary>
         /// The relevancy of the result.
         /// </summary>
-        public int Relevancy { get; private set; }
+        public double Relevancy { get; private set; }
 
         /// <summary>
         /// The key of the result.
