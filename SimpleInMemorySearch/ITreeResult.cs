@@ -7,7 +7,7 @@ namespace SimpleInMemorySearch
     /// </summary>
     /// <typeparam name="T">The type of the object that is searched for.</typeparam>
     /// <typeparam name="TZ">The type of the value at each tree node.</typeparam>
-    public interface ITreeResult<T, out TZ>
+    public interface ITreeResult<out T, out TZ>
     {
         /// <summary>
         /// The match phrase.

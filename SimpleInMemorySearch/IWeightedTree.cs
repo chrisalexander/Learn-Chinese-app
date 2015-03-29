@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace SimpleInMemorySearch
 {
@@ -23,7 +22,7 @@ namespace SimpleInMemorySearch
         /// <summary>
         /// The items that terminate at this node.
         /// </summary>
-        HashSet<T> Items { get; }
+        IDictionary<T, double> Items { get; }
 
         /// <summary>
         /// Index the key enumeration with the specified weight (defaulting to 1).
@@ -47,7 +46,7 @@ namespace SimpleInMemorySearch
         /// Search the tree with the given prefix, returning all matching results.
         /// </summary>
         /// <param name="prefix">The prefix nodes.</param>
-        /// <returns>The matched results, unsorted.</returns>
+        /// <returns>The matched results, unsorted and potentially duplicated.</returns>
         IEnumerable<ITreeResult<T, TZ>> Search(IEnumerable<TZ> prefix);
 
         /// <summary>
@@ -56,21 +55,20 @@ namespace SimpleInMemorySearch
         /// <param name="prefix">The prefix nodes.</param>
         /// <param name="previousKeys">The previous keys searched so far.</param>
         /// <param name="cumulativeWeight">The cumulative weight acquired so far.</param>
-        /// <returns>The matched results, unsorted.</returns>
+        /// <returns>The matched results, unsorted and potentially duplicated.</returns>
         IEnumerable<ITreeResult<T, TZ>> Search(IEnumerator<TZ> prefix, IReadOnlyList<TZ> previousKeys = null, int cumulativeWeight = 0);
 
         /// <summary>
         /// Recursively retrieve all items from this node down the tree.
         /// </summary>
-        /// <returns>All items, unsorted.</returns>
+        /// <returns>All items, unsorted and potentially duplicated.</returns>
         IEnumerable<ITreeResult<T, TZ>> AllItems();
 
         /// <summary>
         /// Recursively retrieve all items from this node down the tree, with the given previous keys and cumulative weight.
         /// </summary>
         /// <param name="previousKeys">The previous keys searched so far.</param>
-        /// <param name="cumulativeWeight">The cumulative weight acquired so far.</param>
-        /// <returns>All items, unsorted.</returns>
-        IEnumerable<ITreeResult<T, TZ>> AllItems(IReadOnlyList<TZ> previousKeys, int cumulativeWeight = 0);
+        /// <returns>All items, unsorted and potentially duplicated.</returns>
+        IEnumerable<ITreeResult<T, TZ>> AllItems(IReadOnlyList<TZ> previousKeys);
     }
 }
