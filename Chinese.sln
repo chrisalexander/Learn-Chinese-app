@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyedItemCollection.Tests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleInMemorySearch.Tests", "SimpleInMemorySearch.Tests\SimpleInMemorySearch.Tests.csproj", "{CBB45F44-C252-40A4-92AB-39BC15A977AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LangDB.Tests", "LangDB.Tests\LangDB.Tests.csproj", "{5FBAB41D-9B31-4F33-980E-E68A68832CFB}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Chinese.Shared\Chinese.Shared.projitems*{9aa40e72-e0f2-4b7d-8076-7e25fbd53a80}*SharedItemsImports = 4
@@ -302,6 +304,16 @@ Global
 		{CBB45F44-C252-40A4-92AB-39BC15A977AA}.Release|ARM.ActiveCfg = Release|Any CPU
 		{CBB45F44-C252-40A4-92AB-39BC15A977AA}.Release|x64.ActiveCfg = Release|Any CPU
 		{CBB45F44-C252-40A4-92AB-39BC15A977AA}.Release|x86.ActiveCfg = Release|Any CPU
+		{5FBAB41D-9B31-4F33-980E-E68A68832CFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FBAB41D-9B31-4F33-980E-E68A68832CFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FBAB41D-9B31-4F33-980E-E68A68832CFB}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{5FBAB41D-9B31-4F33-980E-E68A68832CFB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5FBAB41D-9B31-4F33-980E-E68A68832CFB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5FBAB41D-9B31-4F33-980E-E68A68832CFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FBAB41D-9B31-4F33-980E-E68A68832CFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FBAB41D-9B31-4F33-980E-E68A68832CFB}.Release|ARM.ActiveCfg = Release|Any CPU
+		{5FBAB41D-9B31-4F33-980E-E68A68832CFB}.Release|x64.ActiveCfg = Release|Any CPU
+		{5FBAB41D-9B31-4F33-980E-E68A68832CFB}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

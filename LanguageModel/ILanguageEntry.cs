@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using KeyedItemCollection;
 
 namespace LanguageModel
 {
     /// <summary>
     /// Interface for entries in the model.
     /// </summary>
-    public interface ILanguageEntry
+    public interface ILanguageEntry : IKeyedItem<LanguageEntryId>
     {
         /// <summary>
         /// The Chinese format.

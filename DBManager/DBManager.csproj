@@ -224,6 +224,10 @@
       <Project>{ef45a007-c8a8-4285-b3dd-1be875c3a04f}</Project>
       <Name>LongRunningProcess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SimpleInMemorySearch\SimpleInMemorySearch.csproj">
+      <Project>{56872605-fb91-4410-ad54-c480db43df12}</Project>
+      <Name>SimpleInMemorySearch</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
