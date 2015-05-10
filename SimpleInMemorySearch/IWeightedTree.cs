@@ -65,7 +65,7 @@ namespace SimpleInMemorySearch
         IEnumerable<ITreeResult<T, TZ>> AllItems();
 
         /// <summary>
-        /// Recursively retrieve all items from this node down the tree, with the given previous keys and cumulative weight.
+        /// Recursively retrieve all items from this node down the tree, with the given previous keys.
         /// </summary>
         /// <param name="previousKeys">The previous keys searched so far.</param>
         /// <returns>All items, unsorted and potentially duplicated.</returns>
