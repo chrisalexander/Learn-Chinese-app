@@ -12,5 +12,10 @@ namespace LanguageModel
         /// </summary>
         /// <param name="rootId">The entry ID.</param>
         public LanguageEntryId(string rootId) : base(rootId) { }
+
+        public static implicit operator LanguageEntryId(string d)
+        {
+            return new LanguageEntryId(d);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace KeyedItemCollection
 {
@@ -9,12 +10,13 @@ namespace KeyedItemCollection
     /// </summary>
     /// <typeparam name="T">The type of the object in the collection.</typeparam>
     /// <typeparam name="TZ">The type of the key of the object.</typeparam>
+    [JsonObject]
     public class KeyedItemCollection<T, TZ> : IKeyedItemCollection<T, TZ> where T : IKeyedItem<TZ>
     {
         /// <summary>
         /// The backing dictionary for the collection.
         /// </summary>
-        private readonly IDictionary<TZ, T> backingDictionary;
+        private IDictionary<TZ, T> backingDictionary;
 
         /// <summary>
         /// Create a new keyed item collection.
@@ -149,6 +151,7 @@ namespace KeyedItemCollection
         /// <summary>
         /// Get the keys in the collection.
         /// </summary>
+        [JsonIgnore]
         public ICollection<TZ> Keys
         {
             get
@@ -160,11 +163,28 @@ namespace KeyedItemCollection
         /// <summary>
         /// Get the items in the collection.
         /// </summary>
+        [JsonIgnore]
         public ICollection<T> Values
         {
             get
             {
                 return this.backingDictionary.Values;
+            }
+        }
+
+        /// <summary>
+        /// The data that backs the collection.
+        /// </summary>
+        public IDictionary<TZ, T> Data
+        {
+            get
+            {
+                return this.backingDictionary;
+            }
+
+            set
+            {
+                this.backingDictionary = value;
             }
         }
     }
