@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace SimpleInMemorySearch
 {
@@ -14,9 +15,9 @@ namespace SimpleInMemorySearch
         /// </summary>
         public WeightedTree()
         {
-            this.Edges = new Dictionary<TZ, IWeightedTree<T, TZ>>();
+            this.Edges = new ConcurrentDictionary<TZ, IWeightedTree<T, TZ>>();
             this.Weight = 0;
-            this.Items = new Dictionary<T, double>();
+            this.Items = new ConcurrentDictionary<T, double>();
         }
 
         /// <summary>

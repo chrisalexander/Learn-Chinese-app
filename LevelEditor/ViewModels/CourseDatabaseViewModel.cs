@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using CourseDB;
+using LangDB;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using System;
@@ -17,6 +18,11 @@ namespace LevelEditor.ViewModels
     [Export(typeof(CourseDatabaseViewModel))]
     public class CourseDatabaseViewModel : ViewModel
     {
+        /// <summary>
+        /// The search service.
+        /// </summary>
+        private readonly ILanguageSearchService searchService;
+
         /// <summary>
         /// The course ID.
         /// </summary>
@@ -60,16 +66,20 @@ namespace LevelEditor.ViewModels
         /// <summary>
         /// Construct a new view model from a source.
         /// </summary>
+        /// <param name="searchService">The search service.</param>
         /// <param name="source">The source database.</param>
         /// <param name="storageFile">The storage file the data came from.</param>
-        public CourseDatabaseViewModel(ICourse source, IStorageFile storageFile)
+        [ImportingConstructor]
+        public CourseDatabaseViewModel(ILanguageSearchService searchService, ICourse source, IStorageFile storageFile)
         {
+            this.searchService = searchService;
+
             this.Id = source.Id;
             this.Name = source.Name;
             this.Description = source.Description;
             this.Updated = source.Updated;
             this.Path = source.Path;
-            this.Levels = new ObservableCollection<CourseLevelViewModel>(source.Levels.Select(level => new CourseLevelViewModel(level)));
+            this.Levels = new ObservableCollection<CourseLevelViewModel>(source.Levels.Select(level => new CourseLevelViewModel(this.searchService, level)));
 
             this.storageFile = storageFile;
 
@@ -246,7 +256,7 @@ namespace LevelEditor.ViewModels
             level.Id = new LevelId(this.Id);
             level.Name = level.Id.ToString();
 
-            var levelViewModel = new CourseLevelViewModel(level);
+            var levelViewModel = new CourseLevelViewModel(this.searchService, level);
 
             this.Levels.Add(levelViewModel);
             this.SelectedLevel = levelViewModel;

@@ -12,6 +12,7 @@
 
     <Page.Resources>
         <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />
+        <converters:InverseNullVisibilityConverter x:Key="InverseNullVisibilityConverter" />
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -190,7 +191,7 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <Button Grid.Row="0" Grid.Column="0" Command="{Binding NewEntryCommand}" IsEnabled="{Binding DataContext.Enabled, ElementName=Page}" Margin="20,20,0,0">New</Button>
+                        <Button Grid.Row="0" Grid.Column="0" Command="{Binding NewEntryCommand}" IsEnabled="{Binding DataContext.Enabled, ElementName=Page}" Margin="20,20,0,0">Add</Button>
                         <Button Grid.Row="0" Grid.Column="1" Command="{Binding RemoveEntryCommand}" IsEnabled="{Binding DataContext.Enabled, ElementName=Page}" Margin="0,20,0,0">Remove</Button>
                     </Grid>
 
@@ -219,12 +220,51 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
                     <TextBlock Text="Entry" Grid.Row="0" Grid.Column="0" Style="{StaticResource SubheaderTextBlockStyle}" Margin="20,20,20,20" />
+                    
+                    <!-- Data grid, visible if an entry has previously been selected -->
+                    <Grid Grid.Row="1" Grid.Column="0" Visibility="{Binding LanguageEntryId, Converter={StaticResource NullVisibilityConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+
+                        <TextBlock Text="This entry cannot be edited" Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" Margin="20,20,20,0" />
+
+                    </Grid>
+
+                    <!-- Search box, visible if an entry has NOT been selected -->
+                    <Grid Grid.Row="1" Grid.Column="0" Visibility="{Binding LanguageEntryId, Converter={StaticResource InverseNullVisibilityConverter}, ElementName=Level}" DataContext="{Binding LevelSearchViewModel}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Search for an entry to use" Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" Margin="20,20,20,0" />
+
+                        <Grid Grid.Row="1" Grid.Column="0" Margin="20,20,20,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBox Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,0,20,0" Grid.Row="0" Grid.Column="0"></TextBox>
+                            <Button Grid.Row="0" Grid.Column="1" Command="{Binding SearchCommand}" IsEnabled="{Binding DataContext.Enabled, ElementName=Page}">Search</Button>
+                        </Grid>
+                        
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>

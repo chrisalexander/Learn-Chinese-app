@@ -119,6 +119,10 @@
       <Project>{237932d3-746d-4161-b3a7-20820a354d4d}</Project>
       <Name>DBUtils</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KeyedItemCollection\KeyedItemCollection.csproj">
+      <Project>{050764e9-471a-45e4-a02d-f5f89b4d7758}</Project>
+      <Name>KeyedItemCollection</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LangDB.Windows\LangDB.Windows.csproj">
       <Project>{D019FAA4-BB83-44AC-8EDD-09D6FE18FB0D}</Project>
       <Name>LangDB.Windows</Name>
@@ -126,6 +130,10 @@
     <ProjectReference Include="..\LangDB\LangDB.csproj">
       <Project>{eee40438-cadd-4587-8dab-c51368800598}</Project>
       <Name>LangDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LanguageModel\LanguageModel.csproj">
+      <Project>{C310D1DE-A16C-41ED-9D18-73DA836F59A7}</Project>
+      <Name>LanguageModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\LongRunningProcess\LongRunningProcess.csproj">
       <Project>{ef45a007-c8a8-4285-b3dd-1be875c3a04f}</Project>
@@ -140,11 +148,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\InverseNullVisibilityConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CourseDatabaseViewModel.cs" />
     <Compile Include="ViewModels\CourseLevelViewModel.cs" />
     <Compile Include="ViewModels\LevelEntryViewModel.cs" />
+    <Compile Include="ViewModels\LevelSearchViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

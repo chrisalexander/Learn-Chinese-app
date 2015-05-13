@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using CourseDB;
+using LangDB;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using System.Collections.Generic;
@@ -15,6 +16,11 @@ namespace LevelEditor.ViewModels
     [Export(typeof(CourseLevelViewModel))]
     public class CourseLevelViewModel : ViewModel
     {
+        /// <summary>
+        /// The search service.
+        /// </summary>
+        private readonly ILanguageSearchService searchService;
+
         /// <summary>
         /// The level ID.
         /// </summary>
@@ -53,14 +59,18 @@ namespace LevelEditor.ViewModels
         /// <summary>
         /// Construct a new view model from a source.
         /// </summary>
+        /// <param name="searchService">The search service.</param>
         /// <param name="source">The source level.</param>
-        public CourseLevelViewModel(ILevel source)
+        [ImportingConstructor]
+        public CourseLevelViewModel(ILanguageSearchService searchService, ILevel source)
         {
+            this.searchService = searchService;
+
             this.Id = source.Id;
             this.Name = source.Name;
             this.Description = source.Description;
             this.Difficulty = source.Difficulty;
-            this.Entries = new ObservableCollection<LevelEntryViewModel>(source.Entries.Select(entry => new LevelEntryViewModel(entry)));
+            this.Entries = new ObservableCollection<LevelEntryViewModel>(source.Entries.Select(entry => new LevelEntryViewModel(searchService, entry)));
             this.Prerequisites = new ObservableCollection<LevelId>(source.Prerequisites);
 
             this.NewEntryCommand = new DelegateCommand(this.NewEntry);
@@ -219,7 +229,7 @@ namespace LevelEditor.ViewModels
             var entry = new LevelEntry();
             entry.Id = new EntryId(this.Id);
 
-            var entryViewModel = new LevelEntryViewModel(entry);
+            var entryViewModel = new LevelEntryViewModel(this.searchService, entry);
 
             this.Entries.Add(entryViewModel);
             this.SelectedEntry = entryViewModel;
