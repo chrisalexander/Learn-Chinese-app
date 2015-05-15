@@ -1,4 +1,5 @@
-﻿using CourseDB;
+﻿using System;
+using CourseDB;
 using LangDB;
 using LanguageModel;
 using Microsoft.Practices.Prism.Mvvm;
@@ -95,7 +96,14 @@ namespace LevelEditor.ViewModels
         {
             get
             {
-                return this.languageEntryId == null ? null : this.searchService.ObjectFromKey(this.languageEntryId);
+                try
+                {
+                    return this.searchService.ObjectFromKey(this.languageEntryId);
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
             }
         }
 
