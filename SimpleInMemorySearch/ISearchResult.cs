@@ -13,7 +13,7 @@ namespace SimpleInMemorySearch
         /// <summary>
         /// The relevancy of the result.
         /// </summary>
-        int Relevancy { get; }
+        double Relevancy { get; }
 
         /// <summary>
         /// The key of the result.

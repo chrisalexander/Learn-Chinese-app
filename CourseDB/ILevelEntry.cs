@@ -1,4 +1,6 @@
-﻿namespace CourseDB
+﻿using LanguageModel;
+
+namespace CourseDB
 {
     /// <summary>
     /// Interface for level entries.
@@ -9,6 +11,11 @@
         /// ID of the language entry.
         /// </summary>
         EntryId Id { get; set; }
+
+        /// <summary>
+        /// The language entry ID.
+        /// </summary>
+        LanguageEntryId LanguageEntryId { get; set; }
 
         /// <summary>
         /// The translation chosen to use for the entry in the level.

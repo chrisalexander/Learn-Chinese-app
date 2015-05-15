@@ -40,6 +40,11 @@ namespace LevelEditor.ViewModels
         private readonly IProcessFactory processFactory;
 
         /// <summary>
+        /// The search service.
+        /// </summary>
+        private readonly ILanguageSearchService searchService;
+
+        /// <summary>
         /// The databases in the view.
         /// </summary>
         private ObservableCollection<CourseDatabaseViewModel> databases;
@@ -65,12 +70,14 @@ namespace LevelEditor.ViewModels
         /// <param name="languageDatabaseService">The language database service.</param>
         /// <param name="courseDatabaseService">The course database service.</param>
         /// <param name="processFactory">The process factory.</param>
+        /// <param name="searchService">The search service.</param>
         [ImportingConstructor]
-        public MainPageViewModel(ILanguageDatabaseService languageDatabaseService, ICourseDatabaseService courseDatabaseService, IProcessFactory processFactory)
+        public MainPageViewModel(ILanguageDatabaseService languageDatabaseService, ICourseDatabaseService courseDatabaseService, IProcessFactory processFactory, ILanguageSearchService searchService)
         {
             this.languageDatabaseService = languageDatabaseService;
             this.courseDatabaseService = courseDatabaseService;
             this.processFactory = processFactory;
+            this.searchService = searchService;
 
             this.databases = new ObservableCollection<CourseDatabaseViewModel>();
             this.PickLanguageDatabaseCommand = DelegateCommand.FromAsyncHandler(this.PickLanguageDatabaseAsync, this.CanExecuteAsync);
@@ -193,7 +200,13 @@ namespace LevelEditor.ViewModels
         private async Task PickLanguageDatabaseAsync()
         {
             this.Enabled = false;
+
+            // Load the language database
             this.LanguageDatabase = await this.languageDatabaseService.OpenAsync(this.processFactory.Create("Pick file"));
+
+            // Index the loaded database
+            await this.searchService.Index(this.LanguageDatabase);
+
             this.Enabled = true;
         }
 
@@ -318,7 +331,7 @@ namespace LevelEditor.ViewModels
         /// <param name="file">The file the database came from.</param>
         private void CompleteDatabaseLoad(ICourse database, IStorageFile file)
         {
-            var newDatabase = new CourseDatabaseViewModel(database, file);
+            var newDatabase = new CourseDatabaseViewModel(this.searchService, database, file);
 
             if (this.Databases.Any(db => db.Id.Equals(database.Id)))
             {

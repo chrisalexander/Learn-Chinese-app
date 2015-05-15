@@ -11,5 +11,20 @@ namespace LanguageModel
         /// The characters in the word.
         /// </summary>
         IEnumerable<IChineseCharacter> Characters { get; }
+
+        /// <summary>
+        /// The mandarin pinyin.
+        /// </summary>
+        string Mandarin { get; }
+
+        /// <summary>
+        /// The traditional chinese.
+        /// </summary>
+        string Traditional { get; }
+
+        /// <summary>
+        /// The simplified chinese.
+        /// </summary>
+        string Simplified { get; }
     }
 }

@@ -12,6 +12,7 @@
 
     <Page.Resources>
         <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />
+        <converters:InverseNullVisibilityConverter x:Key="InverseNullVisibilityConverter" />
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -22,7 +23,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <TextBlock Text="Level Editor" Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderTextBlockStyle}" Margin="20,20,20,20" />
@@ -127,7 +128,7 @@
                     <Button Grid.Row="0" Grid.Column="1" Command="{Binding RemoveLevelCommand}" IsEnabled="{Binding DataContext.Enabled, ElementName=Page}" Margin="0,20,0,0">Remove</Button>
                 </Grid>
                 
-                <ListBox Grid.Row="7" Grid.Column="1" ItemsSource="{Binding Levels}" SelectedItem="{Binding SelectedLevel, Mode=TwoWay}" Margin="20,20,0,0" VerticalAlignment="Stretch">
+                <ListBox Grid.Row="7" Grid.Column="1" ItemsSource="{Binding Levels}" SelectedItem="{Binding SelectedLevel, Mode=TwoWay}" Margin="20,20,20,20" VerticalAlignment="Stretch">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -190,11 +191,11 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <Button Grid.Row="0" Grid.Column="0" Command="{Binding NewEntryCommand}" IsEnabled="{Binding DataContext.Enabled, ElementName=Page}" Margin="20,20,0,0">New</Button>
+                        <Button Grid.Row="0" Grid.Column="0" Command="{Binding NewEntryCommand}" IsEnabled="{Binding DataContext.Enabled, ElementName=Page}" Margin="20,20,0,0">Add</Button>
                         <Button Grid.Row="0" Grid.Column="1" Command="{Binding RemoveEntryCommand}" IsEnabled="{Binding DataContext.Enabled, ElementName=Page}" Margin="0,20,0,0">Remove</Button>
                     </Grid>
 
-                    <ListBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding Entries}" SelectedItem="{Binding SelectedEntry, Mode=TwoWay}" Margin="20,20,0,0" VerticalAlignment="Stretch">
+                    <ListBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding Entries}" SelectedItem="{Binding SelectedEntry, Mode=TwoWay}" Margin="20,20,20,20" VerticalAlignment="Stretch">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -205,7 +206,7 @@
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock Text="{Binding Name}" Grid.Column="0" Grid.Row="0" />
+                                    <TextBlock Text="{Binding LanguageEntry.Chinese.Simplified}" Grid.Column="0" Grid.Row="0" />
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -213,18 +214,151 @@
                 </Grid>
 
                 <!-- Entry view -->
-                <Grid Grid.Column="1" Grid.Row="0" DataContext="{Binding SelectedEntry}" Visibility="{Binding DataContext.SelectedEntry, Converter={StaticResource NullVisibilityConverter}, ElementName=Level}">
+                <Grid Grid.Column="1" Grid.Row="0" DataContext="{Binding SelectedEntry}" Visibility="{Binding DataContext.SelectedEntry, Converter={StaticResource NullVisibilityConverter}, ElementName=Level}" Name="Entry">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
                     <TextBlock Text="Entry" Grid.Row="0" Grid.Column="0" Style="{StaticResource SubheaderTextBlockStyle}" Margin="20,20,20,20" />
+                    
+                    <!-- Data grid, visible if an entry has previously been selected -->
+                    <Grid Grid.Row="1" Grid.Column="0" Visibility="{Binding LanguageEntryId, Converter={StaticResource NullVisibilityConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="This entry cannot be edited" Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" Margin="20,20,20,0" />
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Margin="20,20,20,0">
+                            <TextBlock Text="Simplified" FontWeight="Bold" Style="{StaticResource BaseTextBlockStyle}" Margin="0,0,10,0" />
+                            <TextBlock Text="{Binding LanguageEntry.Chinese.Simplified}" Margin="0,8,0,0" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Margin="20,20,20,0">
+                            <TextBlock Text="Traditional" FontWeight="Bold" Style="{StaticResource BaseTextBlockStyle}" Margin="0,0,10,0" />
+                            <TextBlock Text="{Binding LanguageEntry.Chinese.Traditional}" Margin="0,8,0,0" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Margin="20,20,20,0">
+                            <TextBlock Text="Mandarin" FontWeight="Bold" Style="{StaticResource BaseTextBlockStyle}" Margin="0,0,10,0" />
+                            <TextBlock Text="{Binding LanguageEntry.Chinese.Mandarin}" Margin="0,8,0,0" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Margin="20,20,20,0">
+                            <TextBlock Text="Translation" FontWeight="Bold" Style="{StaticResource BaseTextBlockStyle}" Margin="0,0,10,0" />
+                            <TextBlock Text="{Binding SelectedTranslation}" Margin="0,8,0,0" />
+                        </StackPanel>
+
+                    </Grid>
+
+                    <!-- Search box, visible if an entry has NOT been selected -->
+                    <Grid Grid.Row="1" Grid.Column="0" Visibility="{Binding DataContext.LanguageEntryId, Converter={StaticResource InverseNullVisibilityConverter}, ElementName=Entry}" DataContext="{Binding LevelSearchViewModel}" Name="Search">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Search for an entry to use" Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" Margin="20,20,20,0" />
+
+                        <Grid Grid.Row="1" Grid.Column="0" Margin="20,20,20,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBox Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,0,20,0" Grid.Row="0" Grid.Column="0"></TextBox>
+                            <Button Grid.Row="0" Grid.Column="1" Command="{Binding SearchCommand}" IsEnabled="{Binding DataContext.Enabled, ElementName=Page}">Search</Button>
+                        </Grid>
+
+                        <ListBox Grid.Row="2" Grid.Column="0" ItemsSource="{Binding Results}" SelectedItem="{Binding SelectedResult, Mode=TwoWay}" Margin="20,20,20,20" VerticalAlignment="Stretch">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Text="{Binding Chinese}" Grid.Column="0" Grid.Row="0" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        
+                        <Grid Grid.Row="3" Grid.Column="0" DataContext="{Binding SelectedResult}" Visibility="{Binding DataContext.SelectedResult, Converter={StaticResource NullVisibilityConverter}, ElementName=Search}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Selected Entry" Grid.Row="0" Grid.Column="0" Style="{StaticResource SubheaderTextBlockStyle}" Margin="20,20,20,20" />
+                            
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Margin="20,20,20,0">
+                                <TextBlock Text="Simplified" FontWeight="Bold" Style="{StaticResource BaseTextBlockStyle}" Margin="0,0,10,0" />
+                                <TextBlock Text="{Binding Chinese.Simplified}" Margin="0,8,0,0" />
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Margin="20,20,20,0">
+                                <TextBlock Text="Traditional" FontWeight="Bold" Style="{StaticResource BaseTextBlockStyle}" Margin="0,0,10,0" />
+                                <TextBlock Text="{Binding Chinese.Traditional}" Margin="0,8,0,0" />
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Margin="20,20,20,0">
+                                <TextBlock Text="Mandarin" FontWeight="Bold" Style="{StaticResource BaseTextBlockStyle}" Margin="0,0,10,0" />
+                                <TextBlock Text="{Binding Chinese.Mandarin}" Margin="0,8,0,0" />
+                            </StackPanel>
+                            
+                            <TextBlock Text="Select translation" Grid.Row="4" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" Margin="20,20,20,0" />
+                            
+                            <ListBox Grid.Row="5" Grid.Column="0" ItemsSource="{Binding English}" SelectedItem="{Binding DataContext.SelectedTranslation, Mode=TwoWay, ElementName=Search}" Margin="20,20,20,20" VerticalAlignment="Stretch">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Text="{Binding}" Grid.Column="0" Grid.Row="0" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+
+                            <Button Grid.Row="6" Grid.Column="0" Command="{Binding DataContext.SelectCommand, ElementName=Search}" IsEnabled="{Binding DataContext.Enabled, ElementName=Page}" Margin="20,20,20,20" HorizontalAlignment="Right">Choose</Button>
+                        </Grid>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>

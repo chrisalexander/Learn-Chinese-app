@@ -1,5 +1,4 @@
-﻿using KeyedItemCollection;
-using LanguageModel.Annotations;
+﻿using LanguageModel.Annotations;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ namespace LanguageModel
     /// <summary>
     /// A language entry is a Chinese word and its English equivalents.
     /// </summary>
-    public class LanguageEntry : ILanguageEntry, IKeyedItem<LanguageEntryId>
+    public class LanguageEntry : ILanguageEntry
     {
         /// <summary>
         /// Creates a new entry with all of the requirements.
