@@ -23,5 +23,12 @@ namespace SimpleInMemorySearch
         /// <param name="term">The search term.</param>
         /// <returns>The search results matching the term.</returns>
         Task<IEnumerable<ISearchResult<T, TZ>>> Search(string term);
+
+        /// <summary>
+        /// Get a specific object from its key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>The associated object.</returns>
+        T ObjectFromKey(TZ key);
     }
 }

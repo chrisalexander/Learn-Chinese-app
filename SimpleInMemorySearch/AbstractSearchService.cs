@@ -67,6 +67,16 @@ namespace SimpleInMemorySearch
         }
 
         /// <summary>
+        /// Gets an object from its key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>The object.</returns>
+        public T ObjectFromKey(TZ key)
+        {
+            return this.itemCache[key];
+        }
+
+        /// <summary>
         /// Given an item, return keywords from the item with relative rankings of their score.
         /// </summary>
         /// <param name="item">The item.</param>

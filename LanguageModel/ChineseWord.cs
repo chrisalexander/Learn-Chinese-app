@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System.Text;
 using LanguageModel.Annotations;
 using Newtonsoft.Json;
 using System;
@@ -55,19 +54,67 @@ namespace LanguageModel
         public IEnumerable<IChineseCharacter> Characters { get; private set; }
 
         /// <summary>
+        /// The mandarin chinese.
+        /// </summary>
+        public string Mandarin
+        {
+            get
+            {
+                var builder = new StringBuilder();
+
+                foreach (var character in this.Characters)
+                {
+                    builder.Append(character.Mandarin);
+                    builder.Append(" ");
+                }
+
+                return builder.ToString();
+            }
+        }
+
+        /// <summary>
+        /// The traditional chinese.
+        /// </summary>
+        public string Traditional
+        {
+            get
+            {
+                var builder = new StringBuilder();
+
+                foreach (var character in this.Characters)
+                {
+                    builder.Append(character.Traditional);
+                }
+
+                return builder.ToString();
+            }
+        }
+
+        /// <summary>
+        /// The simplified chinese.
+        /// </summary>
+        public string Simplified
+        {
+            get
+            {
+                var builder = new StringBuilder();
+
+                foreach (var character in this.Characters)
+                {
+                    builder.Append(character.Simplified);
+                }
+
+                return builder.ToString();
+            }
+        }
+
+        /// <summary>
         /// Converts a Chinese word to a string.
         /// </summary>
         /// <returns>String representation fo the word.</returns>
         public override string ToString()
         {
-            var builder = new StringBuilder();
-
-            foreach (var character in this.Characters)
-            {
-                builder.Append(character.Simplified);
-            }
-
-            return builder.ToString();
+            return this.Simplified;
         }
     }
 }

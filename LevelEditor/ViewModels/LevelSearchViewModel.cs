@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using LangDB;
@@ -41,6 +40,11 @@ namespace LevelEditor.ViewModels
         private ILanguageEntry selectedResult;
 
         /// <summary>
+        /// The selected translation.
+        /// </summary>
+        private string selectedTranslation;
+
+        /// <summary>
         /// Creates a new level search view model.
         /// </summary>
         /// <param name="searchService">The search service.</param>
@@ -51,7 +55,7 @@ namespace LevelEditor.ViewModels
             this.resultChosen = resultChosen;
 
             this.SearchCommand = new DelegateCommand(this.ExecuteSearch);
-            this.SelectCommand = new DelegateCommand(this.SelectResult, () => this.selectedResult != null);
+            this.SelectCommand = new DelegateCommand(this.SelectResult);
         }
 
         /// <summary>
@@ -113,6 +117,22 @@ namespace LevelEditor.ViewModels
         }
 
         /// <summary>
+        /// The selected translation.
+        /// </summary>
+        public string SelectedTranslation
+        {
+            get
+            {
+                return this.selectedTranslation;
+            }
+
+            set
+            {
+                this.SetProperty(ref this.selectedTranslation, value);
+            }
+        }
+
+        /// <summary>
         /// Executes the requested search.
         /// </summary>
         private async void ExecuteSearch()
@@ -127,7 +147,7 @@ namespace LevelEditor.ViewModels
         /// </summary>
         private void SelectResult()
         {
-            this.resultChosen(this.SelectedResult.Id, string.Empty);
+            this.resultChosen(this.SelectedResult.Id, this.selectedTranslation);
         }
     }
 }

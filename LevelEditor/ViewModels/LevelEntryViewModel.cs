@@ -13,6 +13,11 @@ namespace LevelEditor.ViewModels
     public class LevelEntryViewModel : ViewModel
     {
         /// <summary>
+        /// The search service.
+        /// </summary>
+        private readonly ILanguageSearchService searchService;
+
+        /// <summary>
         /// The ID of the entry in the entry database.
         /// </summary>
         private EntryId entryId;
@@ -35,6 +40,8 @@ namespace LevelEditor.ViewModels
         [ImportingConstructor]
         public LevelEntryViewModel(ILanguageSearchService searchService, ILevelEntry source)
         {
+            this.searchService = searchService;
+
             this.LevelSearchViewModel = new LevelSearchViewModel(searchService, (entryId, translation) =>
             {
                 this.LanguageEntryId = entryId;
@@ -77,6 +84,18 @@ namespace LevelEditor.ViewModels
             set
             {
                 this.SetProperty(ref this.languageEntryId, value);
+                this.OnPropertyChanged("LanguageEntry");
+            }
+        }
+
+        /// <summary>
+        /// Helper to retrieve the associated language entry.
+        /// </summary>
+        public ILanguageEntry LanguageEntry
+        {
+            get
+            {
+                return this.languageEntryId == null ? null : this.searchService.ObjectFromKey(this.languageEntryId);
             }
         }
 
