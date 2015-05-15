@@ -1,4 +1,6 @@
-﻿using LanguageModel.Annotations;
+﻿using System.Linq;
+using System.Text;
+using LanguageModel.Annotations;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -51,5 +53,21 @@ namespace LanguageModel
         /// The characters in the word.
         /// </summary>
         public IEnumerable<IChineseCharacter> Characters { get; private set; }
+
+        /// <summary>
+        /// Converts a Chinese word to a string.
+        /// </summary>
+        /// <returns>String representation fo the word.</returns>
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+
+            foreach (var character in this.Characters)
+            {
+                builder.Append(character.Simplified);
+            }
+
+            return builder.ToString();
+        }
     }
 }

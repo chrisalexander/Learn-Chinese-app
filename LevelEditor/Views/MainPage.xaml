@@ -23,7 +23,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <TextBlock Text="Level Editor" Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderTextBlockStyle}" Margin="20,20,20,20" />
@@ -128,7 +128,7 @@
                     <Button Grid.Row="0" Grid.Column="1" Command="{Binding RemoveLevelCommand}" IsEnabled="{Binding DataContext.Enabled, ElementName=Page}" Margin="0,20,0,0">Remove</Button>
                 </Grid>
                 
-                <ListBox Grid.Row="7" Grid.Column="1" ItemsSource="{Binding Levels}" SelectedItem="{Binding SelectedLevel, Mode=TwoWay}" Margin="20,20,0,0" VerticalAlignment="Stretch">
+                <ListBox Grid.Row="7" Grid.Column="1" ItemsSource="{Binding Levels}" SelectedItem="{Binding SelectedLevel, Mode=TwoWay}" Margin="20,20,20,20" VerticalAlignment="Stretch">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -195,7 +195,7 @@
                         <Button Grid.Row="0" Grid.Column="1" Command="{Binding RemoveEntryCommand}" IsEnabled="{Binding DataContext.Enabled, ElementName=Page}" Margin="0,20,0,0">Remove</Button>
                     </Grid>
 
-                    <ListBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding Entries}" SelectedItem="{Binding SelectedEntry, Mode=TwoWay}" Margin="20,20,0,0" VerticalAlignment="Stretch">
+                    <ListBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding Entries}" SelectedItem="{Binding SelectedEntry, Mode=TwoWay}" Margin="20,20,20,20" VerticalAlignment="Stretch">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -247,6 +247,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Search for an entry to use" Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" Margin="20,20,20,0" />
@@ -263,7 +264,23 @@
                             <TextBox Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,0,20,0" Grid.Row="0" Grid.Column="0"></TextBox>
                             <Button Grid.Row="0" Grid.Column="1" Command="{Binding SearchCommand}" IsEnabled="{Binding DataContext.Enabled, ElementName=Page}">Search</Button>
                         </Grid>
-                        
+
+                        <ListBox Grid.Row="2" Grid.Column="0" ItemsSource="{Binding Results}" SelectedItem="{Binding SelectedResult, Mode=TwoWay}" Margin="20,20,20,20" VerticalAlignment="Stretch">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Text="{Binding Chinese}" Grid.Column="0" Grid.Row="0" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </Grid>
                 </Grid>
             </Grid>

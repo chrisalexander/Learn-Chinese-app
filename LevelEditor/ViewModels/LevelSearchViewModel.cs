@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using LangDB;
@@ -49,7 +50,7 @@ namespace LevelEditor.ViewModels
             this.searchService = searchService;
             this.resultChosen = resultChosen;
 
-            this.SearchCommand = new DelegateCommand(this.ExecuteSearch, () => !string.IsNullOrEmpty(this.SearchTerm));
+            this.SearchCommand = new DelegateCommand(this.ExecuteSearch);
             this.SelectCommand = new DelegateCommand(this.SelectResult, () => this.selectedResult != null);
         }
 
