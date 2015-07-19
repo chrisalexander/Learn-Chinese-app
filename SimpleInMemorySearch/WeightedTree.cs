@@ -59,7 +59,7 @@ namespace SimpleInMemorySearch
             // Add the weight on for the result
             this.Weight += weight;
 
-            // If we have reached the end of the weighting, add the index object to our item collection
+            // If we have reached the end of the node values, add the index object to our item collection
             if (!nodeValues.MoveNext())
             {
                 if (this.Items.ContainsKey(indexObject))

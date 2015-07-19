@@ -139,7 +139,7 @@ namespace LevelEditor.ViewModels
         {
             var searchResults = await this.searchService.Search(this.SearchTerm);
 
-            this.Results = searchResults.Take(25).Select(result => result.Result.Value).ToList();
+            this.Results = searchResults.Select(result => result.Result.Value).ToList();
         }
 
         /// <summary>

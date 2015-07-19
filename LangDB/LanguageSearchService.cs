@@ -41,26 +41,27 @@ namespace LangDB
             {
                 var isolated = EnglishTokeniserRegex.Replace(english, string.Empty);
                 var tokens = isolated.Split(' ');
+                var reverseTokenIndex = tokens.Length;
                 foreach (var token in tokens)
                 {
                     if (!string.IsNullOrWhiteSpace(token))
                     {
-                        yield return new ScoredItemKeyword(token, 0);
+                        yield return new ScoredItemKeyword(token, reverseTokenIndex);
+                        reverseTokenIndex++;
                     }
                 }
             }
 
             // Return the simplified and traditional forms of Chinese
-            yield return new ScoredItemKeyword(string.Join(string.Empty, item.Chinese.Characters.Select(c => c.Traditional)), 1);
-            yield return new ScoredItemKeyword(string.Join(string.Empty, item.Chinese.Characters.Select(c => c.Simplified)), 1);
+            yield return new ScoredItemKeyword(string.Join(string.Empty, item.Chinese.Characters.Select(c => c.Traditional)), 0);
+            yield return new ScoredItemKeyword(string.Join(string.Empty, item.Chinese.Characters.Select(c => c.Simplified)), 0);
 
             // Return each of the pinyin syllables, in reverse priority order
-            var numberOfCharacters = item.Chinese.Characters.Count();
-
+            var reverseCharacterIndex = item.Chinese.Characters.Count();
             foreach (var character in item.Chinese.Characters)
             {
-                yield return new ScoredItemKeyword(character.Mandarin.ToString(), numberOfCharacters);
-                numberOfCharacters--;
+                yield return new ScoredItemKeyword(character.Mandarin.ToString(), reverseCharacterIndex);
+                reverseCharacterIndex++;
             }
         }
     }

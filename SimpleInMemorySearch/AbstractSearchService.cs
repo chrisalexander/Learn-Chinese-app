@@ -57,13 +57,58 @@ namespace SimpleInMemorySearch
         /// <summary>
         /// Asynchronously search for results relating to the specified term.
         /// </summary>
-        /// <param name="term">The search term.</param>
+        /// <param name="termString">The search term.</param>
         /// <returns>The search results matching the term.</returns>
-        public async Task<IEnumerable<ISearchResult<T, TZ>>> Search(string term)
+        public async Task<IEnumerable<ISearchResult<T, TZ>>> Search(string termString)
         {
-            var results = this.weightedTree.Search(term.ToCharArray());
+            var terms = termString.Split(' ');
 
-            return await Task.Run(() => results.Select(r => new SearchResult<T, TZ>(r.Result, r.Score, tz => this.itemCache[tz])).OrderByDescending(r => r.Relevancy));
+            var overallResults = new Dictionary<TZ, IResultTracker<TZ>>();
+
+            var firstTerm = true;
+
+            foreach (var term in terms)
+            {
+                var results = this.weightedTree.Search(term.ToCharArray());
+
+                var resultIds = new HashSet<TZ>();
+
+                // Add the results to the overall results
+                foreach (var result in results)
+                {
+                    resultIds.Add(result.Result);
+
+                    IResultTracker<TZ> resultTracker;
+                    if (overallResults.TryGetValue(result.Result, out resultTracker))
+                    {
+                        resultTracker.Score += result.Score;
+                    }
+                    else if (firstTerm)
+                    {
+                        overallResults.Add(result.Result, new ResultTracker<TZ>(result.Result, result.Score));
+                    }
+                }
+
+                // Remove from the overall results, entries which were not found in this set of results
+                var overallToRemove = new HashSet<TZ>();
+                
+                foreach (var overallResult in overallResults)
+                {
+                    if (!resultIds.Contains(overallResult.Key))
+                    {
+                        overallToRemove.Add(overallResult.Key);
+                    }
+                }
+
+                foreach (var toRemove in overallToRemove)
+                {
+                    overallResults.Remove(toRemove);
+                }
+
+                firstTerm = false;
+            }
+
+            return await Task.Run(() => overallResults.Select(r => new SearchResult<T, TZ>(r.Value.Result, r.Value.Score, tz => this.itemCache[tz])).OrderBy(r => r.Relevancy));
         }
 
         /// <summary>
